@@ -13,6 +13,8 @@ import {
 } from "react-router-dom";
 import User from './components/User/User.jsx';
 import Admin from './components/Admin/Admin.jsx';
+import Login from './components/Auth/Login.jsx';
+import Register from './components/Auth/Register.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
@@ -24,6 +26,10 @@ createRoot(document.getElementById('root')).render(
             <Route path="users" element={<User />} />
           </Route>
           <Route path="admin" element={<Admin />} />
+          <Route path='/login' element={<Login />} />
+          <Route path='/register' element={<Register />} />
+
+
         </Routes>
       </BrowserRouter>
     </Provider>

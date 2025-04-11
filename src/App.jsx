@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import Header from './components/Header/Header.jsx'
 import { Outlet } from "react-router-dom";
+import './App.scss';
 
 function App() {
   return (

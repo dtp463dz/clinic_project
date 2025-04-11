@@ -1,0 +1,49 @@
+body {
+    padding: 0;
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
+        'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
+        sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+.app-container {
+    .header-container {
+
+        .btn-login {
+            border-radius: 5px;
+            margin-right: 15px;
+            border: 1px solid #535353;
+            padding: 0 15px;
+            height: 40px;
+        }
+
+        .btn-signup {
+            background: #4f4f4f;
+            border-radius: 5px;
+            padding: 0 15px;
+            color: white;
+            height: 40px;
+
+            &:hover {
+                background-color: #000;
+            }
+        }
+
+        .navbar {
+            z-index: 10;
+            background-color: rgba(0, 0, 0, 0) !important;
+            padding-top: 20px;
+
+            .nav-link {
+
+                // thêm dấu & đằng trước sẽ hiểu class active đứng ngang hàng với .nav-link
+                &.active {
+                    color: #00bfff;
+                }
+            }
+        }
+
+    }
+}

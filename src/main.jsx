@@ -3,6 +3,9 @@ import { createRoot } from 'react-dom/client';
 // import './index.css'
 import 'bootstrap/dist/css/bootstrap.min.css';
 import App from './App.jsx';
+import { Provider } from 'react-redux';
+import { store } from './redux/store.jsx';
+
 import {
   BrowserRouter,
   Routes,
@@ -13,13 +16,18 @@ import Admin from './components/Admin/Admin.jsx';
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<App />} >
-          <Route path="users" element={<User />} />
+    <Provider store={store}>
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<App />}>
+            {/* <Route index element={<HomePage />} /> */}
+            <Route path="users" element={<User />} />
+          </Route>
           <Route path="admin" element={<Admin />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
+        </Routes>
+      </BrowserRouter>
+    </Provider>
+
   </StrictMode>,
 )
+

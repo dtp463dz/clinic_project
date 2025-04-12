@@ -10,6 +10,7 @@ import Login from './components/Auth/Login.jsx';
 import Register from './components/Auth/Register.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import NotFound from './components/Notice/NotFound.jsx';
 
 const Layout = (props) => {
     return (
@@ -22,6 +23,7 @@ const Layout = (props) => {
                 <Route path="admin" element={<Admin />} />
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
+                <Route path='*' element={<NotFound />} />
 
             </Routes>
             <ToastContainer

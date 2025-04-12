@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import './Register.scss';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 const Register = () => {
     const [email, setEmail] = useState();
@@ -9,6 +10,9 @@ const Register = () => {
     const [userName, setUserName] = useState();
 
     const navigate = useNavigate();
+    const handleRegister = () => {
+        toast.success('Sign up success')
+    }
     return (
         <div className="register-container">
             <div className="header">
@@ -17,10 +21,10 @@ const Register = () => {
 
             </div>
             <div className="title col-4 mx-auto">
-                Booking Heath
+                Booking Health
             </div>
             <div className="welcome col-4 mx-auto">
-                Heathy Care
+                Healthy Care
             </div>
             <div className='content-form col-4 mx-auto'>
                 <div className="form-group">
@@ -53,6 +57,7 @@ const Register = () => {
                 <div>
                     <button
                         className="btn-submit"
+                        onClick={() => handleRegister()}
                     >Create my free account</button>
                 </div>
                 <div className='text-center'>

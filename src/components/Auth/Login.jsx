@@ -2,13 +2,14 @@
 import { useState } from 'react';
 import './Login.scss';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 
 
 const Login = (props) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
     const handleLogin = () => {
-        alert('btn login success');
+        toast.success('Login success')
     }
     const navigate = useNavigate();
     return (
@@ -18,7 +19,7 @@ const Login = (props) => {
                 <button className='btn-signup' onClick={() => { navigate('/register') }}>Sign up</button>
             </div>
             <div className="title col-4 mx-auto">
-                Booking Heath
+                Booking Health
             </div>
             <div className="welcome col-4 mx-auto">
                 Hello, who's this?

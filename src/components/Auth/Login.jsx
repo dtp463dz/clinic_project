@@ -14,14 +14,14 @@ const Login = (props) => {
 
         // submit api
         let data = await postLogin(email, password)
-        console.log('check data', data.data)
+        console.log('check data', data)
 
-        if (data && data.data.errCode === 0) {
-            toast.success(data.data.message);
+        if (data && data.errCode === 0) {
+            toast.success(data.message);
             navigate('/');
         }
-        if (data && +data.data.errCode !== 0) {
-            toast.error(data.data.message);
+        if (data && +data.errCode !== 0) {
+            toast.error(data.message);
         }
 
     }

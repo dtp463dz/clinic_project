@@ -1,9 +1,9 @@
-import axios from "axios";
+import axios from "../utils/axios.jsx";
 
-const postLogin = (userEmail, userPassword) => {
-    return axios.post(`${import.meta.env.VITE_BACKEND_URL}/api/login`, {
-        email: userEmail,
-        password: userPassword
+const postLogin = (email, password) => {
+    return axios.post(`/api/login`, {
+        email: email,
+        password: password
     });
 }
 

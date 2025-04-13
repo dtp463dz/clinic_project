@@ -56,5 +56,17 @@
         .forgot-password {
             cursor: pointer;
         }
+
+        .pass-group {
+            /* cho icons vao form*/
+            position: relative;
+
+            .icons-eye {
+                cursor: pointer;
+                position: absolute;
+                right: 10px;
+                bottom: 10px;
+            }
+        }
     }
 }

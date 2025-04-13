@@ -3,11 +3,14 @@ import { useState } from 'react';
 import './Register.scss';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const Register = () => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
-    const [userName, setUserName] = useState();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [userName, setUserName] = useState("");
+
+    const [isShowPassword, setIsShowPassword] = useState(false); // false la dong
 
     const navigate = useNavigate();
     const handleRegister = () => {
@@ -28,7 +31,7 @@ const Register = () => {
             </div>
             <div className='content-form col-4 mx-auto'>
                 <div className="form-group">
-                    <label>Email</label>
+                    <label>Email(*)</label>
                     <input
                         type={"email"}
                         className="form-control"
@@ -36,14 +39,23 @@ const Register = () => {
                         onChange={(event) => setEmail(event.target.value)}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group pass-group">
                     <label>Password</label>
                     <input
-                        type={"password"}
+                        type={isShowPassword ? "text" : "password"}
                         className="form-control"
                         value={password} // truyen cho react quan ly
                         onChange={(event) => setPassword(event.target.value)}
                     />
+                    {isShowPassword ?
+                        <span className='icons-eye' onClick={() => setIsShowPassword(false)}>
+                            <FaRegEye />
+                        </span>
+                        :
+                        <span className='icons-eye' onClick={() => setIsShowPassword(true)}>
+                            <FaRegEyeSlash />
+                        </span>
+                    }
                 </div>
                 <div className="form-group">
                     <label>User Name</label>

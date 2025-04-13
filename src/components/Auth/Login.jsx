@@ -3,12 +3,16 @@ import './Login.scss';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { postLogin } from '../../services/apiService';
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 
 const Login = (props) => {
-    const [email, setEmail] = useState();
-    const [password, setPassword] = useState();
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
+
+    const [isShowPassword, setIsShowPassword] = useState(false); // false la dong
+
     const isValidateEmail = (email) => {
         const re =
             /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
@@ -67,14 +71,23 @@ const Login = (props) => {
                         onChange={(event) => setEmail(event.target.value)}
                     />
                 </div>
-                <div className="form-group">
+                <div className="form-group pass-group">
                     <label>Password</label>
                     <input
-                        type={"password"}
+                        type={isShowPassword ? "text" : "password"}
                         className="form-control"
                         value={password} // truyen cho react quan ly
                         onChange={(event) => setPassword(event.target.value)}
                     />
+                    {isShowPassword ?
+                        <span className='icons-eye' onClick={() => setIsShowPassword(false)}>
+                            <FaRegEye />
+                        </span>
+                        :
+                        <span className='icons-eye' onClick={() => setIsShowPassword(true)}>
+                            <FaRegEyeSlash />
+                        </span>
+                    }
                 </div>
                 <span className="forgot-password">Forgot password</span>
                 <div>

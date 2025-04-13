@@ -1,17 +1,30 @@
-
 import { useState } from 'react';
 import './Login.scss';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
-
+import { postLogin } from '../../services/apiService';
 
 const Login = (props) => {
     const [email, setEmail] = useState();
     const [password, setPassword] = useState();
-    const handleLogin = () => {
-        toast.success('Login success')
-    }
+
     const navigate = useNavigate();
+    const handleLogin = async () => {
+        // validate
+
+        // submit api
+        let data = await postLogin(email, password)
+        console.log('check data', data.data)
+
+        if (data && data.data.errCode === 0) {
+            toast.success(data.data.message);
+            navigate('/');
+        }
+        if (data && +data.data.errCode !== 0) {
+            toast.error(data.data.message);
+        }
+
+    }
     return (
         <div className="login-container">
             <div className="header">

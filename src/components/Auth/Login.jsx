@@ -9,21 +9,41 @@ const Login = (props) => {
     const [password, setPassword] = useState();
 
     const navigate = useNavigate();
+    const isValidateEmail = (email) => {
+        const re =
+            /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
+        return re.test(String(email).toLowerCase());
+    };
     const handleLogin = async () => {
         // validate
-
+        if (!email || !password) {
+            toast.error("Vui lòng nhập đầy đủ email và mật khẩu.");
+            return;
+        }
+        if (!isValidateEmail(email)) {
+            toast.error("Email không hợp lệ.");
+            return;
+        }
+        if (password.length < 6) {
+            toast.error("Mật khẩu phải có ít nhất 6 ký tự.");
+            return;
+        }
         // submit api
-        let data = await postLogin(email, password)
-        console.log('check data', data)
 
-        if (data && data.errCode === 0) {
-            toast.success(data.message);
-            navigate('/');
+        try {
+            let data = await postLogin(email, password);
+            console.log('check data login: ', data);
+            if (data && data.errCode === 0) {
+                toast.success(data.message);
+                navigate('/');
+            }
+            if (data && +data.errCode !== 0) {
+                toast.error(data.message);
+            }
+        } catch (error) {
+            toast.error("Lỗi kết nối đến server.");
+            console.error(error);
         }
-        if (data && +data.errCode !== 0) {
-            toast.error(data.message);
-        }
-
     }
     return (
         <div className="login-container">

@@ -7,4 +7,8 @@ const postLogin = (email, password) => {
     });
 }
 
-export { postLogin }
+// lay tat ca user
+const getAllUsers = () => {
+    return axios.get(`/api/get-all-users/?id=ALL`)
+}
+export { postLogin, getAllUsers }

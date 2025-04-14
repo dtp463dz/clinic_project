@@ -7,7 +7,16 @@ import { FcPlus } from "react-icons/fc";
 const ModalCreateUser = () => {
     const [show, setShow] = useState(false);
 
-    const handleClose = () => setShow(false);
+    const handleClose = () => {
+        setShow(false) // props.setShow
+        // khi tắt, tất cả sẽ về giá trị rỗng
+        setEmail("");
+        setPassword("");
+        setUsername("");
+        setRole("USER");  // về lại mặc định
+        setImage("");
+        setPreviewImage("");
+    };
     const handleShow = () => setShow(true);
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");

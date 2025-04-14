@@ -1,0 +1,22 @@
+.admin-container {
+    display: flex;
+    height: 100vh;
+
+    .admin-sidebar {
+        min-width: auto;
+    }
+
+    .admin-content {
+        flex: 1;
+        padding: 20px;
+
+        .sb-button {
+            background-color: #6c63ff;
+            color: white;
+            padding: 5px 10px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+    }
+}

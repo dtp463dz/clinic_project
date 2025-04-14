@@ -3,6 +3,7 @@ import { FaTachometerAlt, FaGem, FaGithub } from 'react-icons/fa';
 import './SideBar.scss';
 import { MdDashboard } from "react-icons/md";
 import { DiReact } from "react-icons/di";
+import { Link } from 'react-router-dom';
 
 const SlideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
     return (
@@ -46,12 +47,15 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                 >
                     <MenuItem
                         icon={<MdDashboard />}
+                        component={<Link to='/admin' />}
                     >
                         Dashboard
                     </MenuItem>
 
                     <SubMenu defaultOpen label="Manage" icon={<FaGem />}>
-                        <MenuItem> Quản Lý Users</MenuItem>
+                        <MenuItem component={<Link to='/admin/manage-users' />}>
+                            Quản Lý Users
+                        </MenuItem>
                     </SubMenu>
                 </Menu>
 

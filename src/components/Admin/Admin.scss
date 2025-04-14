@@ -9,6 +9,16 @@
     .admin-content {
         flex: 1;
         padding: 20px;
+        width: 100%;
+
+        .admin-header {
+            height: 40px;
+            border: 1px solid green;
+        }
+
+        .admin-main {
+            border: 1px solid red;
+        }
 
         .sb-button {
             background-color: #6c63ff;

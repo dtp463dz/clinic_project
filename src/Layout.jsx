@@ -11,6 +11,8 @@ import Register from './components/Auth/Register.jsx';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './components/Notice/NotFound.jsx';
+import ManageUser from './components/Admin/Content/ManageUser.jsx';
+import Dashboard from './components/Admin/Content/DashBoard.jsx';
 
 const Layout = (props) => {
     return (
@@ -20,7 +22,13 @@ const Layout = (props) => {
                     {/* <Route index element={<HomePage />} /> */}
                     <Route path="users" element={<User />} />
                 </Route>
-                <Route path="admin" element={<Admin />} />
+
+                <Route />
+                <Route path="admin" element={<Admin />}>
+                    <Route index element={<Dashboard />} />
+                    <Route path="manage-users" element={<ManageUser />} />
+                </Route>
+
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='*' element={<NotFound />} />

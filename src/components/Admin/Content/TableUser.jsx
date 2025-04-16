@@ -1,31 +1,17 @@
 import { useState, useEffect } from "react";
 import { getAllUsers } from "../../../services/apiService";
 
-const TableUser = () => {
-    const [listUsers, setListUsers] = useState([]);
-    // hàm này chạy sau khi hàm return chạy
-    // componentDidMount
-    useEffect(() => {
-        // console.log('run second useEffect')
-        // let res = await getAllUser()
-        fetchListUsers();
-    }, []);
-
-    const fetchListUsers = async () => {
-        let res = await getAllUsers();
-        console.log('>> check res useEffect: ', res)
-        if (res.errCode === 0) {
-            setListUsers(res.users)
-        }
-    }
+const TableUser = (props) => {
+    const { listUsers } = props;
     return (
         <>
             <table className="table table-hover table-bordered">
                 <thead className="table-light">
                     <tr>
                         <th scope="col">ID</th>
-                        <th scope="col">Username</th>
                         <th scope="col">Email</th>
+                        <th scope="col">First Name</th>
+                        <th scope="col">Last Name</th>
                         <th scope="col">Role</th>
                         <th>Action</th>
                     </tr>
@@ -34,12 +20,13 @@ const TableUser = () => {
                     {/* loop list users dung map */}
                     {listUsers && listUsers.length > 0 &&
                         listUsers.map((item, index) => {
-                            console.log('check item: ', item)
+                            // console.log('check item: ', item)
                             return (
                                 <tr key={`table-users-${index}`}>
-                                    <td>{index + 1}</td>
+                                    <td>{item.id}</td>
                                     <td>{item.email}</td>
                                     <td>{item.firstName} {item.lastName}</td>
+                                    <td>{item.lastName}</td>
                                     <td>{item.roleId}</td>
                                     <td>
                                         <button className="btn btn-secondary">View</button>

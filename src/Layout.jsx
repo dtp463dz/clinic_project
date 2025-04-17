@@ -13,6 +13,7 @@ import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './components/Notice/NotFound.jsx';
 import ManageUser from './components/Admin/Content/ManageUser.jsx';
 import Dashboard from './components/Admin/Content/DashBoard.jsx';
+import HomePage from './components/HomePage/HomePage.jsx';
 
 const Layout = (props) => {
     return (
@@ -33,6 +34,7 @@ const Layout = (props) => {
                 <Route path='/register' element={<Register />} />
                 <Route path='*' element={<NotFound />} />
 
+                <Route path='/home' element={<HomePage />} />
             </Routes>
             <ToastContainer
                 position="top-right"

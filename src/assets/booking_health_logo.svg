@@ -1,0 +1,25 @@
+
+<svg width="300" height="120" viewBox="0 0 300 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Biểu tượng lịch -->
+  <rect x="10" y="20" width="60" height="60" rx="10" fill="url(#calendarGradient)"/>
+
+  <!-- Dấu cộng trắng (chữ thập y tế) -->
+  <rect x="37" y="40" width="6" height="20" rx="2" fill="white"/>
+  <rect x="30" y="47" width="20" height="6" rx="2" fill="white"/>
+
+  <!-- Ống nghe bác sĩ -->
+  <circle cx="65" cy="75" r="6" fill="#15477D"/>
+  <path d="M65 75 C60 85, 40 85, 35 70" stroke="#15477D" stroke-width="3" fill="none"/>
+
+  <!-- Text thương hiệu -->
+  <text x="85" y="55" font-family="sans-serif" font-size="20" fill="#004080" font-weight="bold">BOOKING</text>
+  <text x="85" y="85" font-family="sans-serif" font-size="20" fill="#0099CC" font-weight="bold">HEALTH</text>
+
+  <!-- Gradient nền biểu tượng -->
+  <defs>
+    <linearGradient id="calendarGradient" x1="10" y1="20" x2="70" y2="80" gradientUnits="userSpaceOnUse">
+      <stop stop-color="#33AADD"/>
+      <stop offset="1" stop-color="#0077B6"/>
+    </linearGradient>
+  </defs>
+</svg>

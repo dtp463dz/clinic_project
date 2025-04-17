@@ -93,7 +93,7 @@ const ModalCreateUser = (props) => {
                 className='modal-add-user'
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Add New User</Modal.Title>
+                    <Modal.Title>Tạo người dùng mới</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -170,10 +170,10 @@ const ModalCreateUser = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        Đóng
                     </Button>
                     <Button variant="primary" onClick={() => handleSubmitCreateUser()}>
-                        Save
+                        Lưu
                     </Button>
                 </Modal.Footer>
             </Modal>

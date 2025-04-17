@@ -45,10 +45,10 @@ const ModalDeleteUser = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Cancel
+                        Hủy
                     </Button>
                     <Button variant="primary" onClick={() => { handleSubmitDeleteUser() }}>
-                        Confirm
+                        Xác nhận
                     </Button>
                 </Modal.Footer>
             </Modal>

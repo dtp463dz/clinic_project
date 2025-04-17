@@ -109,7 +109,7 @@ const ModalUpdateUser = (props) => {
                 className='modal-add-user'
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Add New User</Modal.Title>
+                    <Modal.Title>Cập nhật người dùng</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -186,10 +186,10 @@ const ModalUpdateUser = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        Đóng
                     </Button>
                     <Button variant="primary" onClick={() => handleSubmitUpdateUser()}>
-                        Save
+                        Lưu
                     </Button>
                 </Modal.Footer>
             </Modal>

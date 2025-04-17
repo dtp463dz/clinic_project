@@ -60,7 +60,7 @@ const ModalViewUser = (props) => {
                 className='modal-add-user'
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Add New User</Modal.Title>
+                    <Modal.Title>Chi tiết người dùng</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <form className="row g-3">
@@ -137,7 +137,7 @@ const ModalViewUser = (props) => {
                 </Modal.Body>
                 <Modal.Footer>
                     <Button variant="secondary" onClick={handleClose}>
-                        Close
+                        Đóng
                     </Button>
                 </Modal.Footer>
             </Modal>

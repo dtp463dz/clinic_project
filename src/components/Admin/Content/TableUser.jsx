@@ -33,15 +33,15 @@ const TableUser = (props) => {
                                         <button
                                             className="btn btn-secondary"
                                             onClick={() => props.handleClickBtnView(item)}
-                                        >View</button>
+                                        >Xem</button>
                                         <button
                                             className="btn btn-warning mx-3"
                                             onClick={() => props.handleClickBtnUpdate(item)}
-                                        >Update</button>
+                                        >Cập Nhật</button>
                                         <button
                                             className="btn btn-danger"
                                             onClick={() => props.handleClickBtnDelete(item)}
-                                        >Delete</button>
+                                        >Xóa</button>
                                     </td>
                                 </tr>
                             )

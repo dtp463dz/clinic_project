@@ -3,6 +3,7 @@ import { getAllUsers } from "../../../services/apiService";
 
 const TableUser = (props) => {
     const { listUsers } = props;
+
     return (
         <>
             <table className="table table-hover table-bordered">
@@ -30,7 +31,10 @@ const TableUser = (props) => {
                                     <td>{item.roleId}</td>
                                     <td>
                                         <button className="btn btn-secondary">View</button>
-                                        <button className="btn btn-warning mx-3">Update</button>
+                                        <button
+                                            className="btn btn-warning mx-3"
+                                            onClick={() => props.handleClickBtnUpdate(item)}
+                                        >Update</button>
                                         <button className="btn btn-danger">Delete</button>
                                     </td>
                                 </tr>

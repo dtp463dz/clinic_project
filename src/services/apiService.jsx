@@ -27,7 +27,7 @@ const postCreateNewUser = (email, password, firstName, lastName, roleId, image) 
 };
 
 // update user
-const putUpdateUser = async (id, firstName, lastName, roleId, image) => {
+const putUpdateUser = (id, firstName, lastName, roleId, image) => {
     return axios.put('/api/edit-user', {
         id: id,
         firstName: firstName,
@@ -37,4 +37,9 @@ const putUpdateUser = async (id, firstName, lastName, roleId, image) => {
     });
 };
 
-export { postLogin, getAllUsers, postCreateNewUser, putUpdateUser }
+// delete user
+const deleteUser = (userId) => {
+    return axios.delete(`/api/delete-user`, { data: { id: userId } })
+}
+
+export { postLogin, getAllUsers, postCreateNewUser, putUpdateUser, deleteUser }

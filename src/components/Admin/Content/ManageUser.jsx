@@ -33,6 +33,11 @@ const ManageUser = () => {
         setShowModalUpdateUser(true); // modal mở
         setDataUpdate(user)
     }
+
+    // reset lại phần modal update khi ấn close
+    const resetUpdateData = () => {
+        setDataUpdate({}); // cho về rỗng
+    }
     return (
         <div className="manage-user-container">
             <div className="title">
@@ -57,6 +62,8 @@ const ManageUser = () => {
                     show={showModalUpdateUser}
                     setShow={setShowModalUpdateUser}
                     dataUpdate={dataUpdate}
+                    fetchListUsers={fetchListUsers}
+                    resetUpdateData={resetUpdateData}
                 />
             </div>
         </div>

@@ -11,10 +11,10 @@ const postLogin = (email, password) => {
 // lay tat ca user
 const getAllUsers = () => {
     return axios.get(`/api/get-all-users/?id=ALL`)
-}
+};
 
 // tạo mới user
-const postCreateNewUser = async (email, password, firstName, lastName, roleId, image) => {
+const postCreateNewUser = (email, password, firstName, lastName, roleId, image) => {
     return axios.post(`/api/create-new-user`, {
         email: email,
         password: password,
@@ -26,4 +26,15 @@ const postCreateNewUser = async (email, password, firstName, lastName, roleId, i
 
 };
 
-export { postLogin, getAllUsers, postCreateNewUser }
+// update user
+const putUpdateUser = async (id, firstName, lastName, roleId, image) => {
+    return axios.put('/api/edit-user', {
+        id: id,
+        firstName: firstName,
+        lastName: lastName,
+        roleId: roleId,
+        image: image,
+    });
+};
+
+export { postLogin, getAllUsers, postCreateNewUser, putUpdateUser }

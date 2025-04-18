@@ -2,6 +2,7 @@ import './HomeHeader.scss';
 import { FaBars } from "react-icons/fa";
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'></link>
 import { FaPersonCircleQuestion } from "react-icons/fa6";
+import { GoSearch } from "react-icons/go";
 import SlideShow from './SlideShow';
 
 
@@ -30,7 +31,10 @@ const HomeHeader = () => {
                         </div>
 
                         {/* Phần tìm kiếm  */}
-
+                        <div className='search'>
+                            <input type='text' placeholder='Tìm kiếm...' />
+                            <i><GoSearch /></i>
+                        </div>
 
                     </div>
                     <div className='right-content'>

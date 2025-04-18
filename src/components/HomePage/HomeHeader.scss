@@ -19,6 +19,11 @@
                 font-size: 25px;
                 color: grey;
                 cursor: pointer;
+                transition: color 0.3s;
+
+                &:hover {
+                    color: #666;
+                }
             }
 
             .header-logo {
@@ -49,6 +54,38 @@
                     color: #111;
                 }
             }
+
+            .search {
+                display: flex;
+                align-items: center;
+                padding: 10px;
+                border-radius: 25px;
+                width: fit-content;
+                background-color: #e0f7ff;
+
+                input {
+                    border: none;
+                    outline: none;
+                    background: white;
+                    padding: 10px 15px;
+                    border-radius: 25px;
+                    font-size: 16px;
+                    width: 250px;
+                }
+
+                i {
+                    background-color: #42a5f5;
+                    color: white;
+                    padding: 10px;
+                    border-radius: 50%;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                    margin-left: -10px;
+                    /* Giúp icon dính sát input */
+                    cursor: pointer;
+                }
+            }
         }
 
         .right-content {
@@ -62,3 +99,5 @@
     }
 
 }
+
+.home-header-banner {}

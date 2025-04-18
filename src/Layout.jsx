@@ -35,6 +35,7 @@ const Layout = (props) => {
                 <Route path='*' element={<NotFound />} />
 
                 <Route path='/home' element={<HomePage />} />
+
             </Routes>
             <ToastContainer
                 position="top-right"

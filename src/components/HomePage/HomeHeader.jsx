@@ -4,11 +4,18 @@ import { FaBars } from "react-icons/fa";
 import { FaPersonCircleQuestion } from "react-icons/fa6";
 import { GoSearch } from "react-icons/go";
 import { ImBook } from "react-icons/im";
-import { FaBookReader, FaUserNurse } from "react-icons/fa";
+import { FaBookReader, FaUserNurse, FaCaretDown } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import SlideShow from './SlideShow';
+import { useState } from 'react';
 
 const HomeHeader = () => {
+
+    // dropdown
+    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+    const toggleDropdown = () => {
+        setIsDropdownOpen(!isDropdownOpen);
+    }
     return (
         <>
             <div className="home-header-container">
@@ -41,11 +48,27 @@ const HomeHeader = () => {
                     </div>
                     <div className='right-content'>
                         <div className='support'>
-                            <i><FaPersonCircleQuestion /></i>
-                            Hỗ trợ khách hàng
+                            <FaPersonCircleQuestion className='support-icons' />
+                            <span>Hỗ trợ khách hàng</span>
                         </div>
-                        <div className='flag'>
-                            VN
+                        <div className='language-vi' onClick={() => toggleDropdown()}>
+                            <img src="https://phenikaamec.com/assets/image/header/lang1.svg"
+                                alt="Vietnamese Flag"
+                                className='flag-icon'
+                            />
+                            <FaCaretDown className='dropdown-arrow' />
+                            {isDropdownOpen && (
+                                <>
+                                    <div className='dropdow-menu'>
+                                        <img src="https://phenikaamec.com/assets/image/header/lang1.svg"
+                                            alt="Vietnamese Flag"
+                                            className='flag-icon'
+                                        />
+                                        <span>Tiếng Việt</span>
+                                    </div>
+                                </>
+                            )}
+
                         </div>
                     </div>
                 </div>

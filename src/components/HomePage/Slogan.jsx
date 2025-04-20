@@ -5,7 +5,7 @@ const Slogan = () => {
             <div className="outer-div">
                 <div className="middle-div">
                     <div className="inner-div">
-                        <p className="text-content">Tận tâm - Sáng tạo - Nâng tầm tri thức</p>
+                        <p className="text-content">Tin cậy - Hiệu quả - Phát triển bền vững</p>
                     </div>
                 </div>
             </div>

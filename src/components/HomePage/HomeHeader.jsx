@@ -7,15 +7,12 @@ import { ImBook } from "react-icons/im";
 import { FaBookReader, FaUserNurse, FaCaretDown } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import SlideShow from './SlideShow';
-import { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
-import Slogan from './Slogan.jsx';
 
 const HomeHeader = () => {
 
     return (
         <>
-            <Slogan />
             <div className="home-header-container">
                 <div className='home-header-content'>
                     <div className='left-content'>
@@ -70,11 +67,6 @@ const HomeHeader = () => {
                                     </Dropdown.Item>
                                 </Dropdown.Menu>
                             </Dropdown>
-
-
-
-
-
                         </div>
 
 

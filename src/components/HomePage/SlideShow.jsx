@@ -2,9 +2,9 @@
 import './SlideShow.scss';
 import { Fade, Slide } from 'react-slideshow-image';
 const spanStyle = {
-    padding: '20px',
-    background: '#efefef',
-    color: '#000000'
+    // padding: '20px',
+    // background: '#efefef',
+    // color: '#000000'
 }
 
 const divStyle = {
@@ -16,16 +16,16 @@ const divStyle = {
 }
 const slideImages = [
     {
-        url: 'https://images.unsplash.com/photo-1509721434272-b79147e0e708?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-        caption: 'Slide 1'
+        url: 'https://img.freepik.com/free-vector/heart-with-cardiograph-line-medical-blue-background_1017-24816.jpg',
     },
     {
-        url: 'https://images.unsplash.com/photo-1506710507565-203b9f24669b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1536&q=80',
-        caption: 'Slide 2'
+        url: 'https://img.freepik.com/premium-photo/doctor-raising-hands-up-show-virtual-screen-with-blue-icon-vaccine-protection-clinic-background-medical-technology-futuristic-concept_159334-78.jpg',
     },
     {
-        url: 'https://images.unsplash.com/photo-1536987333706-fc9adfb10d91?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1500&q=80',
-        caption: 'Slide 3'
+        url: 'https://img.freepik.com/free-photo/close-up-doctor-with-stethoscope_23-2149191355.jpg',
+    },
+    {
+        url: 'https://plus.unsplash.com/premium_photo-1670459707420-f928b82a7307?q=80&w=1519&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D'
     },
 ];
 

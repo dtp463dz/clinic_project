@@ -9,16 +9,13 @@ import { MdPayment } from "react-icons/md";
 import SlideShow from './SlideShow';
 import { useState } from 'react';
 import Dropdown from 'react-bootstrap/Dropdown';
+import Slogan from './Slogan.jsx';
 
 const HomeHeader = () => {
 
-    // // dropdown
-    // const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-    // const toggleDropdown = () => {
-    //     setIsDropdownOpen(!isDropdownOpen);
-    // }
     return (
         <>
+            <Slogan />
             <div className="home-header-container">
                 <div className='home-header-content'>
                     <div className='left-content'>

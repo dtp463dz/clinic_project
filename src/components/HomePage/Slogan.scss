@@ -1,0 +1,45 @@
+.slogan-web {
+    background-color: #e0f7ff;
+
+    .outer-div {
+        background-color: #C4EAFE;
+        margin-left: auto;
+        margin-right: auto;
+        background-color: #F26522;
+        height: 32px;
+        width: 840px;
+        border-bottom-left-radius: 40px;
+        border-bottom-right-radius: 40px;
+
+        .middle-div {
+            margin-left: auto;
+            margin-right: auto;
+            height: 32px;
+            width: 818px;
+            border-bottom-left-radius: 40px;
+            border-bottom-right-radius: 40px;
+            background-color: #00AEEF;
+
+            .inner-div {
+                margin-left: auto;
+                margin-right: auto;
+                display: flex;
+                height: 32px;
+                width: 792px;
+                align-items: center;
+                justify-content: center;
+                border-bottom-left-radius: 40px;
+                border-bottom-right-radius: 40px;
+                background-color: #03428E;
+
+                .text-content {
+                    font-weight: 600;
+                    text-transform: none;
+                    color: white;
+                    text-transform: uppercase;
+                    padding-top: 15px;
+                }
+            }
+        }
+    }
+}

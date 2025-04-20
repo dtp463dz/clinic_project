@@ -125,7 +125,6 @@
                 border-radius: 20px;
                 font-size: 14px;
                 cursor: pointer;
-                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 
                 .flag-icon {
                     width: 25px;
@@ -139,18 +138,20 @@
                     color: #666;
                 }
 
+
                 .dropdow-menu {
-                    position: absolute;
-                    top: calc(10% + 16px);
-                    left: 86%;
-                    background-color: white;
-                    padding: 8px 12px;
-                    border-radius: 10px;
-                    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-                    z-index: 10;
+                    // top: calc(10% + 16px);
+                    // left: 86%;
+                    // background-color: white;
+                    // padding: 8px 12px;
+                    // border-radius: 10px;
+                    // box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+                    // z-index: 10;
                     white-space: nowrap;
                     font-size: 14px;
                     font-weight: 500;
+                    border: none;
+                    box-shadow: none;
                 }
             }
 

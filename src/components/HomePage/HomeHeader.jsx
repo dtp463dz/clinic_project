@@ -8,14 +8,15 @@ import { FaBookReader, FaUserNurse, FaCaretDown } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import SlideShow from './SlideShow';
 import { useState } from 'react';
+import Dropdown from 'react-bootstrap/Dropdown';
 
 const HomeHeader = () => {
 
-    // dropdown
-    const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-    const toggleDropdown = () => {
-        setIsDropdownOpen(!isDropdownOpen);
-    }
+    // // dropdown
+    // const [isDropdownOpen, setIsDropdownOpen] = useState(false)
+    // const toggleDropdown = () => {
+    //     setIsDropdownOpen(!isDropdownOpen);
+    // }
     return (
         <>
             <div className="home-header-container">
@@ -51,28 +52,38 @@ const HomeHeader = () => {
                             <FaPersonCircleQuestion className='support-icons' />
                             <span>Hỗ trợ khách hàng</span>
                         </div>
-                        <div className='language-vi' onClick={() => toggleDropdown()}>
-                            <img src="https://phenikaamec.com/assets/image/header/lang1.svg"
-                                alt="Vietnamese Flag"
-                                className='flag-icon'
-                            />
-                            <FaCaretDown className='dropdown-arrow' />
-                            {isDropdownOpen && (
-                                <>
-                                    <div className='dropdow-menu'>
-                                        <img src="https://phenikaamec.com/assets/image/header/lang1.svg"
-                                            alt="Vietnamese Flag"
-                                            className='flag-icon'
-                                        />
-                                        <span>Tiếng Việt</span>
-                                    </div>
-                                </>
-                            )}
+                        <div className='language-vi' >
+                            <Dropdown className="custom-dropdown">
+                                <Dropdown.Toggle variant="none" id="dropdown-basic" style={{ border: 'none', boxShadow: 'none' }} >
+                                    <img src="https://phenikaamec.com/assets/image/header/lang1.svg"
+                                        alt="Vietnamese Flag"
+                                        className='flag-icon'
+                                    />
+                                </Dropdown.Toggle>
+
+                                <Dropdown.Menu>
+                                    <Dropdown.Item >
+                                        <div className='dropdow-menu'>
+                                            <img src="https://phenikaamec.com/assets/image/header/lang1.svg"
+                                                alt="Vietnamese Flag"
+                                                className='flag-icon'
+                                            />
+                                            <span>Tiếng Việt</span>
+                                        </div>
+                                    </Dropdown.Item>
+                                </Dropdown.Menu>
+                            </Dropdown>
+
+
+
+
 
                         </div>
+
+
                     </div>
                 </div>
-            </div>
+            </div >
 
             <div className='home-header-banner'>
                 <div className='banner-up'>

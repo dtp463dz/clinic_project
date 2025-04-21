@@ -1,37 +1,43 @@
+$bg-color: #C2EFFF;
+
 .section-specialty {
-    height: 330px;
-    background: #f5f5f5;
-    border: 1px solid red;
+    height: 400px;
+    background: $bg-color;
+    padding: 20px 0;
 
     .specialty-container {
-        margin: 0 100px;
-        display: flex;
-        flex-direction: column;
+        max-width: 1200px;
+        margin: 0 auto;
 
         .specialty-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             height: 60px;
-            margin-bottom: 30px;
-            padding-top: 30px;
+            margin-bottom: 20px;
 
             .title-section {
-                font-size: 22px;
+                font-size: 24px;
                 font-weight: 600;
+                color: #333;
             }
 
             .btn-section {
-                float: right;
-                padding: 10px 15px;
+                padding: 8px 16px;
+                border-radius: 20px;
                 border: none;
                 outline: none;
+                font-size: 20px;
+                font-weight: 500;
                 display: block;
-                background: #ebebeb;
-                color: black;
+                background-color: #e0f7fa;
+                color: #34929E;
                 cursor: pointer;
-                text-transform: uppercase;
+                transition: background-color 0.3s;
 
                 &:hover {
-                    color: #fff;
-                    background: #f7d800;
+                    color: #186670;
+                    background-color: #b2ebf2;
                 }
             }
         }
@@ -39,14 +45,38 @@
         .specialty-body {
 
             .specialty-customize {
+                padding: 10px;
+                text-align: center;
+
+                .outline {
+                    border: 1px solid #f1f1f1;
+                    width: 100%;
+                    border-radius: 18px;
+                    display: flex;
+                    flex-direction: column;
+                    align-items: center;
+                    text-align: center;
+                    background-color: white;
+                    margin-right: 15px;
+                    padding: 18px;
+                }
+
                 .bg-image {
-                    background: url('../../../assets/Specialty/co-xuong-khop.png');
-                    width: 278px;
+                    // background: url('../../../assets/Specialty/co-xuong-khop.png');
+                    width: 250px;
                     height: 150px;
                     background-position: center center;
                     background-repeat: no-repeat;
                     background-size: cover;
                     background-color: #eee;
+                    margin: 0 auto 10px;
+                    border-radius: 10px;
+                }
+
+                .specialty-content {
+                    font-size: 16px;
+                    font-weight: 500;
+                    color: #333;
                 }
             }
 
@@ -55,8 +85,8 @@
                 //position: relative !important;
                 left: -10px !important;
                 z-index: 10 !important;
-                height: 48px !important;
-                width: 44px !important;
+                height: 30px !important;
+                width: 30px !important;
                 background: #fff !important;
                 border: 2px solid #d7d7d7 !important;
 
@@ -75,8 +105,8 @@
             .slick-next {
                 right: -10px !important;
                 z-index: 10 !important;
-                height: 48px !important;
-                width: 44px !important;
+                height: 30px !important;
+                width: 30px !important;
                 background: #fff !important;
                 border: 2px solid #d7d7d7 !important;
 

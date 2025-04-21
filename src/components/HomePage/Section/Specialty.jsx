@@ -3,7 +3,7 @@ import './Specialty.scss';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import Slider from "react-slick";
-import specialtyImg from '../../../assets/Specialty/co-xuong-khop.png'
+import Coxuongkhop from '../../../assets/Specialty/co-xuong-khop.png'
 const Specialty = () => {
     const settings = {
         dots: false,
@@ -24,28 +24,53 @@ const Specialty = () => {
                 <div className='specialty-body'>
                     <Slider {...settings}>
                         <div className='specialty-customize'>
-                            <div className='bg-image' />
-                            <div>Cơ xương khớp 1</div>
+                            <div className="outline">
+                                <div className='bg-image'
+                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                />
+                                <div className='specialty-content'>Cơ xương khớp 1</div>
+                            </div>
+
                         </div>
                         <div className='specialty-customize'>
-                            <div className='bg-image' />
-                            <div>Cơ xương khớp 2</div>
+                            <div className="outline">
+                                <div className='bg-image'
+                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                />
+                                <div className='specialty-content'>Cơ xương khớp 2</div>
+                            </div>
                         </div>
                         <div className='specialty-customize'>
-                            <div className='bg-image' />
-                            <div>Cơ xương khớp 3</div>
+                            <div className="outline">
+                                <div className='bg-image'
+                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                />
+                                <div className='specialty-content'>Cơ xương khớp 3</div>
+                            </div>
                         </div>
                         <div className='specialty-customize'>
-                            <div className='bg-image' />
-                            <div>Cơ xương khớp 4</div>
+                            <div className="outline">
+                                <div className='bg-image'
+                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                />
+                                <div className='specialty-content'>Cơ xương khớp 4</div>
+                            </div>
                         </div>
                         <div className='specialty-customize'>
-                            <div className='bg-image' />
-                            <div>Cơ xương khớp 5</div>
+                            <div className="outline">
+                                <div className='bg-image'
+                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                />
+                                <div className='specialty-content'>Cơ xương khớp 5</div>
+                            </div>
                         </div>
                         <div className='specialty-customize'>
-                            <div className='bg-image' />
-                            <div>Cơ xương khớp 6</div>
+                            <div className="outline">
+                                <div className='bg-image'
+                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                />
+                                <div className='specialty-content'>Cơ xương khớp 6</div>
+                            </div>
                         </div>
                     </Slider>
                 </div>

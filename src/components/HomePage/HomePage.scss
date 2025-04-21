@@ -1,0 +1,112 @@
+.section-container {
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .section-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        height: 60px;
+        margin-bottom: 20px;
+
+        .title-section {
+            font-size: 24px;
+            font-weight: 600;
+            color: #333;
+            padding-left: 10px;
+        }
+
+        .btn-section {
+            padding: 8px 16px;
+            border-radius: 20px;
+            border: none;
+            outline: none;
+            font-size: 20px;
+            font-weight: 500;
+            display: block;
+            background-color: #e0f7fa;
+            color: #34929E;
+            cursor: pointer;
+            transition: background-color 0.3s;
+
+            &:hover {
+                color: #186670;
+                background-color: #b2ebf2;
+            }
+        }
+    }
+
+    .section-body {
+
+        .section-customize {
+            padding: 10px;
+            text-align: center;
+
+            .outline {
+                border: 1px solid #f1f1f1;
+                width: 100%;
+                border-radius: 18px;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                text-align: center;
+                background-color: white;
+                margin-right: 15px;
+                padding: 18px;
+            }
+
+            .bg-image {
+                width: 250px;
+                height: 150px;
+                background-position: center center;
+                background-repeat: no-repeat;
+                background-size: cover;
+                background-color: #eee;
+                margin: 0 auto 15px;
+                border-radius: 15px;
+            }
+
+            .section-content {
+                font-size: 16px;
+                font-weight: 500;
+                color: #333;
+                padding: 0 10px;
+                overflow: hidden;
+                text-overflow: ellipsis;
+                line-height: 20px;
+                height: 50px;
+            }
+        }
+    }
+
+}
+
+
+
+
+.slick-prev {
+    //position: relative !important;
+    left: -10px !important;
+    z-index: 10 !important;
+    height: 30px !important;
+    width: 30px !important;
+    //background: #fff !important;
+    // border: 2px solid #d7d7d7 !important;
+}
+
+.slick-prev::before,
+.slick-next::before {
+    // content: "\f060" !important; // mã unicode
+    // font-family: FontAwesome !important;
+    color: #34929E !important;
+    font-size: 30px;
+}
+
+.slick-next {
+    right: -10px !important;
+    z-index: 10 !important;
+    height: 30px !important;
+    width: 30px !important;
+    // background: #fff !important;
+    // border: 2px solid #d7d7d7 !important;
+}

@@ -1,14 +1,13 @@
-import './Specialty.scss';
-// Import css files
+import './MedicalFacility.scss';
 import Slider from "react-slick";
-import Coxuongkhop from '../../../assets/Specialty/co-xuong-khop.png'
-const Specialty = (props) => {
+import BvVietDuc from '../../../assets/medical/benhvienvietduc.jpg'
+const MedicalFacility = (props) => {
 
     return (
-        <div className='section-specialty'>
+        <div className='section-medical'>
             <div className='section-container'>
                 <div className='section-header'>
-                    <span className='title-section'>Chuyên khoa phổ biến</span>
+                    <span className='title-section'>Cơ sở y tế</span>
                     <button className='btn-section'>Xem thêm</button>
                 </div>
                 <div className='section-body'>
@@ -16,50 +15,50 @@ const Specialty = (props) => {
                         <div className='section-customize'>
                             <div className="outline">
                                 <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
                                 />
-                                <div className='section-content'>Cơ xương khớp 1</div>
+                                <div className='section-content'>Bệnh viện Hữu nghị Việt Đức</div>
                             </div>
 
                         </div>
                         <div className='section-customize'>
                             <div className="outline">
                                 <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
                                 />
-                                <div className='section-content'>Cơ xương khớp 2</div>
+                                <div className='section-content'>Bệnh viện Chợ Rẫy</div>
                             </div>
                         </div>
                         <div className='section-customize'>
                             <div className="outline">
                                 <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
                                 />
-                                <div className='section-content'>Cơ xương khớp 3</div>
+                                <div className='section-content'>Doctor Check - Tầm Soát Bệnh Để Sống Thọ Hơn</div>
                             </div>
                         </div>
                         <div className='section-customize'>
                             <div className="outline">
                                 <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
                                 />
-                                <div className='section-content'>Cơ xương khớp 4</div>
+                                <div className='section-content'>Phòng khám Bệnh viện Đại học Y Dược 1</div>
                             </div>
                         </div>
                         <div className='section-customize'>
                             <div className="outline">
                                 <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
                                 />
-                                <div className='section-content'>Cơ xương khớp 5</div>
+                                <div className='section-content'>Bệnh viện Ung bướu Hưng Việt</div>
                             </div>
                         </div>
                         <div className='section-customize'>
                             <div className="outline">
                                 <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
+                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
                                 />
-                                <div className='section-content'>Cơ xương khớp 6</div>
+                                <div className='section-content'>Hệ thống y tế MEDLATEC</div>
                             </div>
                         </div>
                     </Slider>
@@ -72,4 +71,4 @@ const Specialty = (props) => {
 }
 
 
-export default Specialty;
+export default MedicalFacility;

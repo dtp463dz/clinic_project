@@ -7,6 +7,7 @@ import './HomePage.scss';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import OutStandingDoctor from "./Section/OutStandingDoctor";
+import HandBook from "./Section/HandBook";
 const HomePage = () => {
 
     // setting slider
@@ -24,6 +25,7 @@ const HomePage = () => {
             <Specialty settings={settings} />
             <MedicalFacility settings={settings} />
             <OutStandingDoctor settings={settings} />
+            <HandBook />
             <div style={{ height: '300px' }}></div>
         </div>
     )

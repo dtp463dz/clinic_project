@@ -1,0 +1,74 @@
+$bg-color: #C2EFFF;
+
+.section-handbook {
+    height: 400px;
+    background: $bg-color;
+    padding: 20px 0;
+
+    .section-container {
+        .section-body {
+            .slick-slider {
+                position: relative;
+            }
+
+            .custom-arrow {
+                position: absolute;
+                bottom: -40px; // Đặt nút dưới slider (điều chỉnh khoảng cách nếu cần)
+                background: none;
+                border: none;
+                font-size: 30px;
+                color: #00c4b4;
+                cursor: pointer;
+                z-index: 1;
+                padding: 0 10px;
+                width: auto;
+                height: auto;
+
+                &:hover,
+                &:focus {
+                    color: #008c7a; // Đổi màu khi hover
+                    background: none;
+                    outline: none;
+                }
+            }
+
+            .custom-prev {
+                right: 60px; // Cách nút next một khoảng
+            }
+
+            .custom-next {
+                right: 20px; // Đặt ở góc phải
+            }
+
+            .slick-prev,
+            .slick-next {
+                display: none !important; // Ẩn nút mặc định của slick
+            }
+
+            .section-customize {
+                .bg-image {
+                    width: 100%;
+                    height: 120px;
+                }
+
+                .section-content {
+                    padding: 10px;
+                    font-size: 14px;
+                    font-weight: 500;
+                    color: #1A1A1A;
+                    text-align: left;
+                    overflow: hidden;
+                    display: -webkit-box;
+                    -webkit-line-clamp: 2;
+                    -webkit-box-orient: vertical;
+                    overflow: hidden;
+
+                    line-clamp: 2;
+                    display: -webkit-box;
+                    overflow: hidden;
+                }
+            }
+        }
+    }
+
+}

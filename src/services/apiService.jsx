@@ -1,5 +1,15 @@
 import axios from "../utils/axios.jsx";
 
+// register
+const postRegister = (userEmail, userPassword, userFirstName, userLastName) => {
+    return axios.post(`/api/register`, {
+        email: userEmail,
+        password: userPassword,
+        firstName: userFirstName,
+        lastName: userLastName,
+    })
+}
+
 // login
 const postLogin = (email, password) => {
     return axios.post(`/api/login`, {
@@ -42,4 +52,4 @@ const deleteUser = (userId) => {
     return axios.delete(`/api/delete-user`, { data: { id: userId } })
 }
 
-export { postLogin, getAllUsers, postCreateNewUser, putUpdateUser, deleteUser }
+export { postLogin, getAllUsers, postCreateNewUser, putUpdateUser, deleteUser, postRegister }

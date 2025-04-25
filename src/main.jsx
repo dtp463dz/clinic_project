@@ -12,6 +12,8 @@ import {
 } from "react-router-dom";
 
 import Layout from './Layout.jsx';
+import 'nprogress/nprogress.css'; // thư viện dùng cho loading bar
+
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>

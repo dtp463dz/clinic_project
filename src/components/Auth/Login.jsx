@@ -6,6 +6,8 @@ import { postLogin } from '../../services/apiService';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { useDispatch } from 'react-redux'; // tương tự như navigate
 import { doLogin } from '../../redux/action/userAction';
+import { FaSpinner } from "react-icons/fa"; // icon load spinner
+
 
 const Login = (props) => {
     const [email, setEmail] = useState("");
@@ -14,6 +16,7 @@ const Login = (props) => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const [isShowPassword, setIsShowPassword] = useState(false); // false la dong
+    const [isLoading, setIsLoading] = useState(false);
 
     const isValidateEmail = (email) => {
         const re =
@@ -34,7 +37,7 @@ const Login = (props) => {
             toast.error("Mật khẩu phải có ít nhất 6 ký tự.");
             return;
         }
-
+        setIsLoading(true); // trước call api thì set bằng true
         // submit api
         try {
             let data = await postLogin(email, password);
@@ -42,10 +45,12 @@ const Login = (props) => {
             if (data && data.errCode === 0) {
                 dispatch(doLogin(data)) // user action 
                 toast.success(data.message);
+                setIsLoading(false); // sau khi call api thì false
                 navigate('/');
             }
             if (data && +data.errCode !== 0) {
                 toast.error(data.message);
+                setIsLoading(false);
             }
         } catch (error) {
             toast.error("Lỗi kết nối đến server.");
@@ -97,7 +102,12 @@ const Login = (props) => {
                     <button
                         className="btn-submit"
                         onClick={() => handleLogin()}
-                    >Login</button>
+                        disabled={isLoading}
+
+                    >
+                        {isLoading === true && <FaSpinner className='loader-icon' />}
+                        <span>Login</span>
+                    </button>
                 </div>
             </div>
         </div>

@@ -1,6 +1,13 @@
 import axios from 'axios';
 import _ from 'lodash';
 import config from './config.jsx';
+import NProgress from 'nprogress';
+
+// custom NProgress (loading bar)
+NProgress.configure({
+    showSpinner: false,
+    trickleSpeed: 100,
+})
 
 const instance = axios.create({
     // baseURL: process.env.REACT_APP_BACKEND_URL,
@@ -23,9 +30,20 @@ export const isSuccessStatusCode = (s) => {
     const statusType = typeof s;
     return (statusType === 'number' && s === 0) || (statusType === 'string' && s.toUpperCase() === 'OK');
 };
-
+// Thêm yêu cầu chặn để bắt đầu NProgress
+instance.interceptors.request.use(
+    (config) => {
+        NProgress.start();
+        return config;
+    },
+    (error) => {
+        NProgress.done();
+        return Promise.reject(error);
+    }
+);
 instance.interceptors.response.use(
     (response) => {
+        NProgress.done();
         // Thrown error for request with OK status code
         const { data } = response;
         if (data.hasOwnProperty('s') && !isSuccessStatusCode(data['s']) && data.hasOwnProperty('errmsg')) {
@@ -43,6 +61,7 @@ instance.interceptors.response.use(
         return response.data;
     },
     (error) => {
+        NProgress.done();
         const { response } = error;
         if (response == null) {
             return Promise.reject(error);

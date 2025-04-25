@@ -7,12 +7,12 @@ const INITIAL_STATE = {
     account: {
         // access_token: '',
         // refresh_token: '',
-        username: '',
+        // username: '',
         email: '',
         // image: '',
-        role: ''
+        roleId: ''
     },
-    isAuthenticated: false
+    isAuthenticated: false // biến xem người dùng đã đăng nhập chưa
 };
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -22,13 +22,14 @@ const userReducer = (state = INITIAL_STATE, action) => {
                 // nạp vào redux
                 ...state,
                 account: {
-                    access_token: action?.payload?.DT?.access_token,
-                    refresh_token: action?.payload?.DT?.refresh_token,
-                    username: action?.payload?.DT?.username,
-                    image: action?.payload?.DT?.image,
-                    role: action?.payload?.DT?.role
+                    //  access_token: action?.payload?.DT?.access_token,
+                    //    refresh_token: action?.payload?.DT?.refresh_token,
+                    // username: action?.payload?.DT?.username,
+                    // image: action?.payload?.DT?.image,
+                    email: action?.payload?.user?.email,
+                    roleId: action?.payload?.user?.roleId,
                 },
-                isAuthenticated: true
+                isAuthenticated: true // đã đăng nhập
             };
         case DECREMENT:
             return {

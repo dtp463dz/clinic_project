@@ -4,13 +4,15 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { postLogin } from '../../services/apiService';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
+import { useDispatch } from 'react-redux'; // tương tự như navigate
+import { doLogin } from '../../redux/action/userAction';
 
 const Login = (props) => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
     const navigate = useNavigate();
-
+    const dispatch = useDispatch();
     const [isShowPassword, setIsShowPassword] = useState(false); // false la dong
 
     const isValidateEmail = (email) => {
@@ -32,12 +34,13 @@ const Login = (props) => {
             toast.error("Mật khẩu phải có ít nhất 6 ký tự.");
             return;
         }
-        // submit api
 
+        // submit api
         try {
             let data = await postLogin(email, password);
             console.log('check data login: ', data);
             if (data && data.errCode === 0) {
+                dispatch(doLogin(data)) // user action 
                 toast.success(data.message);
                 navigate('/');
             }

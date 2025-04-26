@@ -10,7 +10,9 @@ const INITIAL_STATE = {
         // username: '',
         email: '',
         // image: '',
-        roleId: ''
+        roleId: '',
+        firstName: '',
+        lastName: '',
     },
     isAuthenticated: false // biến xem người dùng đã đăng nhập chưa
 };
@@ -28,6 +30,8 @@ const userReducer = (state = INITIAL_STATE, action) => {
                     // image: action?.payload?.DT?.image,
                     email: action?.payload?.user?.email,
                     roleId: action?.payload?.user?.roleId,
+                    firstName: action?.payload?.user?.firstName,
+                    lastName: action?.payload?.user?.lastName,
                 },
                 isAuthenticated: true // đã đăng nhập
             };

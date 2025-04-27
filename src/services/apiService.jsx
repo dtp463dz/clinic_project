@@ -53,4 +53,14 @@ const deleteUser = (userId) => {
     return axios.delete(`/api/delete-user`, { data: { id: userId } })
 }
 
-export { postLogin, getAllUsers, postCreateNewUser, putUpdateUser, deleteUser, postRegister }
+// all code (có các type: gender role ...)
+const getAllCodeService = (inputType) => {
+    return axios.get(`/api/allcode/?type=${inputType}`)
+
+}
+
+export {
+    postLogin, getAllUsers, postCreateNewUser,
+    putUpdateUser, deleteUser, postRegister,
+    getAllCodeService,
+}

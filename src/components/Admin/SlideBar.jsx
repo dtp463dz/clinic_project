@@ -52,9 +52,12 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                         Dashboard
                     </MenuItem>
 
-                    <SubMenu defaultOpen label="Người Dùng" icon={<FaUser />}>
+                    <SubMenu label="Người Dùng" icon={<FaUser />}>
                         <MenuItem component={<Link to='/admin/manage-users' />}>
                             Quản Lý Người Dùng
+                        </MenuItem>
+                        <MenuItem component={<Link to='/admin/manage-userRedux' />}>
+                            Quản Lý User Redux
                         </MenuItem>
                         <MenuItem>
                             Quản Lý Bác Sĩ
@@ -64,19 +67,19 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                         </MenuItem>
 
                     </SubMenu>
-                    <SubMenu defaultOpen label="Phòng Khám" icon={<FaClinicMedical />}>
+                    <SubMenu label="Phòng Khám" icon={<FaClinicMedical />}>
                         <MenuItem component={<Link to='/admin/manage-clinic' />}>
                             Quản Lý Phòng Khám
                         </MenuItem>
 
                     </SubMenu>
-                    <SubMenu defaultOpen label="Chuyên Khoa" icon={<MdFolderSpecial />}>
+                    <SubMenu label="Chuyên Khoa" icon={<MdFolderSpecial />}>
                         <MenuItem component={<Link to='/admin/manage-specialty' />}>
                             Quản Lý Chuyên Khoa
                         </MenuItem>
 
                     </SubMenu>
-                    <SubMenu defaultOpen label="Cẩm Nang" icon={<FaBookMedical />}>
+                    <SubMenu label="Cẩm Nang" icon={<FaBookMedical />}>
                         <MenuItem component={<Link to='/admin/manage-handbook' />}>
                             Quản Lý Cẩm Nang
                         </MenuItem>

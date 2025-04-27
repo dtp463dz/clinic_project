@@ -14,6 +14,9 @@ import NotFound from './components/Notice/NotFound.jsx';
 import ManageUser from './components/Admin/Content/ManageUser.jsx';
 import Dashboard from './components/Admin/Content/DashBoard.jsx';
 import HomePage from './components/HomePage/HomePage.jsx';
+import ManageClinic from './components/Admin/Content/ManageClinic.jsx';
+import ManageSpecialty from './components/Admin/Content/ManageSpecialty.jsx';
+import ManageHandBook from './components/Admin/Content/ManageHandBook.jsx';
 
 const Layout = (props) => {
     return (
@@ -28,6 +31,9 @@ const Layout = (props) => {
                 <Route path="admin" element={<Admin />}>
                     <Route index element={<Dashboard />} />
                     <Route path="manage-users" element={<ManageUser />} />
+                    <Route path="manage-clinic" element={<ManageClinic />} />
+                    <Route path="manage-specialty" element={<ManageSpecialty />} />
+                    <Route path="manage-handbook" element={<ManageHandBook />} />
                 </Route>
 
                 <Route path='/login' element={<Login />} />

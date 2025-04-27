@@ -47,7 +47,9 @@ const Header = () => {
                             </>
                             :
                             <>
-                                <span className="nav-link">Hello {account.firstName}</span>
+                                <span className="nav-link">
+                                    Hello {account && account.firstName ? account.firstName : ''}
+                                </span>
                                 <NavDropdown title="Settings" id="basic-nav-dropdown">
                                     <NavDropdown.Item >Log In</NavDropdown.Item>
                                     <NavDropdown.Item onClick={() => handleLogout()}>

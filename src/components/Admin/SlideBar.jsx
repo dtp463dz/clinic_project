@@ -1,7 +1,7 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
-import { FaTachometerAlt, FaGem, FaGithub } from 'react-icons/fa';
+import { FaGem, FaGithub, FaUser, FaClinicMedical, FaBookMedical } from 'react-icons/fa';
 import './SideBar.scss';
-import { MdDashboard } from "react-icons/md";
+import { MdDashboard, MdFolderSpecial } from "react-icons/md";
 import { DiReact } from "react-icons/di";
 import { Link } from 'react-router-dom';
 
@@ -52,9 +52,33 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                         Dashboard
                     </MenuItem>
 
-                    <SubMenu defaultOpen label="Manage" icon={<FaGem />}>
+                    <SubMenu defaultOpen label="Người Dùng" icon={<FaUser />}>
                         <MenuItem component={<Link to='/admin/manage-users' />}>
-                            Quản Lý Users
+                            Quản Lý Người Dùng
+                        </MenuItem>
+                        <MenuItem>
+                            Quản Lý Bác Sĩ
+                        </MenuItem>
+                        <MenuItem>
+                            Quản Lý Admin
+                        </MenuItem>
+
+                    </SubMenu>
+                    <SubMenu defaultOpen label="Phòng Khám" icon={<FaClinicMedical />}>
+                        <MenuItem component={<Link to='/admin/manage-clinic' />}>
+                            Quản Lý Phòng Khám
+                        </MenuItem>
+
+                    </SubMenu>
+                    <SubMenu defaultOpen label="Chuyên Khoa" icon={<MdFolderSpecial />}>
+                        <MenuItem component={<Link to='/admin/manage-specialty' />}>
+                            Quản Lý Chuyên Khoa
+                        </MenuItem>
+
+                    </SubMenu>
+                    <SubMenu defaultOpen label="Cẩm Nang" icon={<FaBookMedical />}>
+                        <MenuItem component={<Link to='/admin/manage-handbook' />}>
+                            Quản Lý Cẩm Nang
                         </MenuItem>
                     </SubMenu>
                 </Menu>

@@ -1,4 +1,5 @@
 import { FcPlus } from "react-icons/fc";
+import './ManageUserRedux.scss'
 import { getAllCodeService } from "../../../services/apiService";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'; // tương tự như navigate
@@ -10,6 +11,10 @@ const ManageUserRedux = () => {
     const roleArr = useSelector((state) => state.admin.roles)
     const isLoadingGender = useSelector((state) => state.admin.isLoadingGender)
     const dispatch = useDispatch();
+
+    // preview image
+    const [image, setImage] = useState("");
+    const [previewImage, setPreviewImage] = useState("");
     // componentDidMount
     useEffect(() => {
         dispatch(fetchGenderStart());
@@ -17,6 +22,17 @@ const ManageUserRedux = () => {
         dispatch(fetchRoleIdStart());
 
     }, [dispatch]);
+
+    // upload hinh anh
+    const handleUploadImage = (event) => {
+        if (event.target && event.target.files && event.target.files[0]) {
+            // hien thi anh dung url.createObjectUrl se chuyen sang blob
+            setPreviewImage(URL.createObjectURL(event.target.files[0]));
+            setImage(event.target.files[0])
+        } else {
+
+        }
+    }
 
     return (
         <div className="user-redux-container">
@@ -105,14 +121,19 @@ const ManageUserRedux = () => {
                     </div>
                     <div className='form-group col-md-12 px-3'>
                         <label className="form-label label-upload" htmlFor='labelUpload'>
-                            <FcPlus />Upload File Image
+                            <FcPlus style={{ cursor: 'pointer' }} />Upload File Image
                         </label>
                         <input
                             type="file"
-                            hidden
+                            id="labelUpload" hidden
+                            onChange={(event) => handleUploadImage(event)}
                         />
-                        <div className='col-md-12 img-preview'>
-                            <span>Preview Image</span>
+                        <div className='col-md-12 preview-image'>
+                            {previewImage ?
+                                <img src={previewImage} />
+                                :
+                                <span>Preview Image</span>
+                            }
                         </div>
                     </div>
 
@@ -121,11 +142,7 @@ const ManageUserRedux = () => {
                     </div>
 
                 </div>
-
             </div>
-
-
-
         </div>
     )
 }

@@ -1,9 +1,11 @@
 import { FcPlus } from "react-icons/fc";
 import './ManageUserRedux.scss'
-import { getAllCodeService } from "../../../services/apiService";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'; // tương tự như navigate
 import { fetchGenderStart, fetchPositionStart, fetchRoleIdStart } from "../../../redux/action/adminAction";
+import Lightbox from "yet-another-react-lightbox";
+import "yet-another-react-lightbox/styles.css";
+
 
 const ManageUserRedux = () => {
     const genderArr = useSelector((state) => state.admin.genders)
@@ -15,6 +17,7 @@ const ManageUserRedux = () => {
     // preview image
     const [image, setImage] = useState("");
     const [previewImage, setPreviewImage] = useState("");
+    const [lightBoxOpen, setLightBoxOpen] = useState(false);
     // componentDidMount
     useEffect(() => {
         dispatch(fetchGenderStart());
@@ -130,7 +133,19 @@ const ManageUserRedux = () => {
                         />
                         <div className='col-md-12 preview-image'>
                             {previewImage ?
-                                <img src={previewImage} />
+                                <>
+                                    <img
+                                        src={previewImage}
+                                        alt="Preview"
+                                        style={{ cursor: "pointer", maxWidth: "200px", maxHeight: "200px" }}
+                                        onClick={() => setLightBoxOpen(true)}
+                                    />
+                                    <Lightbox
+                                        open={lightBoxOpen}
+                                        close={() => setLightBoxOpen(false)}
+                                        slides={[{ src: previewImage }]}
+                                    />
+                                </>
                                 :
                                 <span>Preview Image</span>
                             }

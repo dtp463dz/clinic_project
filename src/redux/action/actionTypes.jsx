@@ -1,0 +1,11 @@
+const actionTypes = Object.freeze({
+    FETCH_USER_LOGIN_SUCCES: 'FETCH_USER_LOGIN_SUCCES',
+
+
+    // admin
+    FETCH_GENDER_START: 'FETCH_GENDER_START',
+    FETCH_GENDER_SUCCESS: 'FETCH_GENDER_SUCCESS',
+    FETCH_GENDER_FAIDED: 'FETCH_GENDER_FAIDED',
+})
+
+export default actionTypes;

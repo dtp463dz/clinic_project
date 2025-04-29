@@ -1,23 +1,18 @@
 import { FcPlus } from "react-icons/fc";
 import { getAllCodeService } from "../../../services/apiService";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from 'react-redux'; // tương tự như navigate
+import { fetchGenderStart, fetchGenderFaided, fetchGenderSuccess } from "../../../redux/action/adminAction";
 
 const ManageUserRedux = () => {
-    const [genderArr, setGenderArr] = useState('');
+    const genderArr = useSelector((state) => state.admin.genders)
+    const dispatch = useDispatch();
     // componentDidMount
     useEffect(() => {
-        fetchListType();
-    }, []);
+        dispatch(fetchGenderStart());
+    }, [dispatch]);
 
-    // call api allcode(type)
-    const fetchListType = async () => {
-        let res = await getAllCodeService('gender');
-        if (res && res.errCode === 0) {
-            setGenderArr(res.data);
-        }
-        console.log('check res: ', res);
 
-    }
     return (
 
         <div className="user-redux-container">
@@ -60,13 +55,15 @@ const ManageUserRedux = () => {
                         <div className="form-group col-2 px-3">
                             <label >Gender</label>
                             <select className="form-control">
-                                {genderArr && genderArr.length > 0 &&
-                                    genderArr.map((item, index) => {
-                                        return (
-                                            <option key={index}>{item.valueEn}</option>
-                                        )
-                                    })
-                                }
+                                {genderArr && genderArr.length > 0 ? (
+                                    genderArr.map((item, index) => (
+                                        <option key={index} value={item.keyMap}>
+                                            {item.valueEn}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <option>No genders available</option>
+                                )}
                             </select>
                         </div>
                         <div className="form-group col-2 px-3">

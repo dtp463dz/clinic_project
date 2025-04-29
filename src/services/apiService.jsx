@@ -37,6 +37,13 @@ const postCreateNewUser = (email, password, firstName, lastName, roleId, image) 
 
 };
 
+// create user service (để sử dụng trong redux)
+const createNewUserService = (data) => {
+    return axios.post('/api/create-new-user', {
+        ...data,
+    });
+};
+
 // update user
 const putUpdateUser = (id, firstName, lastName, roleId, image) => {
     return axios.put('/api/edit-user', {
@@ -62,5 +69,5 @@ const getAllCodeService = (inputType) => {
 export {
     postLogin, getAllUsers, postCreateNewUser,
     putUpdateUser, deleteUser, postRegister,
-    getAllCodeService,
+    getAllCodeService, createNewUserService,
 }

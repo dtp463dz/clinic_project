@@ -1,5 +1,5 @@
 import actionTypes from "./actionTypes";
-import { getAllCodeService } from "../../services/apiService";
+import { getAllCodeService, createNewUserService } from "../../services/apiService";
 
 // export const fetchGenderStart = () => {
 //     return {
@@ -19,10 +19,10 @@ export const fetchGenderStart = () => {
             if (res && res.errCode === 0) {
                 dispatch(fetchGenderSuccess(res.data));
             } else {
-                dispatch(fetchGenderFaided());
+                dispatch(fetchGenderFailded());
             }
         } catch (e) {
-            dispatch(fetchGenderFaided());
+            dispatch(fetchGenderFailded());
             console.log('fetchGenderStart error', e);
         }
     }
@@ -35,9 +35,9 @@ export const fetchGenderSuccess = (genderData) => {
         data: genderData
     };
 };
-export const fetchGenderFaided = () => {
+export const fetchGenderFailded = () => {
     return {
-        type: actionTypes.FETCH_GENDER_FAIDED,
+        type: actionTypes.FETCH_GENDER_FAILDED,
     };
 };
 // position
@@ -49,10 +49,10 @@ export const fetchPositionStart = () => {
             if (res && res.errCode === 0) {
                 dispatch(fetchPositionSuccess(res.data));
             } else {
-                dispatch(fetchPositionFaided());
+                dispatch(fetchPositionFailded());
             }
         } catch (e) {
-            dispatch(fetchPositionFaided());
+            dispatch(fetchPositionFailded());
             console.log('fetchPositionStart error', e);
         }
     }
@@ -64,9 +64,9 @@ export const fetchPositionSuccess = (positionData) => {
         data: positionData
     };
 };
-export const fetchPositionFaided = () => {
+export const fetchPositionFailded = () => {
     return {
-        type: actionTypes.FETCH_POSOTION_FAIDED,
+        type: actionTypes.FETCH_POSOTION_FAILDED,
     };
 };
 
@@ -80,10 +80,10 @@ export const fetchRoleIdStart = () => {
             if (res && res.errCode === 0) {
                 dispatch(fetchRoleIdSuccess(res.data));
             } else {
-                dispatch(fetchRoleIdFaided());
+                dispatch(fetchRoleIdFailded());
             }
         } catch (e) {
-            dispatch(fetchRoleIdFaided());
+            dispatch(fetchRoleIdFailded());
             console.log('fetchRoleStart error', e);
         }
     }
@@ -95,10 +95,39 @@ export const fetchRoleIdSuccess = (roleIdData) => {
         data: roleIdData
     };
 };
-export const fetchRoleIdFaided = () => {
+export const fetchRoleIdFailded = () => {
     return {
-        type: actionTypes.FETCH_ROLEID_FAIDED,
+        type: actionTypes.FETCH_ROLEID_FAILDED,
     };
 };
+
+// create user
+export const createNewUser = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            // call create user
+            let res = await createNewUserService(data)
+            console.log('check create user redux: ', res);
+            if (res && res.errCode === 0) {
+                dispatch(saveUserSuccess());
+            } else {
+                dispatch(saveUserFailded());
+            }
+        } catch (e) {
+            dispatch(saveUserFailded());
+            console.log('saveUserFailded error', e);
+        }
+    }
+}
+export const saveUserSuccess = () => {
+    return {
+        type: actionTypes.CREATE_USER_SUCCESS
+    }
+}
+export const saveUserFailded = () => {
+    return {
+        type: actionTypes.CREATE_USER_FAILDED
+    }
+}
 
 

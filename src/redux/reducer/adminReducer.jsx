@@ -1,6 +1,7 @@
 import actionTypes from "../action/actionTypes";
 
 const INITIAL_STATE = {
+    isLoadingGender: false,
     genders: [],
     roles: [],
     positions: [],
@@ -8,22 +9,44 @@ const INITIAL_STATE = {
 const adminReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
         case actionTypes.FETCH_GENDER_START:
-            console.log('check action start: ', action);
+            let copyState = { ...state };
+            copyState.isLoadingGender = true;
             return {
                 // nạp vào redux
-                ...state,
+                ...copyState,
 
-            };
+            }
         case actionTypes.FETCH_GENDER_SUCCESS:
-            let copyState = { ...state };
-            copyState.genders = action.data;
-            console.log('check action succes: ', copyState);
+            state.genders = action.data;
+            state.isLoadingGender = false;
 
             return {
-                ...copyState,
-            };
+                ...state,
+            }
         case actionTypes.FETCH_GENDER_FAIDED:
-            console.log('check action faided: ', action);
+            state.isLoadingGender = false;
+            state.genders = [];
+            return {
+                ...state,
+            }
+
+        case actionTypes.FETCH_POSITION_SUCCESS:
+            state.positions = action.data;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_POSOTION_FAIDED:
+            state.positions = [];
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ROLEID_SUCCESS:
+            state.roles = action.data;
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_ROLEID_FAIDED:
+            state.roles = [];
             return {
                 ...state,
             }

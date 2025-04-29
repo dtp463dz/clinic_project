@@ -2,25 +2,32 @@ import { FcPlus } from "react-icons/fc";
 import { getAllCodeService } from "../../../services/apiService";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'; // tương tự như navigate
-import { fetchGenderStart, fetchGenderFaided, fetchGenderSuccess } from "../../../redux/action/adminAction";
+import { fetchGenderStart, fetchPositionStart, fetchRoleIdStart } from "../../../redux/action/adminAction";
 
 const ManageUserRedux = () => {
     const genderArr = useSelector((state) => state.admin.genders)
+    const positionArr = useSelector((state) => state.admin.positions)
+    const roleArr = useSelector((state) => state.admin.roles)
+    const isLoadingGender = useSelector((state) => state.admin.isLoadingGender)
     const dispatch = useDispatch();
     // componentDidMount
     useEffect(() => {
         dispatch(fetchGenderStart());
+        dispatch(fetchPositionStart());
+        dispatch(fetchRoleIdStart());
+
     }, [dispatch]);
 
-
     return (
-
         <div className="user-redux-container">
             <div className="title h3 px-4 py-2">
                 User Redux
             </div>
             <div className="user-redux-body">
                 <div className="container">
+                    <div className="col-5 px-3">
+                        {isLoadingGender === true ? 'Loading gender' : ''}
+                    </div>
                     <div className="form-row d-flex">
                         <div className="form-group col-5 px-3">
                             <label >Email</label>
@@ -69,15 +76,29 @@ const ManageUserRedux = () => {
                         <div className="form-group col-2 px-3">
                             <label >Position</label>
                             <select className="form-control">
-                                <option >Choose...</option>
-                                <option>...</option>
+                                {positionArr && positionArr.length > 0 ? (
+                                    positionArr.map((item, index) => (
+                                        <option key={index} value={item.keyMap}>
+                                            {item.valueEn}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <option>No position available</option>
+                                )}
                             </select>
                         </div>
                         <div className="form-group col-2 px-3">
                             <label >RoleId</label>
                             <select className="form-control">
-                                <option >Choose...</option>
-                                <option>...</option>
+                                {roleArr && roleArr.length > 0 ? (
+                                    roleArr.map((item, index) => (
+                                        <option key={index} value={item.keyMap}>
+                                            {item.valueEn}
+                                        </option>
+                                    ))
+                                ) : (
+                                    <option>No roleId available</option>
+                                )}
                             </select>
                         </div>
 

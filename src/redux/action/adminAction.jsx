@@ -7,9 +7,13 @@ import { getAllCodeService } from "../../services/apiService";
 //     };
 // };
 
+// gender
 export const fetchGenderStart = () => {
     return async (dispatch, getState) => {
         try {
+            dispatch({
+                type: actionTypes.FETCH_GENDER_START
+            })
             // call api allcode
             let res = await getAllCodeService("gender");
             if (res && res.errCode === 0) {
@@ -25,7 +29,6 @@ export const fetchGenderStart = () => {
 
 };
 
-
 export const fetchGenderSuccess = (genderData) => {
     return {
         type: actionTypes.FETCH_GENDER_SUCCESS,
@@ -37,4 +40,65 @@ export const fetchGenderFaided = () => {
         type: actionTypes.FETCH_GENDER_FAIDED,
     };
 };
+// position
+export const fetchPositionStart = () => {
+    return async (dispatch, getState) => {
+        try {
+            // call api allcode
+            let res = await getAllCodeService("position");
+            if (res && res.errCode === 0) {
+                dispatch(fetchPositionSuccess(res.data));
+            } else {
+                dispatch(fetchPositionFaided());
+            }
+        } catch (e) {
+            dispatch(fetchPositionFaided());
+            console.log('fetchPositionStart error', e);
+        }
+    }
+
+};
+export const fetchPositionSuccess = (positionData) => {
+    return {
+        type: actionTypes.FETCH_POSITION_SUCCESS,
+        data: positionData
+    };
+};
+export const fetchPositionFaided = () => {
+    return {
+        type: actionTypes.FETCH_POSOTION_FAIDED,
+    };
+};
+
+// role id 
+export const fetchRoleIdStart = () => {
+    return async (dispatch, getState) => {
+        try {
+
+            // call api allcode
+            let res = await getAllCodeService("role");
+            if (res && res.errCode === 0) {
+                dispatch(fetchRoleIdSuccess(res.data));
+            } else {
+                dispatch(fetchRoleIdFaided());
+            }
+        } catch (e) {
+            dispatch(fetchRoleIdFaided());
+            console.log('fetchRoleStart error', e);
+        }
+    }
+
+};
+export const fetchRoleIdSuccess = (roleIdData) => {
+    return {
+        type: actionTypes.FETCH_ROLEID_SUCCESS,
+        data: roleIdData
+    };
+};
+export const fetchRoleIdFaided = () => {
+    return {
+        type: actionTypes.FETCH_ROLEID_FAIDED,
+    };
+};
+
 

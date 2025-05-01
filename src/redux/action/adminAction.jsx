@@ -1,5 +1,5 @@
 import actionTypes from "./actionTypes";
-import { getAllCodeService, createNewUserService, getAllUsers, deleteUser } from "../../services/apiService";
+import { getAllCodeService, createNewUserService, getAllUsers, deleteUser, editUserService } from "../../services/apiService";
 import { toast } from 'react-toastify';
 
 // export const fetchGenderStart = () => {
@@ -161,7 +161,39 @@ export const deleteUserFailded = () => {
         type: actionTypes.DELETE_USER_FAILDED
     }
 }
-// get all user
+
+// update user
+export const updateUser = (data) => {
+    return async (dispatch, getState) => {
+        try {
+            // call create user
+            let res = await editUserService(data)
+            if (res && res.errCode === 0) {
+                dispatch(updateUserSuccess());
+                dispatch(fetchAllUsersStart); // cập nhật lại table sau khi update
+            } else {
+                toast.error('Update the User error');
+                dispatch(updateUserFailded());
+            }
+        } catch (e) {
+            toast.error('Update the User error');
+            dispatch(updateUserFailded());
+            console.log('updateUserFailded error', e);
+        }
+    }
+}
+export const updateUserSuccess = () => {
+    return {
+        type: actionTypes.UPDATE_USER_SUCCESS
+    }
+}
+export const updateUserFailded = () => {
+    return {
+        type: actionTypes.UPDATE_USER_FAILDED
+    }
+}
+
+// get all list user
 export const fetchAllUsersStart = () => {
     return async (dispatch, getState) => {
         try {

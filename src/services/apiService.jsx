@@ -55,6 +55,11 @@ const putUpdateUser = (id, firstName, lastName, roleId, image) => {
     });
 };
 
+// update user redux
+const editUserService = (inputData) => {
+    return axios.put('/api/edit-user', inputData)
+}
+
 // delete user
 const deleteUser = (userId) => {
     return axios.delete(`/api/delete-user`, { data: { id: userId } })
@@ -69,5 +74,5 @@ const getAllCodeService = (inputType) => {
 export {
     postLogin, getAllUsers, postCreateNewUser,
     putUpdateUser, deleteUser, postRegister,
-    getAllCodeService, createNewUserService,
+    getAllCodeService, createNewUserService, editUserService
 }

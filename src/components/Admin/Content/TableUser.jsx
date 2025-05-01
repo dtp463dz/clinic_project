@@ -24,9 +24,9 @@ const TableUser = (props) => {
                             // console.log('check item: ', item)
                             return (
                                 <tr key={`table-users-${index}`}>
-                                    <td>{item.id}</td>
+                                    <td>{index + 1}</td>
                                     <td>{item.email}</td>
-                                    <td>{item.firstName} {item.lastName}</td>
+                                    <td>{item.firstName}</td>
                                     <td>{item.lastName}</td>
                                     <td>{item.roleId}</td>
                                     <td>

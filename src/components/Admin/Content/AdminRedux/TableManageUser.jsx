@@ -6,18 +6,28 @@ import ModalDeleteUserRedux from "./ModalDeleteUserRedux";
 
 const TableManageUser = (props) => {
     const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
+    const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
     const listUsers = useSelector((state) => state.admin.users)
+
     const [userDelete, setUserDelete] = useState({});
+    const [userUpdate, setUserUpdate] = useState({});
+
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchAllUsersStart());
         //    dispatch((id) => deleteNewUser(id)); // delete
     }, [dispatch])
 
+    // btn delte user
     const handleDeleteUser = (user) => {
-        console.log('check delete user: ', user)
+        // console.log('check delete user: ', user)
         setShowModalDeleteUser(true);
         setUserDelete(user);
+    }
+    // btn edit delete user
+    const handleUpdateUser = (user) => {
+        // console.log('check edit user: ', user)
+        props.handleEditUserFromParent(user)
     }
     return (
         <>
@@ -40,7 +50,7 @@ const TableManageUser = (props) => {
                         listUsers.map((item, index) => {
                             return (
                                 <tr key={`table-users-${index}`}>
-                                    <th>{item.id}</th>
+                                    <th>{index + 1}</th>
                                     <td>{item.email}</td>
                                     <td>{item.firstName}</td>
                                     <td>{item.lastName}</td>
@@ -50,7 +60,10 @@ const TableManageUser = (props) => {
                                     <td>{item.roleId}</td>
                                     <td>
                                         <button className="btn btn-secondary">Xem</button>
-                                        <button className="btn btn-warning mx-3">Cập nhật</button>
+                                        <button
+                                            className="btn btn-warning mx-3"
+                                            onClick={() => handleUpdateUser(item)}
+                                        >Cập nhật</button>
                                         <button
                                             className="btn btn-danger"
                                             onClick={() => handleDeleteUser(item)}

@@ -2,7 +2,7 @@ import { FcPlus } from "react-icons/fc";
 import './ManageUserRedux.scss'
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'; // tương tự như navigate
-import { fetchGenderStart, fetchPositionStart, fetchRoleIdStart, createNewUser, fetchAllUsersStart } from "../../../../redux/action/adminAction";
+import { fetchGenderStart, fetchPositionStart, fetchRoleIdStart, createNewUser, fetchAllUsersStart, updateUser } from "../../../../redux/action/adminAction";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import TableManageUser from "./TableManageUser";
@@ -30,7 +30,8 @@ const ManageUserRedux = (props) => {
     const [lightBoxOpen, setLightBoxOpen] = useState(false);
     // hide/show form create user
     const [isShowForm, setIsShowForm] = useState(false);
-
+    const [isEditMode, setIsEditMode] = useState(false); // edit mode
+    const [userEditId, setUserEditId] = useState({});
     // componentDidMount
     useEffect(() => {
         dispatch(fetchGenderStart());
@@ -103,45 +104,78 @@ const ManageUserRedux = (props) => {
             alert("Lỗi:\n" + errors.join("\n"));
             return;
         }
+        const userData = {
+            email,
+            password: isEditMode ? undefined : password,
+            firstName,
+            lastName,
+            address,
+            phonenumber: phoneNumber,
+            gender,
+            roleId: role,
+            positionId: position,
+            image,
+        };
 
-        // fire redux action
-        dispatch(
-            createNewUser({
-                email,
-                password,
-                firstName,
-                lastName,
-                address,
-                phonenumber: phoneNumber,
-                gender,
-                roleId: role,
-                positionId: position,
-            })
-        );
+        if (!isEditMode) {
+            // fire redux action create
+            dispatch(
+                createNewUser({ userData })
+            );
+            toast.success('Create User Success')
+        } else {
+            // fire redux action update
+            dispatch(updateUser({ id: userEditId, ...userData }))
+            toast.success('Update User Success')
+        }
+
         // khi nhấn btn save thì table được cập nhật và form trở về trống
         setTimeout(() => {
             dispatch(fetchAllUsersStart());
-            toast.success('Create User Success')
-            // Reset form fields
-            setEmail("");
-            setPassword("");
-            setFirstName("");
-            setLastName("");
-            setPhoneNumber("");
-            setAddress("");
-            setGender(genderArr && genderArr.length > 0 ? genderArr[0].key : "");
-            setPosition(positionArr && positionArr.length > 0 ? positionArr[0].key : "");
-            setRole(roleArr && roleArr.length > 0 ? roleArr[0].key : "");
-            setImage("");
-            setPreviewImage("");
-            // hide form
-            setIsShowForm(!isShowForm)
+            resetForm();
         }, 1000)
+    }
+    // reset form
+    const resetForm = () => {
+        // Reset form fields
+        setEmail("");
+        setPassword("");
+        setFirstName("");
+        setLastName("");
+        setPhoneNumber("");
+        setAddress("");
+        setGender(genderArr && genderArr.length > 0 ? genderArr[0].key : "");
+        setPosition(positionArr && positionArr.length > 0 ? positionArr[0].key : "");
+        setRole(roleArr && roleArr.length > 0 ? roleArr[0].key : "");
+        setImage("");
+        setPreviewImage("");
+        // hide form
+        setIsShowForm(!isShowForm)
+        setIsEditMode(false);
+        setUserEditId('');
     }
 
     // show hide form
     const btnShowForm = () => {
         setIsShowForm(!isShowForm)
+    }
+    // view form edit user
+    const handleEditUserFromParent = (user) => {
+        console.log('check handle edit user from parent: ', user)
+        setEmail(user.email);
+        setPassword('Hash code');
+        setFirstName(user.firstName);
+        setLastName(user.lastName);
+        setPhoneNumber(user.phonenumber);
+        setAddress(user.address);
+        setGender(user.gender);
+        setPosition(user.positionId);
+        setRole(user.roleId);
+        setImage("");
+        setPreviewImage("");
+        setIsShowForm(true); // open form
+        setIsEditMode(true); // true edit mode 
+        setUserEditId(user.id)
     }
     return (
         <div className="user-redux-container">
@@ -165,6 +199,7 @@ const ManageUserRedux = (props) => {
                                 placeholder="Email"
                                 value={email}
                                 onChange={(event) => setEmail(event.target.value)}
+                                disabled={isEditMode} // no update email in editmode
                             />
                         </div>
                         <div className="form-group col-5">
@@ -175,6 +210,7 @@ const ManageUserRedux = (props) => {
                                 placeholder="Password"
                                 value={password}
                                 onChange={(event) => setPassword(event.target.value)}
+                                disabled={isEditMode} // no update password in editmode 
                             />
                         </div>
                     </div>
@@ -228,6 +264,7 @@ const ManageUserRedux = (props) => {
                             <select
                                 className="form-control"
                                 onChange={(event) => setGender(event.target.value)}
+                                value={gender}
                             >
                                 {genderArr && genderArr.length > 0 ? (
                                     genderArr.map((item, index) => (
@@ -245,6 +282,7 @@ const ManageUserRedux = (props) => {
                             <select
                                 className="form-control"
                                 onChange={(event) => setPosition(event.target.value)}
+                                value={position}
                             >
                                 {positionArr && positionArr.length > 0 ? (
                                     positionArr.map((item, index) => (
@@ -262,6 +300,7 @@ const ManageUserRedux = (props) => {
                             <select
                                 className="form-control"
                                 onChange={(event) => setRole(event.target.value)}
+                                value={role}
                             >
                                 {roleArr && roleArr.length > 0 ? (
                                     roleArr.map((item, index) => (
@@ -309,16 +348,18 @@ const ManageUserRedux = (props) => {
                     <div className="form-group px-3 mt-3">
                         <button
                             type="submit"
-                            className="btn btn-primary"
+                            className={isEditMode ? "btn btn-warning" : "btn btn-primary"}
                             onClick={() => handleSaveUser()}
                         >
-                            Save
+                            {isEditMode ? "Edit" : "Save"}
                         </button>
                     </div>
 
                 </div>
                 <div className="col-12 px-4 py-2">
-                    <TableManageUser />
+                    <TableManageUser
+                        handleEditUserFromParent={handleEditUserFromParent}
+                    />
                 </div>
             </div>
         </div>

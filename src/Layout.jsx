@@ -17,7 +17,7 @@ import HomePage from './components/HomePage/HomePage.jsx';
 import ManageClinic from './components/Admin/Content/ManageClinic.jsx';
 import ManageSpecialty from './components/Admin/Content/ManageSpecialty.jsx';
 import ManageHandBook from './components/Admin/Content/ManageHandBook.jsx';
-import ManageUserRedux from './components/Admin/Content/ManageUserRedux.jsx';
+import ManageUserRedux from './components/Admin/Content/AdminRedux/ManageUserRedux.jsx';
 
 const Layout = (props) => {
     return (

@@ -2,9 +2,10 @@ import { FcPlus } from "react-icons/fc";
 import './ManageUserRedux.scss'
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'; // tương tự như navigate
-import { fetchGenderStart, fetchPositionStart, fetchRoleIdStart, createNewUser } from "../../../redux/action/adminAction";
+import { fetchGenderStart, fetchPositionStart, fetchRoleIdStart, createNewUser } from "../../../../redux/action/adminAction";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
+import TableManageUser from "./TableManageUser";
 
 const ManageUserRedux = (props) => {
     const [email, setEmail] = useState("");
@@ -26,6 +27,10 @@ const ManageUserRedux = (props) => {
     // preview image
     const [previewImage, setPreviewImage] = useState("");
     const [lightBoxOpen, setLightBoxOpen] = useState(false);
+    // hide/show form create user
+    const [isShowForm, setIsShowForm] = useState(true);
+    // table user
+    const [listUser, setListUsers] = useState([]);
     // componentDidMount
     useEffect(() => {
         dispatch(fetchGenderStart());
@@ -112,19 +117,10 @@ const ManageUserRedux = (props) => {
                 positionId: position,
             })
         );
-
-        // console.log("User state:", {
-        //     email,
-        //     password,
-        //     firstName,
-        //     lastName,
-        //     phoneNumber,
-        //     address,
-        //     gender,
-        //     position,
-        //     role,
-        //     image: image ? image.name : "No image", // Chỉ in tên file của image để tránh in object lớn
-        // });
+    }
+    // show hide form
+    const btnShowForm = () => {
+        setIsShowForm(!isShowForm)
     }
     return (
         <div className="user-redux-container">
@@ -132,7 +128,10 @@ const ManageUserRedux = (props) => {
                 User Redux
             </div>
             <div className="user-redux-body">
-                <div className="container">
+                <button className="btn btn-primary mb-3 mx-4" onClick={btnShowForm}>
+                    {isShowForm ? "Ẩn" : "Thêm người dùng"}
+                </button>
+                <div className={`container ${isShowForm ? 'visible' : 'hidden'}`}>
                     <div className="col-5 px-3">
                         {isLoadingGender === true ? 'Loading gender' : ''}
                     </div>
@@ -296,6 +295,9 @@ const ManageUserRedux = (props) => {
                         </button>
                     </div>
 
+                </div>
+                <div className="px-4 py-2">
+                    <TableManageUser />
                 </div>
             </div>
         </div>

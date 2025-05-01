@@ -1,5 +1,19 @@
 .user-redux-body {
     .container {
+        // hide / show form create user
+        transition: max-height 0.5s ease-in-out, opacity 0.3s ease-in-out;
+        overflow: hidden;
+
+        &.visible {
+            max-height: 1000px; // Đủ lớn để chứa toàn bộ form
+            opacity: 1;
+        }
+
+        &.hidden {
+            max-height: 0;
+            opacity: 0;
+        }
+
         .label-upload {
             display: flex;
             align-items: center;

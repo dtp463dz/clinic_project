@@ -2,10 +2,11 @@ import { FcPlus } from "react-icons/fc";
 import './ManageUserRedux.scss'
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux'; // tương tự như navigate
-import { fetchGenderStart, fetchPositionStart, fetchRoleIdStart, createNewUser } from "../../../../redux/action/adminAction";
+import { fetchGenderStart, fetchPositionStart, fetchRoleIdStart, createNewUser, fetchAllUsersStart } from "../../../../redux/action/adminAction";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import TableManageUser from "./TableManageUser";
+import { toast } from 'react-toastify';
 
 const ManageUserRedux = (props) => {
     const [email, setEmail] = useState("");
@@ -28,14 +29,14 @@ const ManageUserRedux = (props) => {
     const [previewImage, setPreviewImage] = useState("");
     const [lightBoxOpen, setLightBoxOpen] = useState(false);
     // hide/show form create user
-    const [isShowForm, setIsShowForm] = useState(true);
-    // table user
-    const [listUser, setListUsers] = useState([]);
+    const [isShowForm, setIsShowForm] = useState(false);
+
     // componentDidMount
     useEffect(() => {
         dispatch(fetchGenderStart());
         dispatch(fetchPositionStart());
         dispatch(fetchRoleIdStart());
+        dispatch(fetchAllUsersStart()); // all user
 
     }, [dispatch]);
 
@@ -117,7 +118,27 @@ const ManageUserRedux = (props) => {
                 positionId: position,
             })
         );
+        // khi nhấn btn save thì table được cập nhật và form trở về trống
+        setTimeout(() => {
+            dispatch(fetchAllUsersStart());
+            toast.success('Create User Success')
+            // Reset form fields
+            setEmail("");
+            setPassword("");
+            setFirstName("");
+            setLastName("");
+            setPhoneNumber("");
+            setAddress("");
+            setGender(genderArr && genderArr.length > 0 ? genderArr[0].key : "");
+            setPosition(positionArr && positionArr.length > 0 ? positionArr[0].key : "");
+            setRole(roleArr && roleArr.length > 0 ? roleArr[0].key : "");
+            setImage("");
+            setPreviewImage("");
+            // hide form
+            setIsShowForm(!isShowForm)
+        }, 1000)
     }
+
     // show hide form
     const btnShowForm = () => {
         setIsShowForm(!isShowForm)
@@ -296,7 +317,7 @@ const ManageUserRedux = (props) => {
                     </div>
 
                 </div>
-                <div className="px-4 py-2">
+                <div className="col-12 px-4 py-2">
                     <TableManageUser />
                 </div>
             </div>

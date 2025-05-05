@@ -106,6 +106,7 @@ export const fetchRoleIdFailded = () => {
 export const createNewUser = (data) => {
     return async (dispatch, getState) => {
         try {
+            console.log('Data nhận được trong action:', data);
             // call create user
             let res = await createNewUserService(data)
             if (res && res.errCode === 0) {

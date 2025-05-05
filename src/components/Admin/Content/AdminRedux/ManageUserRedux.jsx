@@ -7,6 +7,7 @@ import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
 import TableManageUser from "./TableManageUser";
 import { toast } from 'react-toastify';
+import CommonUtils from "../../../../utils/commonUtils";
 
 const ManageUserRedux = (props) => {
     const [email, setEmail] = useState("");
@@ -66,11 +67,16 @@ const ManageUserRedux = (props) => {
     }, [genderArr, positionArr, roleArr, gender, position, role]);
 
     // upload hinh anh
-    const handleUploadImage = (event) => {
-        if (event.target && event.target.files && event.target.files[0]) {
+    const handleUploadImage = async (event) => {
+        let data = event.target.files;
+        let file = data[0];
+        if (file) {
+            // convert file to base64
+            let base64 = await CommonUtils.getBase64(file);
+            console.log('check image base64', base64);
             // hien thi anh dung url.createObjectUrl se chuyen sang blob
-            setPreviewImage(URL.createObjectURL(event.target.files[0]));
-            setImage(event.target.files[0])
+            setPreviewImage(URL.createObjectURL(file));
+            setImage(base64)
         } else {
 
         }
@@ -89,10 +95,15 @@ const ManageUserRedux = (props) => {
 
         const errors = [];
         fields.forEach(({ value, label }) => {
-            if (!value) {
+            if (!value || value.trim() === "") {
                 errors.push(`${label} không được để trống`);
             }
         });
+        // Kiểm tra định dạng email
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        if (email && !emailRegex.test(email)) {
+            errors.push("Email không đúng định dạng");
+        }
         return errors;
     };
 
@@ -101,7 +112,7 @@ const ManageUserRedux = (props) => {
         // Gọi hàm validate
         const errors = checkValidateInput();
         if (errors.length > 0) {
-            alert("Lỗi:\n" + errors.join("\n"));
+            toast.error(errors.join(", "));
             return;
         }
         const userData = {
@@ -116,7 +127,7 @@ const ManageUserRedux = (props) => {
             positionId: position,
             image,
         };
-
+        console.log('userData gửi đi:', userData); // Kiểm tra dữ liệu
         if (!isEditMode) {
             // fire redux action create
             dispatch(
@@ -162,7 +173,7 @@ const ManageUserRedux = (props) => {
     // view form edit user
     const handleEditUserFromParent = (user) => {
         console.log('check handle edit user from parent: ', user)
-        setEmail(user.email);
+        setEmail(user.email || "");
         setPassword('Hash code');
         setFirstName(user.firstName);
         setLastName(user.lastName);

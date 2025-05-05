@@ -8,6 +8,7 @@ import "yet-another-react-lightbox/styles.css";
 import TableManageUser from "./TableManageUser";
 import { toast } from 'react-toastify';
 import CommonUtils from "../../../../utils/commonUtils";
+import { Buffer } from 'buffer';
 
 const ManageUserRedux = (props) => {
     const [email, setEmail] = useState("");
@@ -172,22 +173,37 @@ const ManageUserRedux = (props) => {
     }
     // view form edit user
     const handleEditUserFromParent = (user) => {
-        console.log('check handle edit user from parent: ', user)
+        if (!user) return;
+
+        // Chuyển đổi ảnh từ buffer base64 sang dạng nhị phân để preview
+        const imageBase64 = user.image
+            ? Buffer.from(user.image, 'base64').toString('binary')
+            : '';
+
+        console.log('Thông tin user cần chỉnh sửa:', user);
+
+        // Cập nhật thông tin form với dữ liệu từ user
         setEmail(user.email || "");
-        setPassword('Hash code');
-        setFirstName(user.firstName);
-        setLastName(user.lastName);
-        setPhoneNumber(user.phonenumber);
-        setAddress(user.address);
-        setGender(user.gender);
-        setPosition(user.positionId);
-        setRole(user.roleId);
-        setImage("");
-        setPreviewImage("");
-        setIsShowForm(true); // open form
-        setIsEditMode(true); // true edit mode 
-        setUserEditId(user.id)
-    }
+        setPassword('Hard code'); // Gán mật khẩu mặc định
+        setFirstName(user.firstName || "");
+        setLastName(user.lastName || "");
+        setPhoneNumber(user.phonenumber || "");
+        setAddress(user.address || "");
+        setGender(user.gender || "");
+        setPosition(user.positionId || "");
+        setRole(user.roleId || "");
+
+        // Xử lý ảnh và chế độ form
+        setImage(""); // Reset ảnh gốc
+        setPreviewImage(imageBase64); // Ảnh để hiển thị
+        setIsShowForm(true); // Hiển thị form
+        setIsEditMode(true); // Bật chế độ chỉnh sửa
+        setUserEditId(user.id); // Lưu ID user đang chỉnh sửa
+    };
+
+
+
+
     return (
         <div className="user-redux-container">
             <div className="title h3 px-4 py-2">

@@ -1,8 +1,29 @@
 import './OutStandingDoctor.scss';
 import Slider from "react-slick";
 import BvVietDuc from '../../../assets/doctor/pgskieudinhhung.jpg'
-const OutStandingDoctor = (props) => {
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchTopDoctor } from "../../../redux/action/adminAction";
+import { Buffer } from 'buffer';
 
+const OutStandingDoctor = (props) => {
+    const [arrDoctors, setArrDoctors] = useState([]);
+
+    // state redux
+    const topDoctorRedux = useSelector((state) => state.admin.topDoctors)
+    console.log('check topDoctorRedux: ', topDoctorRedux)
+    const dispatch = useDispatch();
+    // did mount
+    useEffect(() => {
+        dispatch(fetchTopDoctor());
+    }, [dispatch]);
+
+    // did update
+    useEffect(() => {
+        if (topDoctorRedux && topDoctorRedux.length > 0) {
+            setArrDoctors(topDoctorRedux)
+        }
+    }, [topDoctorRedux])
     return (
         <div className='section-doctor'>
             <div className='section-container'>
@@ -12,89 +33,36 @@ const OutStandingDoctor = (props) => {
                 </div>
                 <div className='section-body'>
                     <Slider {...props.settings}>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className="outder-bg">
-                                    <div className='bg-image'
-                                        style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                    />
-                                </div>
-                                <div className='position text-center'>
-                                    <div className='section-content'>Phó Giáo sư, Tiến sĩ Kiều Đình Tùng</div>
-                                    <span className='section-infor'>Thần kinh, Cột sống, Ngoại thần kinh</span>
-                                </div>
-                            </div>
-                        </div>
 
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className="outder-bg">
-                                    <div className='bg-image'
-                                        style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                    />
-                                </div>
-                                <div className='position text-center'>
-                                    <div className='section-content'>Phó Giáo sư, Tiến sĩ Kiều Đình Tùng</div>
-                                    <span className='section-infor'>Thần kinh, Cột sống, Ngoại thần kinh</span>
-                                </div>
-                            </div>
-                        </div>
+                        {arrDoctors && arrDoctors.length > 0
+                            && arrDoctors.map((item, index) => {
 
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className="outder-bg">
-                                    <div className='bg-image'
-                                        style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                    />
-                                </div>
-                                <div className='position text-center'>
-                                    <div className='section-content'>Phó Giáo sư, Tiến sĩ Kiều Đình Tùng</div>
-                                    <span className='section-infor'>Thần kinh, Cột sống, Ngoại thần kinh</span>
-                                </div>
-                            </div>
-                        </div>
+                                if (!item.image) return;
 
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className="outder-bg">
-                                    <div className='bg-image'
-                                        style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                    />
-                                </div>
-                                <div className='position text-center'>
-                                    <div className='section-content'>Phó Giáo sư, Tiến sĩ Kiều Đình Tùng</div>
-                                    <span className='section-infor'>Thần kinh, Cột sống, Ngoại thần kinh</span>
-                                </div>
-                            </div>
-                        </div>
+                                // Chuyển đổi ảnh từ buffer base64 sang dạng nhị phân để preview
+                                const imageBase64 = item.image
+                                    ? Buffer.from(item.image, 'base64').toString('binary')
+                                    : '';
+                                let name = `${item.positionData.valueVi}, ${item.firstName} ${item.lastName}`;
+                                return (
+                                    <div className='section-customize' key={index}>
+                                        <div className="outline">
+                                            <div className="outder-bg">
+                                                <div className='bg-image'
+                                                    style={{ backgroundImage: `url(${imageBase64})` }}
+                                                />
+                                            </div>
+                                            <div className='position text-center'>
+                                                <div className='section-content'>{name || 'Unknown Doctor'}</div>
+                                                <span className='section-infor'>Thần kinh, Cột sống, Ngoại thần kinh</span>
+                                            </div>
+                                        </div>
+                                    </div>
+                                )
+                            })
 
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className="outder-bg">
-                                    <div className='bg-image'
-                                        style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                    />
-                                </div>
-                                <div className='position text-center'>
-                                    <div className='section-content'>Phó Giáo sư, Tiến sĩ Kiều Đình Tùng</div>
-                                    <span className='section-infor'>Thần kinh, Cột sống, Ngoại thần kinh</span>
-                                </div>
-                            </div>
-                        </div>
+                        }
 
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className="outder-bg">
-                                    <div className='bg-image'
-                                        style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                    />
-                                </div>
-                                <div className='position text-center'>
-                                    <div className='section-content'>Phó Giáo sư, Tiến sĩ Kiều Đình Tùng</div>
-                                    <span className='section-infor'>Thần kinh, Cột sống, Ngoại thần kinh</span>
-                                </div>
-                            </div>
-                        </div>
 
                     </Slider>
                 </div>

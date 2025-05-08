@@ -1,5 +1,6 @@
 import actionTypes from "./actionTypes";
 import { getAllCodeService, createNewUserService, getAllUsers, deleteUser, editUserService } from "../../services/apiService";
+import { getTopDoctorHomeService } from "../../services/userService";
 import { toast } from 'react-toastify';
 
 // export const fetchGenderStart = () => {
@@ -201,6 +202,8 @@ export const fetchAllUsersStart = () => {
 
             // call api allcode
             let res = await getAllUsers("ALL");
+            // let res1 = await getTopDoctorHomeService(3);
+            // console.log('check list doctor: ', res1);
             if (res && res.errCode === 0) {
                 dispatch(fetchAllUsersSuccess(res.users));
             } else {
@@ -226,3 +229,28 @@ export const fetchAllUsersFailded = () => {
     }
 }
 
+
+// doctor
+export const fetchTopDoctor = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getTopDoctorHomeService('');
+            console.log('check res', res);
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
+                    dataDoctor: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_TOP_DOCTORS_FAILDED,
+                })
+            }
+        } catch (e) {
+            console.log('FETCH_TOP_DOCTORS_FAILDED: ', e)
+            dispatch({
+                type: actionTypes.FETCH_TOP_DOCTORS_FAILDED,
+            })
+        }
+    }
+}

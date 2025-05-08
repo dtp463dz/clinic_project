@@ -46,23 +46,23 @@ const ManageUserRedux = (props) => {
     // Đặt giá trị mặc định cho gender, position, role khi các mảng từ Redux thay đổi
     useEffect(() => {
         if (genderArr && genderArr.length > 0) {
-            const isValidGender = gender && genderArr.some((item) => item.key === gender);// hàm some check phan tu trong mang co tmdk hay ko
+            const isValidGender = gender && genderArr.some((item) => item.keyMap === gender);// hàm some check phan tu trong mang co tmdk hay ko
             if (!isValidGender) {
-                setGender(genderArr[0].key); // Đặt giá trị mặc định cho gender
+                setGender(genderArr[0].keyMap); // Đặt giá trị mặc định cho gender
             }
         }
 
         if (positionArr && positionArr.length > 0) {
-            const isValidPosition = position && positionArr.some((item) => item.key === position);
+            const isValidPosition = position && positionArr.some((item) => item.keyMap === position);
             if (!isValidPosition) {
-                setPosition(positionArr[0].key); // Đặt giá trị mặc định cho position
+                setPosition(positionArr[0].keyMap); // Đặt giá trị mặc định cho position
             }
         }
 
         if (roleArr && roleArr.length > 0) {
-            const isValidRole = role && roleArr.some((item) => item.key === role);
+            const isValidRole = role && roleArr.some((item) => item.keyMap === role);
             if (!isValidRole) {
-                setRole(roleArr[0].key); // Đặt giá trị mặc định cho role
+                setRole(roleArr[0].keyMap); // Đặt giá trị mặc định cho role
             }
         }
     }, [genderArr, positionArr, roleArr, gender, position, role]);
@@ -156,9 +156,9 @@ const ManageUserRedux = (props) => {
         setLastName("");
         setPhoneNumber("");
         setAddress("");
-        setGender(genderArr && genderArr.length > 0 ? genderArr[0].key : "");
-        setPosition(positionArr && positionArr.length > 0 ? positionArr[0].key : "");
-        setRole(roleArr && roleArr.length > 0 ? roleArr[0].key : "");
+        setGender(genderArr && genderArr.length > 0 ? genderArr[0].keyMap : "");
+        setPosition(positionArr && positionArr.length > 0 ? positionArr[0].keyMap : "");
+        setRole(roleArr && roleArr.length > 0 ? roleArr[0].keyMap : "");
         setImage("");
         setPreviewImage("");
         // hide form
@@ -295,7 +295,7 @@ const ManageUserRedux = (props) => {
                             >
                                 {genderArr && genderArr.length > 0 ? (
                                     genderArr.map((item, index) => (
-                                        <option key={index} value={item.key}>
+                                        <option key={index} value={item.keyMap}>
                                             {item.valueEn}
                                         </option>
                                     ))
@@ -313,7 +313,7 @@ const ManageUserRedux = (props) => {
                             >
                                 {positionArr && positionArr.length > 0 ? (
                                     positionArr.map((item, index) => (
-                                        <option key={index} value={item.key}>
+                                        <option key={index} value={item.keyMap}>
                                             {item.valueEn}
                                         </option>
                                     ))
@@ -331,7 +331,7 @@ const ManageUserRedux = (props) => {
                             >
                                 {roleArr && roleArr.length > 0 ? (
                                     roleArr.map((item, index) => (
-                                        <option key={index} value={item.key}>
+                                        <option key={index} value={item.keyMap}>
                                             {item.valueEn}
                                         </option>
                                     ))

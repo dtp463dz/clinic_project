@@ -2,15 +2,28 @@ import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from 'react-redux';
 import { deleteNewUser, fetchAllUsersStart } from "../../../../redux/action/adminAction";
 import ModalDeleteUserRedux from "./ModalDeleteUserRedux";
+import MarkdownIt from 'markdown-it';
+import MdEditor from 'react-markdown-editor-lite';
+// import style manually
+import 'react-markdown-editor-lite/lib/index.css';
+
+// Register plugins if required
+// MdEditor.use(YOUR_PLUGINS_HERE);
+
+// Initialize a markdown parser
+const mdParser = new MarkdownIt(/* Markdown-it options */);
+
+// Finish!
+function handleEditorChange({ html, text }) {
+    console.log('handleEditorChange', html, text);
+}
 
 
 const TableManageUser = (props) => {
     const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
-    const [showModalUpdateUser, setShowModalUpdateUser] = useState(false);
     const listUsers = useSelector((state) => state.admin.users)
 
     const [userDelete, setUserDelete] = useState({});
-    const [userUpdate, setUserUpdate] = useState({});
 
     const dispatch = useDispatch();
     useEffect(() => {
@@ -88,6 +101,7 @@ const TableManageUser = (props) => {
                 setShow={setShowModalDeleteUser}
                 userDelete={userDelete}
             />
+            <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
         </>
     )
 }

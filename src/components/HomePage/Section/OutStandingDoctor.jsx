@@ -1,6 +1,5 @@
 import './OutStandingDoctor.scss';
 import Slider from "react-slick";
-import BvVietDuc from '../../../assets/doctor/pgskieudinhhung.jpg'
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopDoctor } from "../../../redux/action/adminAction";

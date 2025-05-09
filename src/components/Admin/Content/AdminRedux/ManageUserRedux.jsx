@@ -296,7 +296,7 @@ const ManageUserRedux = (props) => {
                                 {genderArr && genderArr.length > 0 ? (
                                     genderArr.map((item, index) => (
                                         <option key={index} value={item.keyMap}>
-                                            {item.valueEn}
+                                            {item.valueVi}
                                         </option>
                                     ))
                                 ) : (
@@ -314,7 +314,7 @@ const ManageUserRedux = (props) => {
                                 {positionArr && positionArr.length > 0 ? (
                                     positionArr.map((item, index) => (
                                         <option key={index} value={item.keyMap}>
-                                            {item.valueEn}
+                                            {item.valueVi}
                                         </option>
                                     ))
                                 ) : (
@@ -332,7 +332,7 @@ const ManageUserRedux = (props) => {
                                 {roleArr && roleArr.length > 0 ? (
                                     roleArr.map((item, index) => (
                                         <option key={index} value={item.keyMap}>
-                                            {item.valueEn}
+                                            {item.valueVi}
                                         </option>
                                     ))
                                 ) : (

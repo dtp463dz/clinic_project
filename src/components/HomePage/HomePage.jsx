@@ -3,7 +3,6 @@ import MedicalFacility from "./Section/MedicalFacility";
 import Specialty from "./Section/Specialty";
 import Slogan from "./Slogan";
 import './HomePage.scss';
-
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import OutStandingDoctor from "./Section/OutStandingDoctor";
@@ -15,7 +14,7 @@ const HomePage = () => {
     // setting slider
     const settings = {
         dots: false,
-        infinite: true,
+        infinite: false,
         speed: 500,
         slidesToShow: 4, // hien thi options
         slidesToScroll: 1, // số lần next 

@@ -59,13 +59,9 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                         <MenuItem component={<Link to='/admin/manage-userRedux' />}>
                             Quản Lý User Redux
                         </MenuItem>
-                        <MenuItem>
+                        <MenuItem component={<Link to={'/admin/manage-doctor'} />}>
                             Quản Lý Bác Sĩ
                         </MenuItem>
-                        <MenuItem>
-                            Quản Lý Admin
-                        </MenuItem>
-
                     </SubMenu>
                     <SubMenu label="Phòng Khám" icon={<FaClinicMedical />}>
                         <MenuItem component={<Link to='/admin/manage-clinic' />}>

@@ -3,14 +3,10 @@ import MdEditor from 'react-markdown-editor-lite';
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
 import './ManageDoctor.scss'
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Select from 'react-select';
-
-const options = [
-    { value: 'chocolate', label: 'Chocolate' },
-    { value: 'strawberry', label: 'Strawberry' },
-    { value: 'vanilla', label: 'Vanilla' }
-]
+import { useDispatch, useSelector } from 'react-redux';
+import { fetchAllDoctor, saveDetailDoctor } from '../../../../redux/action/adminAction';
 
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -19,20 +15,36 @@ const mdParser = new MarkdownIt(/* Markdown-it options */);
 const ManageDoctor = () => {
     const [contentMarkdown, setContentMarkdown] = useState("");
     const [contentHTML, setContentHTML] = useState("");
-    const [selectedDoctor, setSelectedDoctor] = useState("");
+    const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [description, setDescription] = useState("");
+    // Xử lý thay đổi nội dung Markdown
     const handleEditorChange = ({ html, text }) => {
         setContentHTML(html);
         setContentMarkdown(text);
     }
+    // reset form
+    const resetForm = () => {
+        setSelectedDoctor(null); // Reset về null cho react-select
+        setContentHTML('');
+        setContentMarkdown('');
+        setDescription(''); // Reset description
+    };
     const handleSaveContentMarkdown = () => {
         console.log('State values:', {
             contentMarkdown,
             contentHTML,
             selectedDoctor,
-            description
+            description,
+            listDoctors
         });
 
+        dispatch(saveDetailDoctor({
+            contentHTML: contentHTML,
+            contentMarkdown: contentMarkdown,
+            description: description,
+            doctorId: selectedDoctor.value,
+        }));
+        resetForm()
     }
     const handleChange = (selectedOption) => {
         setSelectedDoctor(selectedOption)
@@ -43,6 +55,36 @@ const ManageDoctor = () => {
         // console.log('description', event.target.value)
     }
 
+    const dispatch = useDispatch();
+    // Lấy danh sách bác sĩ khi component mount
+    useEffect(() => {
+        dispatch(fetchAllDoctor());
+    }, [dispatch])
+
+    const allDoctors = useSelector((state) => state.admin.allDoctors)
+    const [listDoctors, setListDoctors] = useState([])
+    // Cập nhật danh sách bác sĩ cho Select
+    useEffect(() => {
+        if (allDoctors && allDoctors.length > 0) {
+            let dataSelect = buildDataInputSelect(allDoctors);
+            setListDoctors(dataSelect)
+        }
+    }, [allDoctors])
+
+    // data input select
+    const buildDataInputSelect = (inputData) => {
+        let result = [];
+        if (inputData && inputData.length > 0) {
+            inputData.map((item, index) => {
+                let object = {};
+                let label = `${item.firstName} ${item.lastName}`;
+                object.label = label;
+                object.value = item.id;
+                result.push(object);
+            })
+        }
+        return result;
+    }
     return (
         <div className='manage-doctor-container'>
             <div className='title'>Thêm Thông Tin Bác Sĩ</div>
@@ -50,7 +92,7 @@ const ManageDoctor = () => {
                 <div className='content-left form-group'>
                     <div className='title-label mb-2'>Chọn Bác Sĩ</div>
                     <Select
-                        options={options}
+                        options={listDoctors}
                         value={selectedDoctor}
                         onChange={handleChange}
                     />
@@ -71,6 +113,7 @@ const ManageDoctor = () => {
                     style={{ height: '500px' }}
                     renderHTML={text => mdParser.render(text)}
                     onChange={handleEditorChange}
+                    value={contentMarkdown}
                 />
             </div>
             <button

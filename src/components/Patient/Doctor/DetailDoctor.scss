@@ -1,0 +1,59 @@
+.doctor-detail-container {
+    height: 500px;
+    border: 1px solid red;
+    margin: 0 100px;
+    max-width: 100%;
+
+    .intro-doctor {
+        display: flex;
+
+        .content-left {
+            width: 20%;
+            border: 1px solid green;
+
+            .img-detail-doctor {
+                display: flex;
+                justify-content: center;
+
+                img {
+                    width: 120px;
+                    height: 120px;
+                    border-radius: 50%;
+                    margin: 10px 20px;
+                }
+            }
+
+            .contact-detail-doctor {
+                display: flex;
+                gap: 10px;
+                justify-content: center;
+
+                img {
+                    width: 10%;
+                }
+            }
+        }
+
+        .content-right {
+            width: 80%;
+            border: 1px solid gray;
+            display: flex;
+            flex-direction: column;
+            padding-left: 10px;
+
+            .position-doctor {
+                padding-top: 15px;
+                font-size: 14px;
+                font-weight: 600;
+                text-transform: uppercase;
+            }
+
+            .introduce-detail-doctor {
+                .introduce-title {
+                    padding-top: 10px;
+
+                }
+            }
+        }
+    }
+}

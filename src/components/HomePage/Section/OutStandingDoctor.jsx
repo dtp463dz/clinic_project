@@ -4,13 +4,15 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchTopDoctor } from "../../../redux/action/adminAction";
 import { Buffer } from 'buffer';
+import { useNavigate } from 'react-router-dom';
 
 const OutStandingDoctor = (props) => {
     const [arrDoctors, setArrDoctors] = useState([]);
+    const navigate = useNavigate();
 
     // state redux
     const topDoctorRedux = useSelector((state) => state.admin.topDoctors)
-    console.log('check topDoctorRedux: ', topDoctorRedux)
+    // console.log('check topDoctorRedux: ', topDoctorRedux)
     const dispatch = useDispatch();
     // did mount
     useEffect(() => {
@@ -23,6 +25,11 @@ const OutStandingDoctor = (props) => {
             setArrDoctors(topDoctorRedux)
         }
     }, [topDoctorRedux])
+
+    // view detail doctor
+    const handleViewDetailDoctor = (doctor) => {
+        navigate(`/detail-doctor/${doctor.id}`)
+    }
     return (
         <div className='section-doctor'>
             <div className='section-container'>
@@ -44,7 +51,8 @@ const OutStandingDoctor = (props) => {
                                     : '';
                                 let name = `${item.positionData.valueVi}, ${item.firstName} ${item.lastName}`;
                                 return (
-                                    <div className='section-customize' key={index}>
+
+                                    <div className='section-customize' key={index} onClick={() => handleViewDetailDoctor(item)}>
                                         <div className="outline">
                                             <div className="outder-bg">
                                                 <div className='bg-image'
@@ -57,6 +65,7 @@ const OutStandingDoctor = (props) => {
                                             </div>
                                         </div>
                                     </div>
+
                                 )
                             })
 

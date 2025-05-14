@@ -4,14 +4,21 @@ const getTopDoctorHomeService = (limit) => {
     return axios.get(`/api/top-doctor-home?limit=${limit}`)
 }
 
+// lay tat ca ba si
 const getAllDoctors = () => {
     return axios.get(`/api/get-all-doctor`)
 }
 
+// luu thong tin chi tiet bac si
 const saveDetailDoctorService = (data) => {
     return axios.post(`/api/save-infor-doctors`, data)
 }
 
+// lay thong tin chi tiet bac si
+const getDetailInforDoctor = (inputId) => {
+    return axios.get(`/api/get-detail-doctor-by-id?id=${inputId}`)
+}
+
 export {
-    getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService
+    getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService, getDetailInforDoctor
 }

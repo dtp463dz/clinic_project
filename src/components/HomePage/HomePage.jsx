@@ -22,7 +22,7 @@ const HomePage = () => {
     return (
         <div>
             <Slogan />
-            <HomeHeader />
+            <HomeHeader isShowBanner={true} />
             <Specialty settings={settings} />
             <MedicalFacility settings={settings} />
             <OutStandingDoctor settings={settings} />

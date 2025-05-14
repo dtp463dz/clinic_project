@@ -19,6 +19,7 @@ import ManageSpecialty from './components/Admin/Content/ManageSpecialty.jsx';
 import ManageHandBook from './components/Admin/Content/ManageHandBook.jsx';
 import ManageUserRedux from './components/Admin/Content/AdminRedux/ManageUserRedux.jsx';
 import ManageDoctor from './components/Admin/Content/AdminRedux/ManageDoctor.jsx';
+import DetailDoctor from './components/Patient/Doctor/DetailDoctor.jsx';
 
 const Layout = (props) => {
     return (
@@ -45,6 +46,7 @@ const Layout = (props) => {
                 <Route path='*' element={<NotFound />} />
 
                 <Route path='/home' element={<HomePage />} />
+                <Route path='/detail-doctor/:id' element={<DetailDoctor />} />
 
             </Routes>
             <ToastContainer

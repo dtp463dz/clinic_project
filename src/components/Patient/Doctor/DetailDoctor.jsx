@@ -58,13 +58,14 @@ const DetailDoctor = (props) => {
                             <img src={ZaloImage} alt="Zalo Icon" style={{ width: '10%' }} />
                         </div>
                         <div className="booking-doctor">
-                            <p> <FaCalendarAlt />Đặt lịch ngay</p>
+                            <p className="booking-icon"><FaCalendarAlt /></p>
+                            <p className="booking-text"> Đặt lịch ngay</p>
                         </div>
                     </div>
                     <div className="content-right">
                         <div className="position-doctor">
                             {detailDoctor && detailDoctor.positionData &&
-                                <span>{nameDetailDoctor} </span>
+                                <h1 className="name-detail-doctor">{nameDetailDoctor} </h1>
                             }
                         </div>
                         <div className="introduce-detail-doctor">
@@ -73,18 +74,19 @@ const DetailDoctor = (props) => {
                                     <span>{detailDoctor.Markdown.description}</span>
                                 }
                             </div>
+                            <div className="detail-infor-doctor">
+                                {detailDoctor && detailDoctor.Markdown && detailDoctor.Markdown.contentHTML &&
+                                    <div dangerouslySetInnerHTML={{ __html: detailDoctor.Markdown.contentHTML }}></div>
+                                }
+
+                            </div>
                         </div>
                     </div>
                 </div>
                 <div className="schedule-doctor">
 
                 </div>
-                <div className="detail-infor-doctor">
-                    {detailDoctor && detailDoctor.Markdown && detailDoctor.Markdown.contentHTML &&
-                        <div dangerouslySetInnerHTML={{ __html: detailDoctor.Markdown.contentHTML }}></div>
-                    }
 
-                </div>
                 <div className="comment-doctor">
 
                 </div>

@@ -1,6 +1,5 @@
 .doctor-detail-container {
-    height: 500px;
-    border: 1px solid red;
+    height: auto;
     margin: 0 100px;
     max-width: 100%;
 
@@ -8,8 +7,8 @@
         display: flex;
 
         .content-left {
+            margin-top: 20px;
             width: 20%;
-            border: 1px solid green;
 
             .img-detail-doctor {
                 display: flex;
@@ -32,26 +31,73 @@
                     width: 10%;
                 }
             }
+
+            .booking-doctor {
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                background: #013779;
+                border-radius: 50px;
+                width: 140px;
+                height: 30px;
+                margin-top: 15px;
+                margin-left: 45px;
+                cursor: pointer;
+
+                &:hover {
+                    background: #012b5e;
+
+                }
+
+                .booking-icon {
+                    color: #fff;
+                    padding-right: 5px;
+                    margin-top: 8px;
+
+                }
+
+                .booking-text {
+                    font-weight: 600;
+                    color: #fff;
+                    font-size: 15px;
+                    margin-top: 14px;
+                }
+            }
         }
 
         .content-right {
             width: 80%;
-            border: 1px solid gray;
             display: flex;
             flex-direction: column;
             padding-left: 10px;
 
             .position-doctor {
-                padding-top: 15px;
-                font-size: 14px;
-                font-weight: 600;
-                text-transform: uppercase;
+                margin-top: 15px;
+
+                .name-detail-doctor {
+                    color: #03428E;
+                    font-size: 14px;
+                    text-transform: uppercase;
+                    font-weight: 600;
+                    margin: 15px;
+                }
             }
 
             .introduce-detail-doctor {
                 .introduce-title {
-                    padding-top: 10px;
+                    font-size: 14px;
+                    margin: 15px;
+                    font-weight: 500;
+                }
 
+                .detail-infor-doctor {
+                    margin: 15px;
+
+                    img {
+                        margin-top: 10px;
+                        margin-left: 30px;
+                        width: 80%;
+                    }
                 }
             }
         }

@@ -101,7 +101,6 @@ const TableManageUser = (props) => {
                 setShow={setShowModalDeleteUser}
                 userDelete={userDelete}
             />
-            <MdEditor style={{ height: '500px' }} renderHTML={text => mdParser.render(text)} onChange={handleEditorChange} />
         </>
     )
 }

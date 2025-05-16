@@ -8,16 +8,21 @@ import { FaBookReader, FaUserNurse, FaCaretDown } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import SlideShow from './SlideShow';
 import Dropdown from 'react-bootstrap/Dropdown';
+import { useNavigate } from 'react-router-dom';
 
 const HomeHeader = (props) => {
 
+    const navigate = useNavigate();
+    const returnHome = () => {
+        navigate('/home');
+    }
     return (
         <>
             <div className="home-header-container">
                 <div className='home-header-content'>
                     <div className='left-content'>
                         <i className='fa-bars'> <FaBars /></i>
-                        <div className='header-logo'></div>
+                        <div className='header-logo' onClick={() => returnHome()}></div>
                     </div>
                     <div className='center-content'>
                         <div className='child-content'>

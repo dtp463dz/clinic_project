@@ -7,6 +7,7 @@ import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
 import { fetchAllDoctor, saveDetailDoctor } from '../../../../redux/action/adminAction';
+import { getDetailInforDoctor } from '../../../../services/userService';
 
 // Initialize a markdown parser
 const mdParser = new MarkdownIt(/* Markdown-it options */);
@@ -17,6 +18,7 @@ const ManageDoctor = () => {
     const [contentHTML, setContentHTML] = useState("");
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [description, setDescription] = useState("");
+    const [isEdit, setIsEdit] = useState(false); // hide show edit, save btn
     // Xử lý thay đổi nội dung Markdown
     const handleEditorChange = ({ html, text }) => {
         setContentHTML(html);
@@ -28,6 +30,7 @@ const ManageDoctor = () => {
         setContentHTML('');
         setContentMarkdown('');
         setDescription(''); // Reset description
+        setIsEdit(false);
     };
     const handleSaveContentMarkdown = () => {
         console.log('State values:', {
@@ -43,12 +46,27 @@ const ManageDoctor = () => {
             contentMarkdown: contentMarkdown,
             description: description,
             doctorId: selectedDoctor.value,
+            action: isEdit === true ? "EDIT" : "CREATE",
         }));
         resetForm()
     }
-    const handleChange = (selectedOption) => {
+    const handleChangeSelect = async (selectedOption) => {
+
         setSelectedDoctor(selectedOption)
-        console.log('Option selected:', selectedOption);
+        let res = await getDetailInforDoctor(selectedOption.value) // lay thong tin chi tiet bac si
+        if (res && res.errCode === 0 && res.data && res.data.Markdown.description) {
+            let markdown = res.data.Markdown;
+            setContentMarkdown(markdown.contentMarkdown)
+            setContentHTML(markdown.contentMarkdown)
+            setDescription(markdown.description);
+            setIsEdit(true);
+        } else {
+            setContentMarkdown('');
+            setContentHTML('');
+            setDescription('');
+            setIsEdit(false);
+        }
+        console.log('Option selected:', res);
     }
     const handleOnChangeDes = (event) => {
         setDescription(event.target.value);
@@ -94,7 +112,7 @@ const ManageDoctor = () => {
                     <Select
                         options={listDoctors}
                         value={selectedDoctor}
-                        onChange={handleChange}
+                        onChange={handleChangeSelect}
                     />
 
                 </div>
@@ -117,10 +135,10 @@ const ManageDoctor = () => {
                 />
             </div>
             <button
-                className='save-content-doctor btn btn-primary'
+                className={isEdit ? "save-content-doctor btn btn-warning" : "save-content-doctor btn btn-primary"}
                 onClick={() => handleSaveContentMarkdown()}
             >
-                Lưu thông tin</button>
+                {isEdit ? "Sửa thông tin" : "Lưu thông tin"}</button>
         </div>
     )
 }

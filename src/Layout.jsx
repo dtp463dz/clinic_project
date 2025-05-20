@@ -20,7 +20,7 @@ import ManageHandBook from './components/Admin/Content/ManageHandBook.jsx';
 import ManageUserRedux from './components/Admin/Content/AdminRedux/ManageUserRedux.jsx';
 import ManageDoctor from './components/Admin/Content/AdminRedux/ManageDoctor.jsx';
 import DetailDoctor from './components/Patient/Doctor/DetailDoctor.jsx';
-import ManageDoctorSchedule from './components/Admin/Content/AdminRedux/ManageDoctorSchedule.jsx';
+import ManageDoctorSchedule from './components/Admin/Content/Doctor/ManageDoctorSchedule.jsx';
 
 const Layout = (props) => {
     return (

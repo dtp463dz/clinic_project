@@ -260,7 +260,7 @@ export const fetchAllDoctor = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getAllDoctors('');
-            console.log('check res', res);
+            // console.log('check res', res);
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.FETCH_ALL_DOCTORS_SUCCESS,
@@ -302,6 +302,31 @@ export const saveDetailDoctor = (data) => {
             console.log('SAVE_DETAIL_DOCTOR_FAILDED: ', e)
             dispatch({
                 type: actionTypes.SAVE_DETAIL_DOCTOR_FAILDED,
+            })
+        }
+    }
+}
+
+// get allcode schedule time, lay time trong api allcode 
+export const fetchAllScheduleTime = () => {
+    return async (dispatch, getState) => {
+        try {
+            let res = await getAllCodeService('TIME');
+            // console.log('check res all schedule time', res);
+            if (res && res.errCode === 0) {
+                dispatch({
+                    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_SUCCESS,
+                    dataTime: res.data
+                })
+            } else {
+                dispatch({
+                    type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILDED,
+                })
+            }
+        } catch (e) {
+            console.log('FETCH_ALLCODE_SCHEDULE_TIME_FAILDED: ', e)
+            dispatch({
+                type: actionTypes.FETCH_ALLCODE_SCHEDULE_TIME_FAILDED,
             })
         }
     }

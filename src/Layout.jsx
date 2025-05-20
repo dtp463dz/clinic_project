@@ -20,6 +20,7 @@ import ManageHandBook from './components/Admin/Content/ManageHandBook.jsx';
 import ManageUserRedux from './components/Admin/Content/AdminRedux/ManageUserRedux.jsx';
 import ManageDoctor from './components/Admin/Content/AdminRedux/ManageDoctor.jsx';
 import DetailDoctor from './components/Patient/Doctor/DetailDoctor.jsx';
+import ManageDoctorSchedule from './components/Admin/Content/AdminRedux/ManageDoctorSchedule.jsx';
 
 const Layout = (props) => {
     return (
@@ -36,6 +37,7 @@ const Layout = (props) => {
                     <Route path="manage-users" element={<ManageUser />} />
                     <Route path="manage-userRedux" element={<ManageUserRedux />} />
                     <Route path="manage-doctor" element={<ManageDoctor />} />
+                    <Route path="manage-doctor-schedule" element={<ManageDoctorSchedule />} />
                     <Route path="manage-clinic" element={<ManageClinic />} />
                     <Route path="manage-specialty" element={<ManageSpecialty />} />
                     <Route path="manage-handbook" element={<ManageHandBook />} />

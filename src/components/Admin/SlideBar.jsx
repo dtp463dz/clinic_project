@@ -62,6 +62,9 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                         <MenuItem component={<Link to={'/admin/manage-doctor'} />}>
                             Quản Lý Bác Sĩ
                         </MenuItem>
+                        <MenuItem component={<Link to={'/admin/manage-doctor-schedule'} />}>
+                            Quản Lý Kế Hoạch Bác Sĩ
+                        </MenuItem>
                     </SubMenu>
                     <SubMenu label="Phòng Khám" icon={<FaClinicMedical />}>
                         <MenuItem component={<Link to='/admin/manage-clinic' />}>

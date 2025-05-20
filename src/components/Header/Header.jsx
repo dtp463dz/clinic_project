@@ -5,6 +5,9 @@ import NavDropdown from 'react-bootstrap/NavDropdown';
 import { Link, NavLink } from "react-router-dom";
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import _ from 'lodash'; // sử dụng lodash để check obj có rỗng hay ko
+import { USER_ROLE } from '../../utils/constant';
 
 const Header = () => {
     const isAuthenticated = useSelector(state => state.user.isAuthenticated)
@@ -23,6 +26,19 @@ const Header = () => {
     const handleLogout = () => {
         navigate('/login');
     }
+    useEffect(() => {
+        if (account && !_.isEmpty(account)) {
+            let role = account.roleId;
+            if (role === USER_ROLE.ADMIN) {
+
+            }
+            if (role === USER_ROLE.DOCTOR) {
+
+            }
+
+        }
+        console.log('check: ', account, isAuthenticated)
+    }, [])
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container>

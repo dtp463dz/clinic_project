@@ -1,0 +1,42 @@
+/* Container để căn chỉnh biểu tượng và input */
+.date-picker-container {
+    position: relative;
+    display: inline-flex;
+    align-items: center;
+
+    .icon-calender {
+        position: absolute;
+        left: 10px;
+        top: 50%;
+        transform: translateY(-50%);
+        width: 20px;
+        height: 20px;
+        color: #4a90e2;
+        transition: color 0.3s ease;
+        z-index: 1;
+    }
+
+    .date-picker {
+        padding: 8px 12px 8px 36px;
+        border: 1px solid #4a90e2;
+        border-radius: 4px;
+        font-size: 16px;
+        width: 200px;
+        background-color: #fff;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
+
+        &:hover {
+            border-color: #1a73e8;
+        }
+
+        &:focus {
+            outline: none;
+            border-color: #1a73e8;
+            box-shadow: 0 0 5px rgba(26, 115, 232, 0.3);
+        }
+
+        &:hover .icon-calender {
+            color: #1a73e8;
+        }
+    }
+}

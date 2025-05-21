@@ -4,6 +4,9 @@ import Select from 'react-select';
 import { useEffect, useState } from 'react';
 import { fetchAllDoctor, fetchAllScheduleTime } from '../../../../redux/action/adminAction';
 import CustomDatePicker from '../../../Input/CustomDatePicker';
+import { format } from 'date-fns'; // format lai ngay
+import { toast } from 'react-toastify';
+import _ from 'lodash'; // sử dụng lodash để check obj có rỗng hay ko
 
 const ManageDoctorSchedule = () => {
     const dispatch = useDispatch();
@@ -12,11 +15,11 @@ const ManageDoctorSchedule = () => {
     const allDoctors = useSelector((state) => state.admin.allDoctors)
     const allScheduleTime = useSelector((state) => state.admin.allScheduleTime)
     const [rangeTime, setRangeTime] = useState([]); // khoang thoi gian
+    const [currentDate, setCurrentDate] = useState(new Date()); // thoi gian chon
     // lay ds bac si
     useEffect(() => {
         dispatch(fetchAllDoctor());
         dispatch(fetchAllScheduleTime())
-        console.log('check props allScheduleTime: ', allScheduleTime)
     }, [dispatch])
 
     useEffect(() => {
@@ -25,14 +28,16 @@ const ManageDoctorSchedule = () => {
             setListDoctors(dataSelect)
         }
         if (allScheduleTime && allScheduleTime.length > 0) {
-            setRangeTime(allScheduleTime)
+            let data = allScheduleTime;
+            if (data && data.length > 0) {
+                data = data.map(item => ({ ...item, isSelected: false })) // tạo isSelected và đặt = false
+            }
+            setRangeTime(data)
         }
-        console.log('check props time: ', rangeTime)
 
     }, [allDoctors, allScheduleTime])
     const handleChangeSelect = async (selectedOption) => {
         setSelectedDoctor(selectedOption)
-
     }
     // data input select
     const buildDataInputSelect = (inputData) => {
@@ -49,8 +54,61 @@ const ManageDoctorSchedule = () => {
         return result;
     }
     // onChange datepicker
-    const handleOnChangeDatePicker = (value) => {
-        console.log('check onChange datePicker: ', value)
+    const handleOnChangeDatePicker = (currentDate) => {
+        setCurrentDate(currentDate);
+        const formattedDate = format(currentDate, 'dd/MM/yyyy');
+        console.log('check onChange datePicker: ', formattedDate);
+    }
+
+    // handle onClick btn time 
+    const handleClickBtnTime = (time) => {
+        if (rangeTime && rangeTime.length > 0) {
+            const updateRangeTime = rangeTime.map(item => {
+                if (item.id === time.id) {
+                    return {
+                        ...item,
+                        isSelected: !item.isSelected
+                    };
+                }
+                return item;
+            })
+            setRangeTime(updateRangeTime)
+            console.log('check range time after: ', updateRangeTime)
+
+        }
+    }
+    // handle luu thong tin
+    const handleSaveSchedule = () => {
+        let result = [];
+        // validate
+        if (selectedDoctor && _.isEmpty(selectedDoctor)) {
+            toast.error('Vui lòng chọn bác sĩ !');
+            return;
+        }
+        if (!currentDate || !rangeTime) {
+            toast.error('Vui lòng chọn ngày và ít nhất một khung giờ !');
+            return;
+        }
+        const formattedDate = format(currentDate, 'dd/MM/yyyy'); // format date
+        if (rangeTime && rangeTime.length > 0) { // loc isSelected === true
+            let selectedTime = rangeTime.filter(item => item.isSelected === true);
+            if (selectedTime && selectedTime.length > 0) {
+                selectedTime.map((schedule, index) => {
+                    console.log('check schedule: ', schedule, index, selectedDoctor)
+                    let object = {};
+                    object.doctorId = selectedDoctor.value; // value: label
+                    object.date = formattedDate;
+                    object.time = schedule.keyMap;
+                    result.push(object)
+                })
+            } else {
+                toast.error('Vui lòng chọn ngày và ít nhất một khung giờ !');
+                return;
+            }
+        }
+        console.log('check state: ', selectedDoctor, formattedDate, rangeTime);
+        console.log('check result: ', result);
+        toast.success('Lưu thông tin khám thành công')
     }
 
     return (
@@ -77,14 +135,23 @@ const ManageDoctorSchedule = () => {
                     {rangeTime && rangeTime.length > 0 &&
                         rangeTime.map((item, index) => {
                             return (
-                                <button className='btn btn-schedule' key={index}>{item.valueVi}</button>
+                                <button
+                                    className={item.isSelected === true ? "btn btn-schedule active" : "btn btn-schedule"}
+                                    key={index}
+                                    onClick={() => handleClickBtnTime(item)}
+                                >
+                                    {item.valueVi}
+                                </button>
                             )
                         })
                     }
 
                 </div>
                 <div className='col-12 my-2'>
-                    <button className='btn btn-primary'>Lưu thông tin</button>
+                    <button
+                        className='btn btn-primary'
+                        onClick={() => handleSaveSchedule()}
+                    >Lưu thông tin</button>
 
                 </div>
             </div>

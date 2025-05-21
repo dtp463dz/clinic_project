@@ -20,7 +20,12 @@
                 padding: 5px 15px;
                 border: 1px solid grey;
 
+                &.active {
+                    background: orange;
+                    border: 1px solid orange;
+                }
             }
+
         }
     }
 

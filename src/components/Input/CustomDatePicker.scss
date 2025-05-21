@@ -39,4 +39,11 @@
             color: #1a73e8;
         }
     }
+
+    .react-datepicker__day--today {
+        font-weight: bold;
+        background: #4790f0 !important;
+        border-radius: 20% !important;
+        color: #fff !important;
+    }
 }

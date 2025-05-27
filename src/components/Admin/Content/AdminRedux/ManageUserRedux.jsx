@@ -10,7 +10,7 @@ import { toast } from 'react-toastify';
 import CommonUtils from "../../../../utils/commonUtils";
 import { Buffer } from 'buffer';
 
-const ManageUserRedux = (props) => {
+const ManageUserRedux = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -78,8 +78,6 @@ const ManageUserRedux = (props) => {
             // hien thi anh dung url.createObjectUrl se chuyen sang blob
             setPreviewImage(URL.createObjectURL(file));
             setImage(base64)
-        } else {
-
         }
     }
 

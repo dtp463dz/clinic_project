@@ -2,7 +2,7 @@ import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import { useState } from 'react';
 import { FaCalendarAlt } from "react-icons/fa";
-import { subDays, addDays } from 'date-fns'; // để tính toán khoảng ngày
+import { subDays } from 'date-fns'; // để tính toán khoảng ngày
 import './CustomDatePicker.scss';
 const CustomDatePicker = ({ onChange }) => {
     const [startDate, setStartDate] = useState(new Date());

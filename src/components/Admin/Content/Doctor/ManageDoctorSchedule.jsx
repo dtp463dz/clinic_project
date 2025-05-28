@@ -181,6 +181,7 @@ import { format } from 'date-fns'; // format lai ngay
 import { toast } from 'react-toastify';
 import _ from 'lodash'; // sử dụng lodash để check obj có rỗng hay ko
 import { saveBulkScheduleDoctor } from '../../../../services/userService';
+import dayjs from 'dayjs'; // su dung de set thoi gian ve 00:00:00
 
 const ManageDoctorSchedule = () => {
     const dispatch = useDispatch();
@@ -252,7 +253,7 @@ const ManageDoctorSchedule = () => {
                 return;
             }
 
-            const formattedDate = currentDate.getTime();
+            const formattedDate = dayjs(currentDate).startOf('day').valueOf(); // chuan hoa về đầu ngày 00:00:000
             const selectedTime = rangeTime.filter(item => item.isSelected);
             const arrSchedule = selectedTime.map(schedule => ({
                 doctorId: selectedDoctor.value,

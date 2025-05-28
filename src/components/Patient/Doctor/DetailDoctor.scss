@@ -63,6 +63,20 @@
                     margin-top: 14px;
                 }
             }
+
+            .schedule-doctor {
+                margin-top: 25px;
+                height: 300px;
+                border: 1px solid red;
+
+                .schedule-content-up {
+                    width: 100%;
+                }
+
+                .schedule-content-down {
+                    width: 100%;
+                }
+            }
         }
 
         .content-right {

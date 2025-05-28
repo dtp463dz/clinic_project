@@ -9,8 +9,9 @@ import PhoneImage from '../../../assets/doctor/whatsapp.png';
 import { FaCalendarAlt } from "react-icons/fa";
 import { getDetailInforDoctor } from "../../../services/userService";
 import { Buffer } from 'buffer';
+import DoctorSchedule from "./DoctorSchedule";
 
-const DetailDoctor = (props) => {
+const DetailDoctor = () => {
     const { id } = useParams(); // Lấy id từ URL
     const [detailDoctor, setDetailDoctor] = useState({});
 
@@ -61,6 +62,17 @@ const DetailDoctor = (props) => {
                             <p className="booking-icon"><FaCalendarAlt /></p>
                             <p className="booking-text"> Đặt lịch ngay</p>
                         </div>
+                        <div className="schedule-doctor">
+                            <div className="schedule-content-up">
+                                <DoctorSchedule
+                                    doctorIdFromParent={detailDoctor && detailDoctor.id ? detailDoctor.id : -1}
+                                />
+                            </div>
+
+                            <div className="schedule-content-down">
+
+                            </div>
+                        </div>
                     </div>
                     <div className="content-right">
                         <div className="position-doctor">
@@ -74,6 +86,7 @@ const DetailDoctor = (props) => {
                                     <span>{detailDoctor.Markdown.description}</span>
                                 }
                             </div>
+
                             <div className="detail-infor-doctor">
                                 {detailDoctor && detailDoctor.Markdown && detailDoctor.Markdown.contentHTML &&
                                     <div dangerouslySetInnerHTML={{ __html: detailDoctor.Markdown.contentHTML }}></div>

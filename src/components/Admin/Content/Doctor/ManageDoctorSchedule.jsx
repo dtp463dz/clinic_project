@@ -234,6 +234,19 @@ const ManageDoctorSchedule = () => {
         );
     };
 
+    // reset form
+    const reSetForm = () => {
+        setSelectedDoctor("");
+        setIsSaving(false);
+        // reset lại khung giờ
+        setRangeTime(preRangTime =>
+            preRangTime.map(item => ({
+                ...item,
+                isSelected: false,
+            }))
+        )
+    }
+
     const handleSaveSchedule = async () => {
         if (isSaving) return;
         setIsSaving(true);
@@ -279,6 +292,7 @@ const ManageDoctorSchedule = () => {
         } finally {
             setIsSaving(false);
         }
+        reSetForm();
     };
 
     return (
@@ -300,7 +314,7 @@ const ManageDoctorSchedule = () => {
                     <CustomDatePicker onChange={handleOnChangeDatePicker} />
                 </div>
                 <div className="col-12 pick-hour-container">
-                    {rangeTime.map((item, index) => (
+                    {rangeTime && rangeTime.map((item, index) => (
                         <button
                             className={item.isSelected ? 'btn btn-schedule active' : 'btn btn-schedule'}
                             key={index}

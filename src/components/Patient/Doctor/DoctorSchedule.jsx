@@ -3,7 +3,7 @@ import { useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import 'dayjs/locale/vi'; // nạp locale tiếng Việt
 import { getScheduleDoctorByDate } from "../../../services/userService";
-import { FaCalendarAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaRegHandPointUp } from "react-icons/fa";
 const DoctorSchedule = (props) => {
     const [allDays, setAllDays] = useState([]);
     const [allAvalableTime, setAllAvalableTime] = useState([]);
@@ -22,11 +22,18 @@ const DoctorSchedule = (props) => {
         const tempDays = [];
         for (let i = 0; i < 7; i++) {
             const currentDate = dayjs().add(i, 'day');
-            // xử lý viết hoa chữ cái đầu
-            const dayLabel = currentDate.format('dddd');
-            const formattedLabel = capitalizeEachWord(dayLabel);
+            let label;
+            if (i === 0) {
+                // ngày mặc định là ngày Hôm nay
+                label = `Hôm nay - ${currentDate.format('DD/MM')}`;
+            } else {
+                // xử lý viết hoa chữ cái đầu
+                const dayLabel = currentDate.format('dddd');
+                const formattedLabel = capitalizeEachWord(dayLabel);
+                label = `${formattedLabel} - ${currentDate.format('DD/MM')}`;
+            }
             tempDays.push({
-                label: `${formattedLabel} - ${currentDate.format('DD/MM')}`,
+                label: label,
                 value: currentDate.startOf('day').valueOf()
             });
         }
@@ -57,18 +64,6 @@ const DoctorSchedule = (props) => {
         fetchSchedule();
     }, [props.doctorIdFromParent, selectedDate]);
     const handleOnChangeSelect = async (event) => {
-        // lay doctorIdFromParent từ DetailDocto
-        // if (props.doctorIdFromParent && props.doctorIdFromParent !== -1) {
-        //     let doctorId = props.doctorIdFromParent;
-        //     console.log('check detail doctor: ', doctorId)
-        //     const date = event.target.value;
-        //     let res = await getScheduleDoctorByDate(doctorId, date);
-        //     if (res && res.errCode === 0) {
-        //         setAllAvalableTime(res.data ? res.data : [])
-        //     }
-        //     console.log('check handleonChange: ', res)
-        // }
-
         const date = event.target.value;
         setSelectedDate(date); // Cập nhật ngày được chọn
     }
@@ -97,14 +92,26 @@ const DoctorSchedule = (props) => {
                 </div>
                 <div className="time-content">
                     {allAvalableTime && allAvalableTime.length > 0 ?
-                        allAvalableTime.map((item, index) => {
-                            let timeDisplay = item.timeTypeData.valueVi;
-                            return (
-                                <button key={index}>{timeDisplay}</button>
-                            )
-                        })
+                        <>
+                            <div className="time-content-btns">
+                                {allAvalableTime.map((item, index) => {
+                                    let timeDisplay = item.timeTypeData.valueVi;
+                                    return (
+                                        <button key={index}>{timeDisplay}</button>
+                                    )
+                                })
+                                }
+                            </div>
+
+                            <div className="book-free">
+                                <span>Chọn <FaRegHandPointUp /> và đặt (miễn phí)</span>
+                            </div>
+
+                        </>
                         :
-                        <div>Không có lịch hẹn trong thời gian này, vui lòng chọn thời gian khác</div>
+                        <div className="no-schedule">
+                            <span>Không có lịch hẹn trong thời gian này, vui lòng chọn thời gian khác</span>
+                        </div>
                     }
                 </div>
             </div>

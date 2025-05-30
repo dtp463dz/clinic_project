@@ -8,7 +8,9 @@ const INITIAL_STATE = {
     users: [],
     topDoctors: [],
     allDoctors: [],
-    allScheduleTime: []
+    allScheduleTime: [],
+
+    allRequiredDoctorInfor: [],
 };
 const adminReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {
@@ -99,6 +101,17 @@ const adminReducer = (state = INITIAL_STATE, action) => {
                 ...state,
             }
 
+        case actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_START:
+            state.allRequiredDoctorInfor = action.data; // res.data ben action
+            //    console.log('>> required doctor data action: ', action)
+            return {
+                ...state,
+            }
+        case actionTypes.FETCH_REQUIRED_DOCTOR_INFOR_FAILDED:
+            state.allRequiredDoctorInfor = [];
+            return {
+                ...state,
+            }
 
         default: return state;
     }

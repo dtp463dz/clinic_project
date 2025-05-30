@@ -6,7 +6,7 @@ import './ManageDoctor.scss'
 import { useEffect, useState } from 'react';
 import Select from 'react-select';
 import { useDispatch, useSelector } from 'react-redux';
-import { fetchAllDoctor, saveDetailDoctor } from '../../../../redux/action/adminAction';
+import { fetchAllDoctor, getRequiredDoctorInfor, saveDetailDoctor } from '../../../../redux/action/adminAction';
 import { getDetailInforDoctor } from '../../../../services/userService';
 
 // Initialize a markdown parser
@@ -14,11 +14,27 @@ const mdParser = new MarkdownIt(/* Markdown-it options */);
 
 
 const ManageDoctor = () => {
+    // save to markdown table
     const [contentMarkdown, setContentMarkdown] = useState("");
     const [contentHTML, setContentHTML] = useState("");
     const [selectedDoctor, setSelectedDoctor] = useState(null);
     const [description, setDescription] = useState("");
     const [isEdit, setIsEdit] = useState(false); // hide show edit, save btn
+    const allDoctors = useSelector((state) => state.admin.allDoctors)
+    const [listDoctors, setListDoctors] = useState([])
+
+    // save to doctor_infor table
+    const [listPrice, setListPrice] = useState([]);
+    const [listPayment, setListPayment] = useState([]);
+    const [listProvince, setListProvince] = useState([]);
+    const [selectedPrice, setSelectedPrice] = useState("");
+    const [selectedPayment, setSelectedPayment] = useState("");
+    const [selectedProvince, setSelectedProvince] = useState("");
+    const [nameClinic, setNameClinic] = useState("");
+    const [addressClinic, setAddressClinic] = useState("");
+    const [note, setNote] = useState("");
+
+    const allRequiredDoctorInfor = useSelector((state) => state.admin.allRequiredDoctorInfor);
     // Xử lý thay đổi nội dung Markdown
     const handleEditorChange = ({ html, text }) => {
         setContentHTML(html);
@@ -77,25 +93,17 @@ const ManageDoctor = () => {
     // Lấy danh sách bác sĩ khi component mount
     useEffect(() => {
         dispatch(fetchAllDoctor());
+        dispatch(getRequiredDoctorInfor());
     }, [dispatch])
 
-    const allDoctors = useSelector((state) => state.admin.allDoctors)
-    const [listDoctors, setListDoctors] = useState([])
-    // Cập nhật danh sách bác sĩ cho Select
-    useEffect(() => {
-        if (allDoctors && allDoctors.length > 0) {
-            let dataSelect = buildDataInputSelect(allDoctors);
-            setListDoctors(dataSelect)
-        }
-    }, [allDoctors])
 
     // data input select
-    const buildDataInputSelect = (inputData) => {
+    const buildDataInputSelect = (inputData, type) => {
         let result = [];
         if (inputData && inputData.length > 0) {
-            inputData.map((item, index) => {
+            inputData.map((item) => {
                 let object = {};
-                let label = `${item.firstName} ${item.lastName}`;
+                let label = type === 'USERS' ? `${item.firstName} ${item.lastName}` : item.valueVi;
                 object.label = label;
                 object.value = item.id;
                 result.push(object);
@@ -103,6 +111,27 @@ const ManageDoctor = () => {
         }
         return result;
     }
+
+    // Cập nhật danh sách bác sĩ cho Select
+    useEffect(() => {
+        if (allDoctors && allDoctors.length > 0) {
+            let dataSelect = buildDataInputSelect(allDoctors, 'USERS');
+            setListDoctors(dataSelect)
+        }
+        if (allRequiredDoctorInfor && allRequiredDoctorInfor.resPayment) {
+            let { resPayment, resPrice, resProvince } = allRequiredDoctorInfor;
+            let dataSelectPrice = buildDataInputSelect(resPrice);
+            let dataSelectPayment = buildDataInputSelect(resPayment);
+            let dataSelectProvince = buildDataInputSelect(resProvince);
+            console.log('data new: ', dataSelectPrice, dataSelectPayment, dataSelectProvince)
+            setListPrice(dataSelectPrice);
+            setListPayment(dataSelectPayment);
+            setListProvince(dataSelectProvince);
+
+        }
+    }, [allDoctors, allRequiredDoctorInfor])
+
+
     return (
         <div className='manage-doctor-container'>
             <div className='title'>Thêm Thông Tin Bác Sĩ</div>
@@ -113,6 +142,7 @@ const ManageDoctor = () => {
                         options={listDoctors}
                         value={selectedDoctor}
                         onChange={handleChangeSelect}
+                        placeholder={'Chọn bác sĩ'}
                     />
 
                 </div>
@@ -125,7 +155,47 @@ const ManageDoctor = () => {
                     </textarea>
                 </div>
             </div>
-
+            <div className='more-infor-extra row'>
+                <div className='col-4 form-group'>
+                    <label className='title-label mb-2'>Chọn giá</label>
+                    <Select
+                        options={listPrice}
+                        // value={selectedDoctor}
+                        // onChange={handleChangeSelect}
+                        placeholder={'Chọn giá'}
+                    />
+                </div>
+                <div className='col-4 form-group'>
+                    <label className='title-label mb-2'>Chọn phương thức thanh toán</label>
+                    <Select
+                        options={listPayment}
+                        // value={selectedDoctor}
+                        // onChange={handleChangeSelect}
+                        placeholder={'Chọn phương thức thanh toán'}
+                    />
+                </div>
+                <div className='col-4 form-group'>
+                    <label className='title-label mb-2'>Chọn tỉnh thành</label>
+                    <Select
+                        options={listProvince}
+                        // value={selectedDoctor}
+                        // onChange={handleChangeSelect}
+                        placeholder={'Chọn tỉnh thành'}
+                    />
+                </div>
+                <div className='col-4 form-group mt-2'>
+                    <label className='title-label mb-2'>Tên phòng khám</label>
+                    <input className='form-control' />
+                </div>
+                <div className='col-4 form-group mt-2'>
+                    <label className='title-label mb-2'>Địa chỉ phòng khám</label>
+                    <input className='form-control' />
+                </div>
+                <div className='col-4 form-group mt-2'>
+                    <label className='title-label mb-2'>Note</label>
+                    <input className='form-control' />
+                </div>
+            </div>
             <div className='manage-doctor-editor'>
                 <MdEditor
                     style={{ height: '500px' }}

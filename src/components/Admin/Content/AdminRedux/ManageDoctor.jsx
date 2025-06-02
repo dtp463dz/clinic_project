@@ -27,9 +27,9 @@ const ManageDoctor = () => {
     const [listPrice, setListPrice] = useState([]);
     const [listPayment, setListPayment] = useState([]);
     const [listProvince, setListProvince] = useState([]);
-    const [selectedPrice, setSelectedPrice] = useState("");
-    const [selectedPayment, setSelectedPayment] = useState("");
-    const [selectedProvince, setSelectedProvince] = useState("");
+    const [selectedPrice, setSelectedPrice] = useState(null);
+    const [selectedPayment, setSelectedPayment] = useState(null);
+    const [selectedProvince, setSelectedProvince] = useState(null);
     const [nameClinic, setNameClinic] = useState("");
     const [addressClinic, setAddressClinic] = useState("");
     const [note, setNote] = useState("");
@@ -47,6 +47,12 @@ const ManageDoctor = () => {
         setContentMarkdown('');
         setDescription(''); // Reset description
         setIsEdit(false);
+        setSelectedPrice(null);
+        setSelectedPayment(null);
+        setSelectedProvince(null);
+        setNameClinic('');
+        setAddressClinic('');
+        setNote('');
     };
     const handleSaveContentMarkdown = () => {
         console.log('State values:', {
@@ -54,7 +60,13 @@ const ManageDoctor = () => {
             contentHTML,
             selectedDoctor,
             description,
-            listDoctors
+            listDoctors,
+            selectedPrice,
+            selectedPayment,
+            selectedProvince,
+            nameClinic,
+            addressClinic,
+            note,
         });
 
         dispatch(saveDetailDoctor({
@@ -63,11 +75,16 @@ const ManageDoctor = () => {
             description: description,
             doctorId: selectedDoctor.value,
             action: isEdit === true ? "EDIT" : "CREATE",
+            priceId: selectedPrice.value,
+            paymentId: selectedPayment.value,
+            provinceId: selectedProvince.value,
+            nameClinic: nameClinic || '',
+            addressClinic: addressClinic || '',
+            note: note || '',
         }));
         resetForm()
     }
     const handleChangeSelect = async (selectedOption) => {
-
         setSelectedDoctor(selectedOption)
         let res = await getDetailInforDoctor(selectedOption.value) // lay thong tin chi tiet bac si
         if (res && res.errCode === 0 && res.data && res.data.Markdown.description) {
@@ -84,8 +101,46 @@ const ManageDoctor = () => {
         }
         console.log('Option selected:', res);
     }
-    const handleOnChangeDes = (event) => {
-        setDescription(event.target.value);
+    // handleChangeSelectDoctorInfor Hàm xử lý sự kiện khi người dùng chọn option từ các Select (giá, phương thức thanh toán, tỉnh thành)
+    const handleChangeSelectDoctorInfor = async (selectedOption, name) => {
+        let stateName = name.name;
+        console.log('check new select on change: ', selectedOption, stateName)
+        // Dựa vào tên state, cập nhật state tương ứng với giá trị mới được chọn
+        switch (stateName) {
+            case 'selectedPrice':
+                setSelectedPrice(selectedOption);
+                break;
+            case 'selectedPayment':
+                setSelectedPayment(selectedOption);
+                break;
+            case 'selectedProvince':
+                setSelectedProvince(selectedOption);
+                break;
+            default:
+                break;
+        }
+    }
+    const handleOnChangeText = (event, id) => {
+        const value = event.target.value;
+        console.log(`handleOnChangeText: id = ${id}, value = ${value}`);
+        switch (id) {
+            case 'description':
+                setDescription(value);
+                break;
+            case 'nameClinic':
+                setNameClinic(value);
+                break;
+            case 'addressClinic':
+                setAddressClinic(value);
+                break;
+            case 'note':
+                setNote(value);
+                break;
+            default:
+                console.warn(`Unhandled input id: ${id}`);
+                break;
+        }
+
         // console.log('description', event.target.value)
     }
 
@@ -96,18 +151,27 @@ const ManageDoctor = () => {
         dispatch(getRequiredDoctorInfor());
     }, [dispatch])
 
-
     // data input select
     const buildDataInputSelect = (inputData, type) => {
         let result = [];
         if (inputData && inputData.length > 0) {
-            inputData.map((item) => {
-                let object = {};
-                let label = type === 'USERS' ? `${item.firstName} ${item.lastName}` : item.valueVi;
-                object.label = label;
-                object.value = item.id;
-                result.push(object);
-            })
+            if (type === 'DOCTORS') {
+                inputData.map((item) => {
+                    let object = {};
+                    let label = `${item.firstName} ${item.lastName}`;
+                    object.label = label;
+                    object.value = item.id;
+                    result.push(object);
+                })
+            } else if (type === 'PRICE' || type === "PAYMENT" || type === "PROVINCE") {
+                inputData.map((item) => {
+                    let object = {};
+                    let label = `${item.valueVi}`;
+                    object.label = label;
+                    object.value = item.keyMap;
+                    result.push(object);
+                })
+            }
         }
         return result;
     }
@@ -115,14 +179,14 @@ const ManageDoctor = () => {
     // Cập nhật danh sách bác sĩ cho Select
     useEffect(() => {
         if (allDoctors && allDoctors.length > 0) {
-            let dataSelect = buildDataInputSelect(allDoctors, 'USERS');
+            let dataSelect = buildDataInputSelect(allDoctors, 'DOCTORS');
             setListDoctors(dataSelect)
         }
         if (allRequiredDoctorInfor && allRequiredDoctorInfor.resPayment) {
             let { resPayment, resPrice, resProvince } = allRequiredDoctorInfor;
-            let dataSelectPrice = buildDataInputSelect(resPrice);
-            let dataSelectPayment = buildDataInputSelect(resPayment);
-            let dataSelectProvince = buildDataInputSelect(resProvince);
+            let dataSelectPrice = buildDataInputSelect(resPrice, 'PRICE');
+            let dataSelectPayment = buildDataInputSelect(resPayment, 'PAYMENT');
+            let dataSelectProvince = buildDataInputSelect(resProvince, 'PROVINCE');
             console.log('data new: ', dataSelectPrice, dataSelectPayment, dataSelectProvince)
             setListPrice(dataSelectPrice);
             setListPayment(dataSelectPayment);
@@ -150,8 +214,7 @@ const ManageDoctor = () => {
                     <div className='title-label mb-2'>Thông tin giới thiệu</div>
                     <textarea className='form-control' rows="4"
                         value={description}
-                        onChange={handleOnChangeDes}>
-
+                        onChange={(event) => handleOnChangeText(event, 'description')}>
                     </textarea>
                 </div>
             </div>
@@ -160,40 +223,52 @@ const ManageDoctor = () => {
                     <label className='title-label mb-2'>Chọn giá</label>
                     <Select
                         options={listPrice}
-                        // value={selectedDoctor}
-                        // onChange={handleChangeSelect}
+                        value={selectedPrice}
+                        onChange={handleChangeSelectDoctorInfor}
                         placeholder={'Chọn giá'}
+                        name='selectedPrice'
                     />
                 </div>
                 <div className='col-4 form-group'>
                     <label className='title-label mb-2'>Chọn phương thức thanh toán</label>
                     <Select
                         options={listPayment}
-                        // value={selectedDoctor}
-                        // onChange={handleChangeSelect}
+                        value={selectedPayment}
+                        onChange={handleChangeSelectDoctorInfor}
                         placeholder={'Chọn phương thức thanh toán'}
+                        name='selectedPayment'
                     />
                 </div>
                 <div className='col-4 form-group'>
                     <label className='title-label mb-2'>Chọn tỉnh thành</label>
                     <Select
                         options={listProvince}
-                        // value={selectedDoctor}
-                        // onChange={handleChangeSelect}
+                        value={selectedProvince}
+                        onChange={handleChangeSelectDoctorInfor}
                         placeholder={'Chọn tỉnh thành'}
+                        name='selectedProvince'
                     />
                 </div>
                 <div className='col-4 form-group mt-2'>
                     <label className='title-label mb-2'>Tên phòng khám</label>
-                    <input className='form-control' />
+                    <input className='form-control'
+                        value={nameClinic || ''}
+                        onChange={(event) => handleOnChangeText(event, 'nameClinic')}
+                    />
                 </div>
                 <div className='col-4 form-group mt-2'>
                     <label className='title-label mb-2'>Địa chỉ phòng khám</label>
-                    <input className='form-control' />
+                    <input className='form-control'
+                        value={addressClinic || ''}
+                        onChange={(event) => handleOnChangeText(event, 'addressClinic')}
+                    />
                 </div>
                 <div className='col-4 form-group mt-2'>
                     <label className='title-label mb-2'>Note</label>
-                    <input className='form-control' />
+                    <input className='form-control'
+                        value={note || ''}
+                        onChange={(event) => handleOnChangeText(event, 'note')}
+                    />
                 </div>
             </div>
             <div className='manage-doctor-editor'>

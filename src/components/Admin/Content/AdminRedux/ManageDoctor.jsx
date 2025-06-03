@@ -87,17 +87,54 @@ const ManageDoctor = () => {
     const handleChangeSelect = async (selectedOption) => {
         setSelectedDoctor(selectedOption)
         let res = await getDetailInforDoctor(selectedOption.value) // lay thong tin chi tiet bac si
-        if (res && res.errCode === 0 && res.data && res.data.Markdown.description) {
+        if (res && res.errCode === 0 && res.data && res.data.Markdown) {
             let markdown = res.data.Markdown;
+            // let doctor_infor = res.data.Doctor_Infor; 
+            let addressClinic = '', nameClinic = '', note = '', paymentId = '', priceId = '', provinceId = '';
+            let selectedPayment = '', selectedPrice = '', selectedProvince = ''
+            if (res.data.Doctor_Infor) {
+                addressClinic = res.data.Doctor_Infor.addressClinic;
+                nameClinic = res.data.Doctor_Infor.nameClinic;
+                note = res.data.Doctor_Infor.note;
+                paymentId = res.data.Doctor_Infor.paymentId;
+                priceId = res.data.Doctor_Infor.priceId;
+                provinceId = res.data.Doctor_Infor.provinceId;
+
+                // tim item 
+                selectedPayment = listPayment.find(item => {
+                    return item && item.value === paymentId
+                })
+                selectedPrice = listPrice.find(item => {
+                    return item && item.value === priceId
+                })
+                selectedProvince = listProvince.find(item => {
+                    return item && item.value === provinceId
+                })
+                console.log('check findItem find arrray: ', selectedPayment, selectedPrice, selectedProvince)
+            }
             setContentMarkdown(markdown.contentMarkdown)
             setContentHTML(markdown.contentMarkdown)
             setDescription(markdown.description);
             setIsEdit(true);
+            // fill data vào select, input
+            setAddressClinic(addressClinic);
+            setNameClinic(nameClinic);
+            setNote(note)
+            setSelectedPrice(selectedPrice);
+            setSelectedPayment(selectedPayment);
+            setSelectedProvince(selectedProvince)
         } else {
             setContentMarkdown('');
             setContentHTML('');
             setDescription('');
             setIsEdit(false);
+
+            setAddressClinic('');
+            setNameClinic('');
+            setNote('')
+            setSelectedPrice('');
+            setSelectedPayment('');
+            setSelectedProvince('');
         }
         console.log('Option selected:', res);
     }

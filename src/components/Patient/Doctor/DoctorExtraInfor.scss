@@ -1,0 +1,26 @@
+.doctor-extra-infor-container {
+    .content-up {}
+
+    .content-down {
+        .view-detail {
+            span {
+                cursor: pointer;
+                margin-top: 10px;
+
+                &:hover {
+                    color: rgb(38, 160, 231);
+
+                }
+            }
+        }
+
+        .hide-price {
+            margin-top: 10px;
+
+            span {
+                cursor: pointer;
+                color: rgb(38, 160, 231);
+            }
+        }
+    }
+}

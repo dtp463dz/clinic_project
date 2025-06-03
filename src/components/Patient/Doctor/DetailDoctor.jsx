@@ -10,6 +10,7 @@ import { FaCalendarAlt } from "react-icons/fa";
 import { getDetailInforDoctor } from "../../../services/userService";
 import { Buffer } from 'buffer';
 import DoctorSchedule from "./DoctorSchedule";
+import DoctorExtraInfor from "./DoctorExtraInfor";
 
 const DetailDoctor = () => {
     const { id } = useParams(); // Lấy id từ URL
@@ -70,7 +71,9 @@ const DetailDoctor = () => {
                             </div>
 
                             <div className="schedule-content-down">
-
+                                <div className="">
+                                    <DoctorExtraInfor doctorIdFromParent={detailDoctor && detailDoctor.id ? detailDoctor.id : -1} />
+                                </div>
                             </div>
                         </div>
                     </div>

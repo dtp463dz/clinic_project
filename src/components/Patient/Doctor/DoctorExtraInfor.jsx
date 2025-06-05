@@ -1,38 +1,72 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import "./DoctorExtraInfor.scss";
+import { getExtraInforDoctorById } from "../../../services/userService";
+import { NumericFormat } from 'react-number-format';
 
 const DoctorExtraInfor = (props) => {
     const [isShowDetailInfor, setIsShowDetailInfor] = useState(false);
+    const [extraInfor, setExtraInfor] = useState({});
 
     const showHideDetailInfor = (status) => {
         setIsShowDetailInfor(status)
     }
+    useEffect(() => {
+        const fetchExtraInfor = async () => {
+            if (props.doctorIdFromParent && props.doctorIdFromParent !== -1) {
+                let res = await getExtraInforDoctorById(props.doctorIdFromParent);
+                if (res && res.errCode === 0) {
+                    setExtraInfor(res.data)
+                }
+                console.log('check res doctor extra: ', res)
+            }
+        };
+        fetchExtraInfor();
+
+    }, [props.doctorIdFromParent])
+    console.log('check extra', extraInfor)
     return (
         <div className="doctor-extra-infor-container">
             <div className="content-up">
                 <div className="text-address">Địa chỉ phòng khám</div>
-                <div className="name=clinic">Phòng khám chuyên khoa da liễu</div>
-                <div className="detail-address">207 Phố Huế - Hai Bà Trưng - Hà Nội</div>
+                <div className="name=clinic">{extraInfor?.nameClinic || ""}</div>
+                <div className="detail-address">{extraInfor?.addressClinic || ""}</div>
             </div>
             <div className="content-down">
                 {isShowDetailInfor === false ?
                     <div className="view-detail">
-                        <div>GIÁ KHÁM: 250.000đ. </div>
-                        <span onClick={() => showHideDetailInfor(true)}>Xem chi tiết</span>
+                        <div className="title-price">
+                            GIÁ KHÁM :
+                            <NumericFormat
+                                value={extraInfor?.priceTypeData?.valueVi}
+                                displayType={'text'}
+                                thousandSeparator={true}
+                                suffix={'VND'}
+                                className="currency"
+                            />
+                        </div>
+                        <span className="view-more" onClick={() => showHideDetailInfor(true)}>Xem chi tiết</span>
                     </div>
                     :
                     <>
-                        <div className="title-price">Giá Khám: </div>
-                        <div className="detail-infor">
-                            <div>
-                                <span className="left">Giá khám</span>
-                                <span className="right">Giá khám</span>
+                        <div className="view-detail">
+                            <div className="title-price">
+                                GIÁ KHÁM :
+                                <NumericFormat
+                                    value={extraInfor?.priceTypeData?.valueVi}
+                                    displayType={'text'}
+                                    thousandSeparator={true}
+                                    suffix={'VND'}
+                                    className="currency"
+                                />
                             </div>
-                            <div>Mô tả</div>
-                        </div>
-                        <div className="payment">LOẠI BẢO HIỂM ÁP DỤNG.</div>
-                        <div className="hide-price">
-                            <span onClick={() => showHideDetailInfor(false)}>Ẩn bảng giá</span>
+                            <div className="detail-infor">
+                                <div className="note">{extraInfor?.note}</div>
+                                <div className="payment">Người bệnh có thể thanh toán bằng hình thức: {extraInfor?.paymentTypeData?.valueVi || ""}</div>
+
+                            </div>
+                            <div className="hide-price">
+                                <span onClick={() => showHideDetailInfor(false)}>Ẩn bảng giá</span>
+                            </div>
                         </div>
                     </>
                 }

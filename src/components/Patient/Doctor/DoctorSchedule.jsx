@@ -55,7 +55,7 @@ const DoctorSchedule = (props) => {
                     if (res && res.errCode === 0) {
                         setAllAvalableTime(res.data ? res.data : []);
                     }
-                    console.log('check fetchSchedule: ', res);
+                    // console.log('check fetchSchedule: ', res);
                 } catch (error) {
                     console.error('Failed to fetch schedule:', error);
                 }

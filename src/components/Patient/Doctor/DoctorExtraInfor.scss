@@ -1,25 +1,87 @@
 .doctor-extra-infor-container {
-    .content-up {}
+    margin-top: 10px;
+    font-family: Arial, sans-serif;
+    color: #2c3e50;
+
+    .content-up {
+        margin-bottom: 20px;
+
+        .text-address {
+            font-weight: bold;
+            font-size: 16px;
+            color: #e67e22;
+            margin-bottom: 8px;
+        }
+
+        .name-clinic {
+            font-size: 14px;
+            font-weight: 600;
+            color: #2980b9;
+            margin-bottom: 4px;
+        }
+
+        .detail-address {
+            font-size: 14px;
+            color: #7f8c8d;
+        }
+    }
 
     .content-down {
         .view-detail {
-            span {
-                cursor: pointer;
-                margin-top: 10px;
+            .title-price {
+                font-weight: bold;
+                font-size: 16px;
+                color: #e67e22;
+                margin-bottom: 8px;
 
-                &:hover {
-                    color: rgb(38, 160, 231);
-
+                .currency {
+                    margin: 0 5px;
+                    color: #27ae60;
                 }
             }
-        }
 
-        .hide-price {
-            margin-top: 10px;
-
-            span {
+            .view-more {
                 cursor: pointer;
-                color: rgb(38, 160, 231);
+                margin-top: 10px;
+                color: #3498db;
+                font-size: 14px;
+                text-decoration: none;
+
+                &:hover {
+                    color: #e74c3c;
+                    text-decoration: underline;
+                }
+            }
+
+            .detail-infor {
+                margin-top: 10px;
+                font-size: 14px;
+                color: #7f8c8d;
+
+                .note {
+                    margin-bottom: 8px;
+                    color: #8e44ad;
+                }
+
+                .payment {
+                    margin-bottom: 8px;
+                    color: #2c3e50;
+                }
+            }
+
+            .hide-price {
+                margin-top: 10px;
+
+                span {
+                    cursor: pointer;
+                    color: #3498db;
+                    font-size: 14px;
+
+                    &:hover {
+                        color: #e74c3c;
+                        text-decoration: underline;
+                    }
+                }
             }
         }
     }

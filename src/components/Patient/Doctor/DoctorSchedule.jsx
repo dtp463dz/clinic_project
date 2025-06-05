@@ -4,10 +4,16 @@ import dayjs from 'dayjs';
 import 'dayjs/locale/vi'; // nạp locale tiếng Việt
 import { getScheduleDoctorByDate } from "../../../services/userService";
 import { FaCalendarAlt, FaRegHandPointUp } from "react-icons/fa";
+import BookingModal from "./Modal/BookingModal";
 const DoctorSchedule = (props) => {
     const [allDays, setAllDays] = useState([]);
     const [allAvalableTime, setAllAvalableTime] = useState([]);
     const [selectedDate, setSelectedDate] = useState(null); // state mới để lưu ngày được chọn
+
+    // modal
+    const [showModalBooking, setShowModalBooking] = useState(false);
+    // data schedule time modal
+    const [dataScheduleTimeModal, setDataScheduleTimeModal] = useState({});
 
     // xử lý in hoa chữ cái đầu mỗi từ
     function capitalizeEachWord(str) {
@@ -37,7 +43,7 @@ const DoctorSchedule = (props) => {
                 value: currentDate.startOf('day').valueOf()
             });
         }
-        console.log("allDays: ", tempDays)
+        // console.log("allDays: ", tempDays)
         setAllDays(tempDays);
         if (tempDays.length > 0) {
             setSelectedDate(tempDays[0].value); // Chọn ngày đầu tiên làm mặc định
@@ -63,59 +69,79 @@ const DoctorSchedule = (props) => {
         };
         fetchSchedule();
     }, [props.doctorIdFromParent, selectedDate]);
+    // onChange select
     const handleOnChangeSelect = async (event) => {
         const date = event.target.value;
         setSelectedDate(date); // Cập nhật ngày được chọn
     }
+    // click schedule time modal
+    const handleClickScheduleTimeModal = (time) => {
+        setShowModalBooking(true)
+        setDataScheduleTimeModal(time)
+        console.log('check schedule time: ', time)
+    }
 
     return (
-        <div className="doctor-schedule-container">
-            <div className="all-schedule">
-                <select onChange={(event) => handleOnChangeSelect(event)}>
-                    {allDays && allDays.length > 0 &&
-                        allDays.map((item, index) => {
-                            return (
-                                <option
-                                    key={index}
-                                    value={item.value}
-                                >
-                                    {item.label}
-                                </option>
-                            )
-                        })
-                    }
-                </select>
-            </div>
-            <div className="all-avaiable-time">
-                <div className="text-calendar">
-                    <FaCalendarAlt className="icon-calendar" /><span>Lịch khám</span>
+        <>
+            <div className="doctor-schedule-container">
+                <div className="all-schedule">
+                    <select onChange={(event) => handleOnChangeSelect(event)}>
+                        {allDays && allDays.length > 0 &&
+                            allDays.map((item, index) => {
+                                return (
+                                    <option
+                                        key={index}
+                                        value={item.value}
+                                    >
+                                        {item.label}
+                                    </option>
+                                )
+                            })
+                        }
+                    </select>
                 </div>
-                <div className="time-content">
-                    {allAvalableTime && allAvalableTime.length > 0 ?
-                        <>
-                            <div className="time-content-btns">
-                                {allAvalableTime.map((item, index) => {
-                                    let timeDisplay = item.timeTypeData.valueVi;
-                                    return (
-                                        <button key={index}>{timeDisplay}</button>
-                                    )
-                                })
-                                }
-                            </div>
+                <div className="all-avaiable-time">
+                    <div className="text-calendar">
+                        <FaCalendarAlt className="icon-calendar" /><span>Lịch khám</span>
+                    </div>
+                    <div className="time-content" >
+                        {allAvalableTime && allAvalableTime.length > 0 ?
+                            <>
+                                <div className="time-content-btns">
+                                    {allAvalableTime.map((item, index) => {
+                                        let timeDisplay = item.timeTypeData.valueVi;
+                                        return (
+                                            <button
+                                                onClick={() => handleClickScheduleTimeModal(item)}
+                                                key={index}
+                                            >
+                                                {timeDisplay}
+                                            </button>
+                                        )
+                                    })
+                                    }
+                                </div>
 
-                            <div className="book-free">
-                                <span>Chọn <FaRegHandPointUp /> và đặt (miễn phí)</span>
-                            </div>
+                                <div className="book-free">
+                                    <span>Chọn <FaRegHandPointUp /> và đặt (miễn phí)</span>
+                                </div>
 
-                        </>
-                        :
-                        <div className="no-schedule">
-                            <span>Không có lịch hẹn trong thời gian này, vui lòng chọn thời gian khác</span>
-                        </div>
-                    }
+                            </>
+                            :
+                            <div className="no-schedule">
+                                <span>Không có lịch hẹn trong thời gian này, vui lòng chọn thời gian khác</span>
+                            </div>
+                        }
+                    </div>
                 </div>
             </div>
-        </div>
+            <BookingModal
+                show={showModalBooking}
+                setShow={setShowModalBooking}
+                dataTime={dataScheduleTimeModal}
+            />
+        </>
+
     )
 }
 

@@ -11,6 +11,8 @@ import { getDetailInforDoctor } from "../../../services/userService";
 import { Buffer } from 'buffer';
 import DoctorSchedule from "./DoctorSchedule";
 import DoctorExtraInfor from "./DoctorExtraInfor";
+import { useNavigate } from 'react-router-dom';
+
 
 const DetailDoctor = () => {
     const { id } = useParams(); // Lấy id từ URL
@@ -24,7 +26,7 @@ const DetailDoctor = () => {
 
     const fetchDetaiInforDoctor = async () => {
         let res = await getDetailInforDoctor(id);
-        console.log('>> check res fetch Detai Infor Doctor: ', res)
+        // console.log('>> check res fetch Detai Infor Doctor: ', res)
         if (res && res.errCode === 0) {
             setDetailDoctor(res.data);
         }
@@ -36,6 +38,12 @@ const DetailDoctor = () => {
                 : '';
             return imageBase64;
         }
+    }
+    const navigate = useNavigate();
+
+
+    const handleBooking = () => {
+        navigate('/')
     }
 
     console.log('check state', detailDoctor)
@@ -59,9 +67,9 @@ const DetailDoctor = () => {
                             <img src={FBImage} alt="Facebook Icon" style={{ width: '10%' }} />
                             <img src={ZaloImage} alt="Zalo Icon" style={{ width: '10%' }} />
                         </div>
-                        <div className="booking-doctor">
+                        <div className="booking-doctor" onClick={handleBooking}>
                             <p className="booking-icon"><FaCalendarAlt /></p>
-                            <p className="booking-text"> Đặt lịch ngay</p>
+                            <p className="booking-text" > Đặt lịch ngay</p>
                         </div>
                         <div className="schedule-doctor">
                             <div className="schedule-content-up">

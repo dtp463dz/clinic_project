@@ -23,7 +23,7 @@ const DoctorExtraInfor = (props) => {
         fetchExtraInfor();
 
     }, [props.doctorIdFromParent])
-    console.log('check extra', extraInfor)
+    // console.log('check extra', extraInfor)
     return (
         <div className="doctor-extra-infor-container">
             <div className="content-up">

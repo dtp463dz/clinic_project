@@ -46,7 +46,7 @@ const DetailDoctor = () => {
         navigate('/')
     }
 
-    console.log('check state', detailDoctor)
+    // console.log('check state', detailDoctor)
     let nameDetailDoctor = `${detailDoctor.positionData?.valueVi} ${detailDoctor.firstName} ${detailDoctor.lastName}`;
     return (
         <>

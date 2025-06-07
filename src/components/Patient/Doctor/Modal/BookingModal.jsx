@@ -1,12 +1,20 @@
 import './BookingModal.scss'
 import Modal from 'react-bootstrap/Modal';
 import Button from 'react-bootstrap/Button';
+import ProfileDoctor from '../ProfileDoctor';
+import _ from 'lodash';
 
 const BookingModal = (props) => {
     const { show, setShow, dataTime } = props;
     const handleClose = () => {
         setShow(false);
     }
+    console.log("check dataTime: ", dataTime);
+    let doctorId = '';
+    if (dataTime && !_.isEmpty(dataTime)) {
+        doctorId = dataTime.doctorId
+    }
+    // let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : '';
 
     return (
         <div>
@@ -26,11 +34,11 @@ const BookingModal = (props) => {
                     <div className='booking-modal-body mx-3'>
                         {/* {JSON.stringify(dataTime)} */}
                         <div className='doctor-infor'>
+                            <ProfileDoctor
+                                doctorId={doctorId}
+                            />
+                        </div>
 
-                        </div>
-                        <div className='price'>
-                            Giá khám 500.000VND
-                        </div>
                         <div className='row'>
                             <div className='col-6 form-group'>
                                 <label>Họ tên</label>

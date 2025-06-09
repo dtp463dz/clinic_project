@@ -9,13 +9,13 @@ const BookingModal = (props) => {
     const handleClose = () => {
         setShow(false);
     }
-    console.log("check dataTime: ", dataTime);
+
     let doctorId = '';
     if (dataTime && !_.isEmpty(dataTime)) {
         doctorId = dataTime.doctorId
     }
     // let doctorId = dataTime && !_.isEmpty(dataTime) ? dataTime.doctorId : '';
-
+    console.log("check dataTime: ", dataTime);
     return (
         <div>
             <Modal
@@ -36,6 +36,8 @@ const BookingModal = (props) => {
                         <div className='doctor-infor'>
                             <ProfileDoctor
                                 doctorId={doctorId}
+                                isShowDescriptionDoctor={true} // open description
+                                dataTime={dataTime}
                             />
                         </div>
 

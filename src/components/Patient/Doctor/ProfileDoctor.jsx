@@ -3,20 +3,23 @@ import { getProfileDoctorById } from "../../../services/userService";
 import { useEffect, useState } from "react";
 import { Buffer } from 'buffer';
 import { NumericFormat } from 'react-number-format';
-
+import _ from 'lodash';
+import dayjs from 'dayjs';
+import 'dayjs/locale/vi';
+dayjs.locale('vi');
 
 const ProfileDoctor = (props) => {
     const [dataProfile, setDataProfile] = useState({});
+    const { doctorId, dataTime } = props;
 
     useEffect(() => {
         const fetchData = async () => {
-            let data = await getInforDoctor(props.doctorId);
+            let data = await getInforDoctor(doctorId);
             setDataProfile(data);
-            console.log('check data profile: ', data);
         };
 
         fetchData();
-    }, [props.doctorId]);
+    }, [doctorId]);
 
     const getInforDoctor = async (id) => {
         let result = {};
@@ -38,7 +41,25 @@ const ProfileDoctor = (props) => {
         }
     }
     let nameDetailDoctor = `${dataProfile.positionData?.valueVi} ${dataProfile.firstName} ${dataProfile.lastName}`;
-    console.log('check price', dataProfile?.Doctor_Infor?.priceTypeData?.valueVi);
+    console.log('check data profile: ', dataProfile);
+
+    const renderTimeBooking = (dataTime) => {
+        console.log('check dataTime inside time booking: ', dataTime)
+        if (dataTime && !_.isEmpty(dataTime)) {
+            const date = dayjs(Number(dataTime.date)).locale('vi').format('dddd - DD/MM/YYYY');
+            const capitalizedDate = date.charAt(0).toUpperCase() + date.slice(1); // viết hoa chữ cái đầu 
+            const time = dataTime?.timeTypeData?.valueVi;
+            return (
+                <>
+                    <div>{time}, {capitalizedDate}</div>
+                    <div>Miễn phí đặt lịch</div>
+                </>
+            )
+        }
+        return <></>
+
+    }
+
     return (
         <div className="profile-doctor-container">
             <div className="intro-doctor">
@@ -66,8 +87,18 @@ const ProfileDoctor = (props) => {
                     </div>
                     <div className="introduce-detail-doctor">
                         <div className="introduce-title">
-                            {dataProfile && dataProfile.Markdown && dataProfile.Markdown.description &&
-                                <span>{dataProfile.Markdown.description}</span>
+                            {props.isShowDescriptionDoctor === false ?  //  close description
+                                <>
+                                    {
+                                        dataProfile && dataProfile.Markdown && dataProfile.Markdown.description &&
+                                        <span>{dataProfile.Markdown.description}</span>
+                                    }
+
+                                </>
+                                :
+                                <>
+                                    {renderTimeBooking(dataTime)}
+                                </>
                             }
                         </div>
                     </div>

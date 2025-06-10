@@ -41,10 +41,10 @@ const ProfileDoctor = (props) => {
         }
     }
     let nameDetailDoctor = `${dataProfile.positionData?.valueVi} ${dataProfile.firstName} ${dataProfile.lastName}`;
-    console.log('check data profile: ', dataProfile);
+    // console.log('check data profile: ', dataProfile);
 
     const renderTimeBooking = (dataTime) => {
-        console.log('check dataTime inside time booking: ', dataTime)
+        // console.log('check dataTime inside time booking: ', dataTime)
         if (dataTime && !_.isEmpty(dataTime)) {
             const date = dayjs(Number(dataTime.date)).locale('vi').format('dddd - DD/MM/YYYY');
             const capitalizedDate = date.charAt(0).toUpperCase() + date.slice(1); // viết hoa chữ cái đầu 

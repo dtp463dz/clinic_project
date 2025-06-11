@@ -10,7 +10,9 @@ import { fetchGenderStart } from "../../../../redux/action/adminAction";
 import { useDispatch, useSelector } from 'react-redux';
 import { postPatientBookAppointment } from '../../../../services/userService';
 import { toast } from 'react-toastify';
-
+import dayjs from 'dayjs';
+import 'dayjs/locale/vi';
+dayjs.locale('vi');
 
 const BookingModal = (props) => {
     const { show, setShow, dataTime } = props;
@@ -29,14 +31,23 @@ const BookingModal = (props) => {
     // dong modal
     const handleClose = () => {
         setShow(false);
+        resetForm()
     }
 
-    // let doctorId = '';
-    // if (dataTime && !_.isEmpty(dataTime)) {
-    //     doctorId = dataTime.doctorId
-    // }
-    // console.log("check dataTime: ", dataTime);
-    // let timeType = dataTime.timeType;
+    const resetForm = () => {
+        setFormData({
+            fullName: '',
+            phoneNumber: '',
+            email: '',
+            address: '',
+            reason: '',
+            birthday: '',
+            selectedGender: '',
+            doctorId: dataTime?.doctorId || '',
+            genders: '',
+            timeType: dataTime?.timeType || ''
+        });
+    };
 
     useEffect(() => {
         if (dataTime && !_.isEmpty(dataTime)) {
@@ -82,7 +93,26 @@ const BookingModal = (props) => {
 
     }, [dispatch])
     const genderArr = useSelector((state) => state.admin.genders)
-
+    // render time
+    const buildTimeBooking = (dataTime) => {
+        // console.log('check dataTime inside time booking: ', dataTime)
+        if (dataTime && !_.isEmpty(dataTime)) {
+            const date = dayjs(Number(dataTime.date)).locale('vi').format('dddd - DD/MM/YYYY');
+            const capitalizedDate = date.charAt(0).toUpperCase() + date.slice(1); // viết hoa chữ cái đầu 
+            const time = dataTime?.timeTypeData?.valueVi;
+            return `${time}, ${capitalizedDate}`
+        }
+        return <></>
+    }
+    // render name doctor
+    const buildDoctorName = (dataTime) => {
+        // console.log('check dataTime inside time booking: ', dataTime)
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let nameDoctor = `${dataTime?.doctorData?.firstName}${dataTime?.doctorData?.lastName}`;
+            return `${nameDoctor}`
+        }
+        return <></>
+    }
     // xác nhận đặt lịch
     const handleConfirmBooking = async () => {
         console.log('Thông tin đặt lịch:', {
@@ -98,6 +128,8 @@ const BookingModal = (props) => {
             Mã_bác_sĩ: formData.doctorId
         });
         let date = new Date(formData.birthday).getTime()
+        let timeString = buildTimeBooking(dataTime);
+        let doctorName = buildDoctorName(dataTime);
 
         // validate input
         let res = await postPatientBookAppointment({
@@ -109,15 +141,20 @@ const BookingModal = (props) => {
             date: date,
             selectedGender: formData.selectedGender,
             doctorId: formData.doctorId,
-            timeType: formData.timeType
+            timeType: formData.timeType,
+            timeString: timeString, // thời gian đặt lịch   
+            doctorName: doctorName, // tên bác sĩ
         })
         if (res && res.errCode === 0) {
             toast.success('Đặt lịch khám thành công')
             setShow(false);
+            resetForm()
         } else {
             toast.error('Đặt lịch khám thất bại')
         }
     }
+
+    console.log('check dataTime: ', dataTime)
     return (
         <div>
             <Modal

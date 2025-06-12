@@ -8,7 +8,7 @@ import User from './components/User/User.jsx';
 import Admin from './components/Admin/Admin.jsx';
 import Login from './components/Auth/Login.jsx';
 import Register from './components/Auth/Register.jsx';
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import NotFound from './components/Notice/NotFound.jsx';
 import ManageUser from './components/Admin/Content/ManageUser.jsx';
@@ -21,8 +21,9 @@ import ManageUserRedux from './components/Admin/Content/AdminRedux/ManageUserRed
 import ManageDoctor from './components/Admin/Content/AdminRedux/ManageDoctor.jsx';
 import DetailDoctor from './components/Patient/Doctor/DetailDoctor.jsx';
 import ManageDoctorSchedule from './components/Admin/Content/Doctor/ManageDoctorSchedule.jsx';
+import VerifyBooking from './components/Patient/VerifyBooking.jsx';
 
-const Layout = (props) => {
+const Layout = () => {
     return (
         <>
             <Routes>
@@ -46,6 +47,8 @@ const Layout = (props) => {
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='*' element={<NotFound />} />
+                <Route path='/verify-booking' element={<VerifyBooking />} />
+
 
                 <Route path='/home' element={<HomePage />} />
                 <Route path='/detail-doctor/:id' element={<DetailDoctor />} />

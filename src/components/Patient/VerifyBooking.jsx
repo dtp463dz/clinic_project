@@ -2,6 +2,8 @@ import { useLocation } from "react-router-dom";
 import { useEffect, useState } from 'react';
 import { postVerifyBookAppointment } from "../../services/userService";
 import "./VerifyBooking.scss";
+import Slogan from "../HomePage/Slogan";
+import HomeHeader from "../HomePage/HomeHeader";
 
 const VerifyBooking = () => {
     const location = useLocation(); // Lấy thông tin URL (bao gồm cả query string)
@@ -33,14 +35,19 @@ const VerifyBooking = () => {
         fetchVerifyBooking()
     }, [location])
     return (
-        <div className="verify-booking-container">
-            <div className="verify-box">
-                <h2>Xác nhận đặt lịch khám</h2>
-                <p className={statusVerify ? "success" : "error"}>
-                    {message}
-                </p>
+        <>
+            <Slogan />
+            <HomeHeader />
+            <div className="verify-booking-container">
+                <div className="verify-box">
+                    <h2>Xác nhận đặt lịch khám</h2>
+                    <p className={statusVerify ? "success" : "error"}>
+                        {message}
+                    </p>
+                </div>
             </div>
-        </div>
+        </>
+
     );
 };
 

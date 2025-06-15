@@ -4,9 +4,17 @@ import Slider from "react-slick";
 import { useEffect, useState } from 'react';
 import { getAllSpecialty } from "../../../services/userService";
 
+import { useNavigate } from 'react-router-dom';
+
 const Specialty = (props) => {
 
     const [dataSpecialty, setDataSpecialty] = useState([])
+    const navigate = useNavigate();
+
+    const handleViewMore = () => {
+        navigate('/view-more-specialty');
+
+    }
 
     useEffect(() => {
         const fetchAllSpecialty = async () => {
@@ -29,7 +37,7 @@ const Specialty = (props) => {
             <div className='section-container'>
                 <div className='section-header'>
                     <span className='title-section'>Chuyên khoa phổ biến</span>
-                    <button className='btn-section'>Xem thêm</button>
+                    <button className='btn-section' onClick={() => handleViewMore()}>Xem thêm</button>
                 </div>
                 <div className='section-body'>
                     <Slider {...props.settings}>

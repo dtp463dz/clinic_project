@@ -30,12 +30,16 @@ const OutStandingDoctor = (props) => {
     const handleViewDetailDoctor = (doctor) => {
         navigate(`/detail-doctor/${doctor.id}`)
     }
+
+    const handleViewMore = () => {
+        navigate(`/view-more-doctor`)
+    }
     return (
         <div className='section-doctor'>
             <div className='section-container'>
                 <div className='section-header'>
                     <span className='title-section'>Bác sĩ nổi bật</span>
-                    <button className='btn-section'>Xem thêm</button>
+                    <button className='btn-section' onClick={() => handleViewMore()}>Xem thêm</button>
                 </div>
                 <div className='section-body'>
                     <Slider {...props.settings}>

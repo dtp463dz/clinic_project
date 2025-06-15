@@ -22,6 +22,8 @@ import ManageDoctor from './components/Admin/Content/AdminRedux/ManageDoctor.jsx
 import DetailDoctor from './components/Patient/Doctor/DetailDoctor.jsx';
 import ManageDoctorSchedule from './components/Admin/Content/Doctor/ManageDoctorSchedule.jsx';
 import VerifyBooking from './components/Patient/VerifyBooking.jsx';
+import ViewMoreSpecialty from './components/HomePage/Section/ViewMore/ViewMoreSpecialty.jsx';
+import ViewMoreDoctor from './components/HomePage/Section/ViewMore/ViewMoreDoctor.jsx';
 
 const Layout = () => {
     return (
@@ -50,7 +52,11 @@ const Layout = () => {
                 <Route path='/verify-booking' element={<VerifyBooking />} />
 
 
-                <Route path='/home' element={<HomePage />} />
+                <Route path="/home" element={<HomePage />} />
+                <Route path="/view-more-specialty" element={<ViewMoreSpecialty />} />
+                <Route path="/view-more-doctor" element={<ViewMoreDoctor />} />
+
+
                 <Route path='/detail-doctor/:id' element={<DetailDoctor />} />
 
             </Routes>

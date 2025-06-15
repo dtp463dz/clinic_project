@@ -52,9 +52,14 @@ const postVerifyBookAppointment = (data) => {
 const createNewSpecialty = (data) => {
     return axios.post('/api/create-new-specialty', data)
 }
+
+// lấy tất cả chuyên khoa
+const getAllSpecialty = () => {
+    return axios.get(`/api/get-all-specialty`)
+}
 export {
     getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService, getDetailInforDoctor,
     saveBulkScheduleDoctor, getScheduleDoctorByDate,
     getExtraInforDoctorById, getProfileDoctorById, postPatientBookAppointment,
-    postVerifyBookAppointment, createNewSpecialty
+    postVerifyBookAppointment, createNewSpecialty, getAllSpecialty
 }

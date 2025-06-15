@@ -1,8 +1,28 @@
 import './Specialty.scss';
 // Import css files
 import Slider from "react-slick";
-import Coxuongkhop from '../../../assets/Specialty/co-xuong-khop.png'
+import { useEffect, useState } from 'react';
+import { getAllSpecialty } from "../../../services/userService";
+
 const Specialty = (props) => {
+
+    const [dataSpecialty, setDataSpecialty] = useState([])
+
+    useEffect(() => {
+        const fetchAllSpecialty = async () => {
+            try {
+                let res = await getAllSpecialty();
+                if (res && res.errCode === 0) {
+                    setDataSpecialty(res.data ? res.data : [])
+                }
+                console.log('check fetchAllSpecialty: ', res);
+            } catch (error) {
+                console.error('Failed all specialty:', error);
+            }
+        };
+        fetchAllSpecialty()
+
+    }, [])
 
     return (
         <div className='section-specialty'>
@@ -13,55 +33,24 @@ const Specialty = (props) => {
                 </div>
                 <div className='section-body'>
                     <Slider {...props.settings}>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
-                                />
-                                <div className='section-content'>Cơ xương khớp 1</div>
-                            </div>
+                        {dataSpecialty && dataSpecialty.length > 0 &&
+                            dataSpecialty.map((item, index) => {
+                                return (
+                                    <div className='section-customize ' key={index.id}>
+                                        <div className="outline specialty-child" >
+                                            <div className='bg-image'
+                                                style={{ backgroundImage: `url(${item.image})` }}
+                                            />
+                                            <div className='section-content section-name'>{item.name}</div>
+                                        </div>
 
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
-                                />
-                                <div className='section-content'>Cơ xương khớp 2</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
-                                />
-                                <div className='section-content'>Cơ xương khớp 3</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
-                                />
-                                <div className='section-content'>Cơ xương khớp 4</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
-                                />
-                                <div className='section-content'>Cơ xương khớp 5</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${Coxuongkhop})` }}
-                                />
-                                <div className='section-content'>Cơ xương khớp 6</div>
-                            </div>
-                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+
+
+
                     </Slider>
                 </div>
 

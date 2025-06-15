@@ -16,6 +16,15 @@ const ManageSpecialty = () => {
         descriptionHTML: '',
         descriptionMarkdown: '',
     })
+
+    const reSetForm = () => {
+        setImage('')
+        setFormSpecialty({
+            name: '',
+            descriptionHTML: '',
+            descriptionMarkdown: '',
+        })
+    }
     const handleImageChange = (base64) => {
         setImage(base64);
         console.log("Ảnh base64:", base64); // Kiểm tra dữ liệu ảnh
@@ -54,6 +63,7 @@ const ManageSpecialty = () => {
         })
         if (res && res.errCode === 0) {
             toast.success('Tạo chuyên khoa thành công')
+            reSetForm()
         } else {
             toast.error('Tạo chuyên khoa thất bại')
         }

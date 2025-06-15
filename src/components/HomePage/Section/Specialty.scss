@@ -5,4 +5,19 @@ $bg-color: #C2EFFF;
     background: $bg-color;
     padding: 20px 0;
 
+    .section-container {
+        .section-body {
+            .section-customize {
+                .specialty-child {
+                    .section-name {
+                        &:hover {
+                            color: blue;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
 }

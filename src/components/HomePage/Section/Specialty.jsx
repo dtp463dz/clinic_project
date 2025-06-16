@@ -13,7 +13,6 @@ const Specialty = (props) => {
 
     const handleViewMore = () => {
         navigate('/view-more-specialty');
-
     }
 
     useEffect(() => {
@@ -32,6 +31,10 @@ const Specialty = (props) => {
 
     }, [])
 
+    const handleViewDetailSpecialty = (specialty) => {
+        navigate(`/detail-specialty/${specialty.id}`)
+    }
+
     return (
         <div className='section-specialty'>
             <div className='section-container'>
@@ -44,7 +47,7 @@ const Specialty = (props) => {
                         {dataSpecialty && dataSpecialty.length > 0 &&
                             dataSpecialty.map((item, index) => {
                                 return (
-                                    <div className='section-customize ' key={index.id}>
+                                    <div className='section-customize ' key={index.id} onClick={() => handleViewDetailSpecialty(item)}>
                                         <div className="outline specialty-child" >
                                             <div className='bg-image'
                                                 style={{ backgroundImage: `url(${item.image})` }}

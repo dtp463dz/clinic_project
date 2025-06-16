@@ -24,15 +24,28 @@ const ManageDoctor = () => {
     const [listDoctors, setListDoctors] = useState([])
 
     // save to doctor_infor table
+    //list
     const [listPrice, setListPrice] = useState([]);
     const [listPayment, setListPayment] = useState([]);
     const [listProvince, setListProvince] = useState([]);
+    const [listClinic, setListClinic] = useState([]);
+    const [listSpecialty, setListSpecialty] = useState([]);
+
+    // selected
     const [selectedPrice, setSelectedPrice] = useState(null);
     const [selectedPayment, setSelectedPayment] = useState(null);
     const [selectedProvince, setSelectedProvince] = useState(null);
+    const [selectedClinic, setSelectedClinic] = useState(null);
+    const [selectedSpecialty, setSelectedSpecialty] = useState(null);
+
+    // 
     const [nameClinic, setNameClinic] = useState("");
     const [addressClinic, setAddressClinic] = useState("");
     const [note, setNote] = useState("");
+    const [clinicId, setClinicId] = useState("");
+    const [specialtyId, setSpecialtyId] = useState("");
+
+
 
     const allRequiredDoctorInfor = useSelector((state) => state.admin.allRequiredDoctorInfor);
     // Xử lý thay đổi nội dung Markdown
@@ -53,6 +66,8 @@ const ManageDoctor = () => {
         setNameClinic('');
         setAddressClinic('');
         setNote('');
+        setClinicId('');
+        setSelectedSpecialty('')
     };
     const handleSaveContentMarkdown = () => {
         console.log('State values:', {
@@ -67,6 +82,10 @@ const ManageDoctor = () => {
             nameClinic,
             addressClinic,
             note,
+            clinicId,
+
+            selectedSpecialty,
+            selectedClinic,
         });
 
         dispatch(saveDetailDoctor({
@@ -81,6 +100,9 @@ const ManageDoctor = () => {
             nameClinic: nameClinic || '',
             addressClinic: addressClinic || '',
             note: note || '',
+            clinicId: selectedClinic && selectedClinic.value ? selectedClinic.value : '',
+            specialtyId: selectedSpecialty.value,
+
         }));
         resetForm()
     }
@@ -90,8 +112,8 @@ const ManageDoctor = () => {
         if (res && res.errCode === 0 && res.data && res.data.Markdown) {
             let markdown = res.data.Markdown;
             // let doctor_infor = res.data.Doctor_Infor; 
-            let addressClinic = '', nameClinic = '', note = '', paymentId = '', priceId = '', provinceId = '';
-            let selectedPayment = '', selectedPrice = '', selectedProvince = ''
+            let addressClinic = '', nameClinic = '', note = '', paymentId = '', priceId = '', provinceId = '', clinicId = '', specialtyId = '';
+            let selectedPayment = '', selectedPrice = '', selectedProvince = '', selectedClinic = '', selectedSpecialty = '';
             if (res.data.Doctor_Infor) {
                 addressClinic = res.data.Doctor_Infor.addressClinic;
                 nameClinic = res.data.Doctor_Infor.nameClinic;
@@ -99,7 +121,8 @@ const ManageDoctor = () => {
                 paymentId = res.data.Doctor_Infor.paymentId;
                 priceId = res.data.Doctor_Infor.priceId;
                 provinceId = res.data.Doctor_Infor.provinceId;
-
+                specialtyId = res.data.Doctor_Infor.specialtyId;
+                clinicId = res.data.Doctor_Infor.clinicId;
                 // tim item 
                 selectedPayment = listPayment.find(item => {
                     return item && item.value === paymentId
@@ -110,7 +133,13 @@ const ManageDoctor = () => {
                 selectedProvince = listProvince.find(item => {
                     return item && item.value === provinceId
                 })
-                console.log('check findItem find arrray: ', selectedPayment, selectedPrice, selectedProvince)
+                selectedSpecialty = listSpecialty.find(item => {
+                    return item && item.value === specialtyId
+                })
+                selectedClinic = listClinic.find(item => {
+                    return item && item.value === clinicId
+                })
+                console.log('check findItem find arrray: ', selectedPayment, selectedPrice, selectedProvince, selectedSpecialty, selectedClinic)
             }
             setContentMarkdown(markdown.contentMarkdown)
             setContentHTML(markdown.contentMarkdown)
@@ -122,7 +151,10 @@ const ManageDoctor = () => {
             setNote(note)
             setSelectedPrice(selectedPrice);
             setSelectedPayment(selectedPayment);
-            setSelectedProvince(selectedProvince)
+            setSelectedProvince(selectedProvince);
+
+            setSelectedClinic(selectedClinic);
+            setSelectedSpecialty(selectedSpecialty);
         } else {
             setContentMarkdown('');
             setContentHTML('');
@@ -135,6 +167,9 @@ const ManageDoctor = () => {
             setSelectedPrice('');
             setSelectedPayment('');
             setSelectedProvince('');
+
+            setSelectedClinic('');
+            setSelectedSpecialty('');
         }
         console.log('Option selected:', res);
     }
@@ -152,6 +187,12 @@ const ManageDoctor = () => {
                 break;
             case 'selectedProvince':
                 setSelectedProvince(selectedOption);
+                break;
+            case 'selectedSpecialty':
+                setSelectedSpecialty(selectedOption);
+                break;
+            case 'selectedClinic':
+                setSelectedClinic(selectedOption);
                 break;
             default:
                 break;
@@ -177,10 +218,7 @@ const ManageDoctor = () => {
                 console.warn(`Unhandled input id: ${id}`);
                 break;
         }
-
-        // console.log('description', event.target.value)
     }
-
     const dispatch = useDispatch();
     // Lấy danh sách bác sĩ khi component mount
     useEffect(() => {
@@ -208,7 +246,15 @@ const ManageDoctor = () => {
                     object.value = item.keyMap;
                     result.push(object);
                 })
+            } else if (type === "SPECIALTY") {
+                inputData.map((item) => {
+                    let object = {};
+                    object.label = item.name;
+                    object.value = item.id;
+                    result.push(object);
+                })
             }
+
         }
         return result;
     }
@@ -220,14 +266,17 @@ const ManageDoctor = () => {
             setListDoctors(dataSelect)
         }
         if (allRequiredDoctorInfor && allRequiredDoctorInfor.resPayment) {
-            let { resPayment, resPrice, resProvince } = allRequiredDoctorInfor;
+            let { resPayment, resPrice, resProvince, resSpecialty } = allRequiredDoctorInfor;
             let dataSelectPrice = buildDataInputSelect(resPrice, 'PRICE');
             let dataSelectPayment = buildDataInputSelect(resPayment, 'PAYMENT');
             let dataSelectProvince = buildDataInputSelect(resProvince, 'PROVINCE');
-            console.log('data new: ', dataSelectPrice, dataSelectPayment, dataSelectProvince)
+            let dataSelectSpecialty = buildDataInputSelect(resSpecialty, 'SPECIALTY');
+
+            console.log('data new: ', dataSelectPrice, dataSelectPayment, dataSelectProvince, dataSelectSpecialty)
             setListPrice(dataSelectPrice);
             setListPayment(dataSelectPayment);
             setListProvince(dataSelectProvince);
+            setListSpecialty(dataSelectSpecialty)
 
         }
     }, [allDoctors, allRequiredDoctorInfor])
@@ -307,10 +356,30 @@ const ManageDoctor = () => {
                         onChange={(event) => handleOnChangeText(event, 'note')}
                     />
                 </div>
+                <div className='col-4 form-group mt-2'>
+                    <label className='title-label mb-2'>Chọn chuyên khoa</label>
+                    <Select
+                        options={listSpecialty}
+                        value={selectedSpecialty}
+                        onChange={handleChangeSelectDoctorInfor}
+                        placeholder={'Chọn chuyên khoa'}
+                        name='selectedSpecialty'
+                    />
+                </div>
+                <div className='col-4 form-group mt-2'>
+                    <label className='title-label mb-2'>Chọn phòng khám</label>
+                    <Select
+                        options={listClinic}
+                        value={selectedClinic}
+                        onChange={handleChangeSelectDoctorInfor}
+                        placeholder={'Chọn phòng khám'}
+                        name='selectedClinic'
+                    />
+                </div>
             </div>
             <div className='manage-doctor-editor'>
                 <MdEditor
-                    style={{ height: '500px' }}
+                    style={{ height: '300px' }}
                     renderHTML={text => mdParser.render(text)}
                     onChange={handleEditorChange}
                     value={contentMarkdown}

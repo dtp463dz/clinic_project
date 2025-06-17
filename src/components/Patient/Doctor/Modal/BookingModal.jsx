@@ -154,7 +154,7 @@ const BookingModal = (props) => {
         }
     }
 
-    console.log('check dataTime: ', dataTime)
+    // console.log('check dataTime: ', dataTime)
     return (
         <div>
             <Modal

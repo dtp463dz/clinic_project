@@ -9,6 +9,8 @@ $bg-color: #C2EFFF;
         .section-body {
             .section-customize {
                 .specialty-child {
+                    cursor: pointer;
+
                     .section-name {
                         &:hover {
                             color: blue;

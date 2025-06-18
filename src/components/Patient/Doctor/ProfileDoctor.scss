@@ -57,3 +57,11 @@
 
 
 }
+
+.view-detail-doctor {
+    cursor: pointer;
+
+    &:hover {
+        color: #03428E;
+    }
+}

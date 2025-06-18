@@ -17,6 +17,8 @@ const DetailSpecialty = () => {
     const [arrDoctorId, setArrDoctorId] = useState([]);
     const [dataDetailSpecialty, setDataDetailSpecialty] = useState({})
     const [listProvince, setListProvince] = useState([])
+
+
     useEffect(() => {
         if (id) {
             const fetchDetailSpecialty = async () => {
@@ -37,26 +39,54 @@ const DetailSpecialty = () => {
                             })
                         }
                     }
+
+                    let dataProvince = resProvince.data;
+                    if (dataProvince && dataProvince.length > 0) {
+                        dataProvince.unshift({
+                            createdAt: null,
+                            keyMap: "ALL",
+                            type: "PROVINCE",
+                            valueVi: "Toàn Quốc"
+                        })
+                    }
                     setDataDetailSpecialty(res.data) // chi tiet chuyen khoa
                     setArrDoctorId(arrDoctorId) // chi tiet bac si thuoc chuyen khoa
-                    setListProvince(resProvince.data) // tỉnh thành phố của bác sĩ
+                    setListProvince(dataProvince) // tỉnh thành phố của bác sĩ
                 }
             }
             fetchDetailSpecialty();
         }
     }, [id])
 
-    console.log('check state: ', arrDoctorId, dataDetailSpecialty, listProvince)
-    const handleOnChangeSelect = (e) => {
-        console.log('check on change', e.target.value)
+    const handleOnChangeSelect = async (e) => {
+        let location = e.target.value;
+        let res = await getDetailSpecialtyById({
+            id: id,
+            location: location
+        });
+        console.log("check res fetchDetailSpecialty: ", res)
+        if (res && res.errCode === 0) {
+            let data = res.data;
+            let arrDoctorId = []
+            if (data && !_.isEmpty(res.data)) {
+                let arr = data.doctorSpecialty;
+                if (arr && arr.length > 0) {
+                    arr.map(item => {
+                        arrDoctorId.push(item.doctorId)
+                    })
+                }
+            }
+            setDataDetailSpecialty(res.data) // chi tiet chuyen khoa
+            setArrDoctorId(arrDoctorId) // chi tiet bac si thuoc chuyen khoa
+        }
     }
+    console.log('check state: ', arrDoctorId, dataDetailSpecialty, listProvince)
+
     return (
         <div className="detail-specialty-container">
             <Slogan />
             <HomeHeader />
             <div className="detail-specialty-body">
-
-
                 <div className="description-specialty">
                     {dataDetailSpecialty && !_.isEmpty(dataDetailSpecialty)
                         &&
@@ -69,7 +99,7 @@ const DetailSpecialty = () => {
                         {listProvince && listProvince.length > 0 &&
                             listProvince.map((item, index) => {
                                 return (
-                                    <option key={index.id} value={item.keyMap}>
+                                    <option key={index} value={item.keyMap}>
                                         {item.valueVi}
                                     </option>
                                 )
@@ -87,6 +117,8 @@ const DetailSpecialty = () => {
                                         <ProfileDoctor
                                             doctorId={doctorId}
                                             isShowDescriptionDoctor={false} // open description
+                                            isShowLinkDetail={true}
+                                            isShowPrice={false}
                                         // dataTime={dataTime}
                                         />
                                     </div>

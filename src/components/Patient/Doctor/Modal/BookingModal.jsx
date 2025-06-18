@@ -177,6 +177,8 @@ const BookingModal = (props) => {
                                 doctorId={formData.doctorId}
                                 isShowDescriptionDoctor={true} // open description
                                 dataTime={dataTime}
+                                isShowLinkDetail={false}
+                                isShowPrice={true}
                             />
                         </div>
 

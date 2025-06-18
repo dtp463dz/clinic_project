@@ -1,6 +1,7 @@
 import "./ProfileDoctor.scss";
 import { getProfileDoctorById } from "../../../services/userService";
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Buffer } from 'buffer';
 import { NumericFormat } from 'react-number-format';
 import _ from 'lodash';
@@ -10,7 +11,7 @@ dayjs.locale('vi');
 
 const ProfileDoctor = (props) => {
     const [dataProfile, setDataProfile] = useState({});
-    const { doctorId, dataTime } = props;
+    const { doctorId, dataTime, isShowLinkDetail, isShowPrice } = props;
 
     useEffect(() => {
         const fetchData = async () => {
@@ -59,6 +60,11 @@ const ProfileDoctor = (props) => {
         return <></>
 
     }
+    // click view detail
+    const navigation = useNavigate()
+    const handleViewDetail = (doctorId) => {
+        navigation(`/detail-doctor/${doctorId}`)
+    }
 
     return (
         <div className="profile-doctor-container">
@@ -105,16 +111,26 @@ const ProfileDoctor = (props) => {
                 </div>
 
             </div>
-            <div className="price">
-                <span>Giá Khám : </span>
-                <NumericFormat
-                    value={dataProfile?.Doctor_Infor?.priceTypeData?.valueVi}
-                    displayType={'text'}
-                    thousandSeparator={true}
-                    suffix={'VND'}
-                    className="currency"
-                />
-            </div>
+            {isShowLinkDetail === true &&
+                <div
+                    className="view-detail-doctor"
+                    onClick={() => handleViewDetail(doctorId)}
+                >
+                    <p>Xem Thêm</p>
+                </div>
+            }
+            {isShowPrice === true &&
+                <div className="price">
+                    <span>Giá Khám : </span>
+                    <NumericFormat
+                        value={dataProfile?.Doctor_Infor?.priceTypeData?.valueVi}
+                        displayType={'text'}
+                        thousandSeparator={true}
+                        suffix={'VND'}
+                        className="currency"
+                    />
+                </div>
+            }
         </div>
     );
 };

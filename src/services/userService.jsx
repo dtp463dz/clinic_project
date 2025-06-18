@@ -57,9 +57,15 @@ const createNewSpecialty = (data) => {
 const getAllSpecialty = () => {
     return axios.get(`/api/get-all-specialty`)
 }
+
+// lấy chi tiết chuyên khoa theo id và location (tỉnh thành)
+const getDetailSpecialtyById = (data) => {
+    return axios.get(`/api/get-detail-specialty-by-id?id=${data.id}&location=${data.location}`)
+}
 export {
     getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService, getDetailInforDoctor,
     saveBulkScheduleDoctor, getScheduleDoctorByDate,
     getExtraInforDoctorById, getProfileDoctorById, postPatientBookAppointment,
-    postVerifyBookAppointment, createNewSpecialty, getAllSpecialty
+    postVerifyBookAppointment, createNewSpecialty, getAllSpecialty,
+    getDetailSpecialtyById
 }

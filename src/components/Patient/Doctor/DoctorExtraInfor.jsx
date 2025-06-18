@@ -17,7 +17,7 @@ const DoctorExtraInfor = (props) => {
                 if (res && res.errCode === 0) {
                     setExtraInfor(res.data)
                 }
-                console.log('check res doctor extra: ', res)
+                // console.log('check res doctor extra: ', res)
             }
         };
         fetchExtraInfor();

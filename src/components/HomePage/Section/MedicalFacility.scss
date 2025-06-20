@@ -5,4 +5,21 @@ $bg-color: #C2EFFF;
     background: $bg-color;
     padding: 20px 0;
 
+    .section-container {
+        .section-body {
+            .section-customize {
+                .clinic-child {
+                    cursor: pointer;
+
+                    .section-name {
+                        &:hover {
+                            color: blue;
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
 }

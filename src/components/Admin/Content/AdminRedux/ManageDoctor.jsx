@@ -66,8 +66,8 @@ const ManageDoctor = () => {
         setNameClinic('');
         setAddressClinic('');
         setNote('');
-        setClinicId('');
-        setSelectedSpecialty('')
+        setSelectedClinic(null);
+        setSelectedSpecialty(null)
     };
     const handleSaveContentMarkdown = () => {
         console.log('State values:', {
@@ -82,7 +82,6 @@ const ManageDoctor = () => {
             nameClinic,
             addressClinic,
             note,
-            clinicId,
 
             selectedSpecialty,
             selectedClinic,
@@ -100,7 +99,7 @@ const ManageDoctor = () => {
             nameClinic: nameClinic || '',
             addressClinic: addressClinic || '',
             note: note || '',
-            clinicId: selectedClinic && selectedClinic.value ? selectedClinic.value : '',
+            clinicId: selectedClinic.value,
             specialtyId: selectedSpecialty.value,
 
         }));
@@ -109,7 +108,7 @@ const ManageDoctor = () => {
     const handleChangeSelect = async (selectedOption) => {
         setSelectedDoctor(selectedOption)
         let res = await getDetailInforDoctor(selectedOption.value) // lay thong tin chi tiet bac si
-        if (res && res.errCode === 0 && res.data && res.data.Markdown) {
+        if (res && res.errCode === 0 && res.data && res.data.Markdown && res.data.Doctor_Infor) {
             let markdown = res.data.Markdown;
             // let doctor_infor = res.data.Doctor_Infor; 
             let addressClinic = '', nameClinic = '', note = '', paymentId = '', priceId = '', provinceId = '', clinicId = '', specialtyId = '';
@@ -142,7 +141,7 @@ const ManageDoctor = () => {
                 console.log('check findItem find arrray: ', selectedPayment, selectedPrice, selectedProvince, selectedSpecialty, selectedClinic)
             }
             setContentMarkdown(markdown.contentMarkdown)
-            setContentHTML(markdown.contentMarkdown)
+            setContentHTML(markdown.contentHTML)
             setDescription(markdown.description);
             setIsEdit(true);
             // fill data vào select, input
@@ -254,6 +253,14 @@ const ManageDoctor = () => {
                     result.push(object);
                 })
             }
+            if (type === "CLINIC") {
+                inputData.map((item) => {
+                    let object = {};
+                    object.label = item.name;
+                    object.value = item.id;
+                    result.push(object);
+                })
+            }
 
         }
         return result;
@@ -266,17 +273,19 @@ const ManageDoctor = () => {
             setListDoctors(dataSelect)
         }
         if (allRequiredDoctorInfor && allRequiredDoctorInfor.resPayment) {
-            let { resPayment, resPrice, resProvince, resSpecialty } = allRequiredDoctorInfor;
+            let { resPayment, resPrice, resProvince, resSpecialty, resClinic } = allRequiredDoctorInfor;
             let dataSelectPrice = buildDataInputSelect(resPrice, 'PRICE');
             let dataSelectPayment = buildDataInputSelect(resPayment, 'PAYMENT');
             let dataSelectProvince = buildDataInputSelect(resProvince, 'PROVINCE');
             let dataSelectSpecialty = buildDataInputSelect(resSpecialty, 'SPECIALTY');
+            let dataSelectClinic = buildDataInputSelect(resClinic, 'CLINIC');
 
             console.log('data new: ', dataSelectPrice, dataSelectPayment, dataSelectProvince, dataSelectSpecialty)
             setListPrice(dataSelectPrice);
             setListPayment(dataSelectPayment);
             setListProvince(dataSelectProvince);
             setListSpecialty(dataSelectSpecialty)
+            setListClinic(dataSelectClinic)
 
         }
     }, [allDoctors, allRequiredDoctorInfor])
@@ -299,7 +308,7 @@ const ManageDoctor = () => {
                 <div className='content-right'>
                     <div className='title-label mb-2'>Thông tin giới thiệu</div>
                     <textarea className='form-control' rows="4"
-                        value={description}
+                        value={description || ''}
                         onChange={(event) => handleOnChangeText(event, 'description')}>
                     </textarea>
                 </div>

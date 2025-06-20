@@ -1,7 +1,37 @@
 import './MedicalFacility.scss';
 import Slider from "react-slick";
 import BvVietDuc from '../../../assets/medical/benhvienvietduc.jpg'
+import { useEffect, useState } from 'react';
+import { getAllClinic } from '../../../services/userService';
+import { useNavigate } from 'react-router-dom';
+
 const MedicalFacility = (props) => {
+    const [dataClinic, setDataClinic] = useState([])
+    const navigate = useNavigate();
+
+    // view more
+
+
+    //
+    useEffect(() => {
+        const fetchAllClinic = async () => {
+            try {
+                let res = await getAllClinic();
+                if (res && res.errCode === 0) {
+                    setDataClinic(res.data ? res.data : [])
+                }
+                console.log('check fetchAllClinic: ', res);
+            } catch (error) {
+                console.error('Failed all clinic:', error);
+            }
+        };
+        fetchAllClinic()
+
+    }, [])
+
+    const handleViewDetailClinic = (clinic) => {
+        navigate(`/detail-clinic/${clinic.id}`)
+    }
 
     return (
         <div className='section-medical'>
@@ -12,55 +42,26 @@ const MedicalFacility = (props) => {
                 </div>
                 <div className='section-body'>
                     <Slider {...props.settings}>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                />
-                                <div className='section-content'>Bệnh viện Hữu nghị Việt Đức</div>
-                            </div>
+                        {dataClinic && dataClinic.length > 0 &&
+                            dataClinic.map((item, index) => {
+                                return (
+                                    <div className='section-customize' key={index.id} onClick={() => handleViewDetailClinic(item)}>
+                                        <div className="outline clinic-child">
+                                            <div className='bg-image'
+                                                style={{ backgroundImage: `url(${item.image})` }}
+                                            />
+                                            <div className='section-content section-name'>{item.name}</div>
+                                        </div>
 
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                />
-                                <div className='section-content'>Bệnh viện Chợ Rẫy</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                />
-                                <div className='section-content'>Doctor Check - Tầm Soát Bệnh Để Sống Thọ Hơn</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                />
-                                <div className='section-content'>Phòng khám Bệnh viện Đại học Y Dược 1</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                />
-                                <div className='section-content'>Bệnh viện Ung bướu Hưng Việt</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${BvVietDuc})` }}
-                                />
-                                <div className='section-content'>Hệ thống y tế MEDLATEC</div>
-                            </div>
-                        </div>
+                                    </div>
+                                )
+                            })
+                        }
+
+
+
+
+
                     </Slider>
                 </div>
 

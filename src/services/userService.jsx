@@ -68,11 +68,19 @@ const getDetailSpecialtyById = (data) => {
 const createNewClinic = (data) => {
     return axios.post('/api/create-new-clinic', data)
 }
+// lấy tất cả phòng khám
+const getAllClinic = () => {
+    return axios.get(`/api/get-all-clinic`)
+}
+// lấy chi tiết phòng khám theo id 
+const getDetailClinicById = (data) => {
+    return axios.get(`/api/get-detail-clinic-by-id?id=${data.id}}`)
+}
 
 export {
     getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService, getDetailInforDoctor,
     saveBulkScheduleDoctor, getScheduleDoctorByDate,
     getExtraInforDoctorById, getProfileDoctorById, postPatientBookAppointment,
     postVerifyBookAppointment, createNewSpecialty, getAllSpecialty,
-    getDetailSpecialtyById, createNewClinic
+    getDetailSpecialtyById, createNewClinic, getAllClinic, getDetailClinicById
 }

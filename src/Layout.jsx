@@ -25,6 +25,7 @@ import VerifyBooking from './components/Patient/VerifyBooking.jsx';
 import ViewMoreSpecialty from './components/HomePage/Section/ViewMore/ViewMoreSpecialty.jsx';
 import ViewMoreDoctor from './components/HomePage/Section/ViewMore/ViewMoreDoctor.jsx';
 import DetailSpecialty from './components/Patient/Specialty/DetailSpecialty.jsx';
+import DetailClinic from './components/Patient/Clinic/DetailClinic.jsx';
 
 const Layout = () => {
     return (
@@ -60,6 +61,7 @@ const Layout = () => {
 
                 <Route path='/detail-doctor/:id' element={<DetailDoctor />} />
                 <Route path='/detail-specialty/:id' element={<DetailSpecialty />} />
+                <Route path='/detail-clinic/:id' element={<DetailClinic />} />
 
 
             </Routes>

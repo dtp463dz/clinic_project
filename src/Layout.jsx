@@ -14,7 +14,7 @@ import NotFound from './components/Notice/NotFound.jsx';
 import ManageUser from './components/Admin/Content/ManageUser.jsx';
 import Dashboard from './components/Admin/Content/DashBoard.jsx';
 import HomePage from './components/HomePage/HomePage.jsx';
-import ManageClinic from './components/Admin/Content/ManageClinic.jsx';
+import ManageClinic from './components/Admin/Content/Clinic/ManageClinic.jsx';
 import ManageSpecialty from './components/Admin/Content/Specialty/ManageSpecialty.jsx';
 import ManageHandBook from './components/Admin/Content/ManageHandBook.jsx';
 import ManageUserRedux from './components/Admin/Content/AdminRedux/ManageUserRedux.jsx';

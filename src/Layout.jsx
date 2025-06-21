@@ -26,6 +26,8 @@ import ViewMoreSpecialty from './components/HomePage/Section/ViewMore/ViewMoreSp
 import ViewMoreDoctor from './components/HomePage/Section/ViewMore/ViewMoreDoctor.jsx';
 import DetailSpecialty from './components/Patient/Specialty/DetailSpecialty.jsx';
 import DetailClinic from './components/Patient/Clinic/DetailClinic.jsx';
+import PrivateRoute from './components/PrivateRouter.jsx';
+import Unauthorized from './components/Unauthorized.jsx';
 
 const Layout = () => {
     return (
@@ -37,7 +39,7 @@ const Layout = () => {
                 </Route>
 
                 <Route />
-                <Route path="admin" element={<Admin />}>
+                <Route path="admin" element={<PrivateRoute component={Admin} allowedRoles={['R1', 'R2']} />}>
                     <Route index element={<Dashboard />} />
                     <Route path="manage-users" element={<ManageUser />} />
                     <Route path="manage-userRedux" element={<ManageUserRedux />} />
@@ -47,6 +49,8 @@ const Layout = () => {
                     <Route path="manage-specialty" element={<ManageSpecialty />} />
                     <Route path="manage-handbook" element={<ManageHandBook />} />
                 </Route>
+
+                <Route path="/unauthorized" element={<Unauthorized />} />
 
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />

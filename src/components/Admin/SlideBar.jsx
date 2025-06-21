@@ -5,7 +5,7 @@ import { MdDashboard, MdFolderSpecial } from "react-icons/md";
 import { DiReact } from "react-icons/di";
 import { Link } from 'react-router-dom';
 
-const SlideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
+const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
     return (
         <div style={{ display: 'flex', height: '100vh' }}>
             <Sidebar
@@ -30,7 +30,7 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                     }}
                 >
                     <DiReact size={'3rem'} color='00bfff' />  {/** logo react */}
-                    ADMIN
+                    {isAdmin ? 'ADMIN' : 'DOCTOR'}
                 </div>
 
                 {/* Main Menu */}
@@ -45,74 +45,93 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar }) => {
                         },
                     }}
                 >
-                    <MenuItem
-                        icon={<MdDashboard />}
-                        component={<Link to='/admin' />}
-                    >
-                        Dashboard
-                    </MenuItem>
+                    {isAdmin && (
+                        <MenuItem
+                            icon={<MdDashboard />}
+                            component={<Link to='/admin' />}
+                        >
+                            Dashboard
+                        </MenuItem>
+                    )}
+                    {isAdmin && (
+                        <SubMenu label="Người Dùng" icon={<FaUser />}>
+                            <MenuItem component={<Link to='/admin/manage-users' />}>
+                                Quản Lý Người Dùng
+                            </MenuItem>
+                            <MenuItem component={<Link to='/admin/manage-userRedux' />}>
+                                Quản Lý User Redux
+                            </MenuItem>
+                            <MenuItem component={<Link to={'/admin/manage-doctor'} />}>
+                                Quản Lý Bác Sĩ
+                            </MenuItem>
+                            <MenuItem component={<Link to={'/admin/manage-doctor-schedule'} />}>
+                                Quản Lý Kế Hoạch Bác Sĩ
+                            </MenuItem>
+                        </SubMenu>
+                    )}
+                    {isAdmin && (
+                        <SubMenu label="Phòng Khám" icon={<FaClinicMedical />}>
+                            <MenuItem component={<Link to='/admin/manage-clinic' />}>
+                                Quản Lý Phòng Khám
+                            </MenuItem>
 
-                    <SubMenu label="Người Dùng" icon={<FaUser />}>
-                        <MenuItem component={<Link to='/admin/manage-users' />}>
-                            Quản Lý Người Dùng
-                        </MenuItem>
-                        <MenuItem component={<Link to='/admin/manage-userRedux' />}>
-                            Quản Lý User Redux
-                        </MenuItem>
-                        <MenuItem component={<Link to={'/admin/manage-doctor'} />}>
-                            Quản Lý Bác Sĩ
-                        </MenuItem>
+                        </SubMenu>
+                    )}
+                    {isAdmin && (
+                        <SubMenu label="Chuyên Khoa" icon={<MdFolderSpecial />}>
+                            <MenuItem component={<Link to='/admin/manage-specialty' />}>
+                                Quản Lý Chuyên Khoa
+                            </MenuItem>
+
+                        </SubMenu>
+                    )}
+                    {isAdmin && (
+                        <SubMenu label="Cẩm Nang" icon={<FaBookMedical />}>
+                            <MenuItem component={<Link to='/admin/manage-handbook' />}>
+                                Quản Lý Cẩm Nang
+                            </MenuItem>
+                        </SubMenu>
+                    )}
+
+                    {!isAdmin && (
                         <MenuItem component={<Link to={'/admin/manage-doctor-schedule'} />}>
                             Quản Lý Kế Hoạch Bác Sĩ
                         </MenuItem>
-                    </SubMenu>
-                    <SubMenu label="Phòng Khám" icon={<FaClinicMedical />}>
-                        <MenuItem component={<Link to='/admin/manage-clinic' />}>
-                            Quản Lý Phòng Khám
-                        </MenuItem>
+                    )}
 
-                    </SubMenu>
-                    <SubMenu label="Chuyên Khoa" icon={<MdFolderSpecial />}>
-                        <MenuItem component={<Link to='/admin/manage-specialty' />}>
-                            Quản Lý Chuyên Khoa
-                        </MenuItem>
 
-                    </SubMenu>
-                    <SubMenu label="Cẩm Nang" icon={<FaBookMedical />}>
-                        <MenuItem component={<Link to='/admin/manage-handbook' />}>
-                            Quản Lý Cẩm Nang
-                        </MenuItem>
-                    </SubMenu>
                 </Menu>
 
                 {/* Footer menu */}
-                <Menu style={{ textAlign: 'center' }}>
-                    <div
-                        className="sidebar-btn-wrapper"
-                        style={{
-                            padding: '20px 24px',
-                        }}
-                    >
-                        <a
-                            href="https://github.com/azouaoui-med/react-pro-sidebar"
-                            target="_blank"
-                            className="sidebar-btn"
-                            rel="noopener noreferrer"
+                {isAdmin && (
+                    <Menu style={{ textAlign: 'center' }}>
+                        <div
+                            className="sidebar-btn-wrapper"
+                            style={{
+                                padding: '20px 24px',
+                            }}
                         >
-                            <FaGithub />
-                            <span
-                                style={{
-                                    whiteSpace: 'nowrap',
-                                    textOverflow: 'ellipsis',
-                                    overflow: 'hidden',
-                                    marginLeft: 10
-                                }}
+                            <a
+                                href="https://github.com/azouaoui-med/react-pro-sidebar"
+                                target="_blank"
+                                className="sidebar-btn"
+                                rel="noopener noreferrer"
                             >
-                                View Source
-                            </span>
-                        </a>
-                    </div>
-                </Menu>
+                                <FaGithub />
+                                <span
+                                    style={{
+                                        whiteSpace: 'nowrap',
+                                        textOverflow: 'ellipsis',
+                                        overflow: 'hidden',
+                                        marginLeft: 10
+                                    }}
+                                >
+                                    View Source
+                                </span>
+                            </a>
+                        </div>
+                    </Menu>
+                )}
             </Sidebar>
         </div>
     );

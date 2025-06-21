@@ -3,11 +3,13 @@ import SlideBar from "./SlideBar.jsx";
 import './Admin.scss';
 import { useState } from "react";
 import { Outlet } from 'react-router-dom';
+import { useSelector } from 'react-redux';
 
 const Admin = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [toggled, setToggled] = useState(false); // cho responsive nếu cần
-
+    const { account } = useSelector((state) => state.user);
+    const isAdmin = account.roleId === 'R1';
     return (
         <div className="admin-container">
             {/* Sidebar khu vực trái */}
@@ -16,6 +18,7 @@ const Admin = () => {
                     collapsed={collapsed}
                     toggled={toggled}
                     handleToggleSidebar={() => setToggled(!toggled)}
+                    isAdmin={isAdmin}
                 />
             </div>
 

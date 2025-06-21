@@ -9,7 +9,7 @@ import { doLogin } from '../../redux/action/userAction';
 import { FaSpinner } from "react-icons/fa"; // icon load spinner
 
 
-const Login = (props) => {
+const Login = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
 
@@ -46,7 +46,12 @@ const Login = (props) => {
                 dispatch(doLogin(data)) // user action 
                 toast.success(data.message);
                 setIsLoading(false); // sau khi call api thì false
-                navigate('/');
+                // điều hướng
+                const roleId = data.user.roleId;
+                if (roleId === 'R1') {
+                    navigate('/admin')
+                }
+                if (roleId === 'R2') navigate('/admin/manage-doctor-schedule')
             }
             if (data && +data.errCode !== 0) {
                 toast.error(data.message);

@@ -67,6 +67,9 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                             <MenuItem component={<Link to={'/admin/manage-doctor-schedule'} />}>
                                 Quản Lý Kế Hoạch Bác Sĩ
                             </MenuItem>
+                            <MenuItem component={<Link to={'/admin/manage-patient'} />}>
+                                Quản Lý Bệnh Nhân Khám Bệnh
+                            </MenuItem>
                         </SubMenu>
                     )}
                     {isAdmin && (
@@ -94,9 +97,14 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                     )}
 
                     {!isAdmin && (
-                        <MenuItem component={<Link to={'/admin/manage-doctor-schedule'} />}>
-                            Quản Lý Kế Hoạch Bác Sĩ
-                        </MenuItem>
+                        <SubMenu label="Quản Lý" icon={<FaUser />}>
+                            <MenuItem component={<Link to={'/admin/manage-doctor-schedule'} />}>
+                                Quản Lý Kế Hoạch Bác Sĩ
+                            </MenuItem>
+                            <MenuItem component={<Link to={'/admin/manage-patient'} />}>
+                                Quản Lý Bệnh Nhân Khám Bệnh
+                            </MenuItem>
+                        </SubMenu>
                     )}
 
 

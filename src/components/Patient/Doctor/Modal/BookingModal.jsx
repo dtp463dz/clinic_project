@@ -108,7 +108,7 @@ const BookingModal = (props) => {
     const buildDoctorName = (dataTime) => {
         // console.log('check dataTime inside time booking: ', dataTime)
         if (dataTime && !_.isEmpty(dataTime)) {
-            let nameDoctor = `${dataTime?.doctorData?.firstName}${dataTime?.doctorData?.lastName}`;
+            let nameDoctor = `${dataTime?.doctorData?.firstName} ${dataTime?.doctorData?.lastName}`;
             return `${nameDoctor}`
         }
         return <></>

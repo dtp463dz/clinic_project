@@ -137,7 +137,7 @@ const ManageDoctorSchedule = () => {
                     />
                 </div>
                 <div className="col-6 form-group">
-                    <div className="title-label mb-2">Chọn Ngày</div>
+                    <div className="title-label mx-3">Chọn Ngày</div>
                     <CustomDatePicker onChange={handleOnChangeDatePicker} />
                 </div>
                 <div className="col-12 pick-hour-container">

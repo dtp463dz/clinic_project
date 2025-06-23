@@ -12,7 +12,7 @@ const ManagePatient = () => {
     console.log('user: ', user);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dataPatient, setDataPatient] = useState([]);
-
+    const [pagination, setPagination] = useState({});
     // on change datepicker
     const handleOnChangeDatePicker = (date) => {
         setCurrentDate(date);
@@ -28,13 +28,14 @@ const ManagePatient = () => {
                 date: formattedDate,
             })
             if (res && res.errCode === 0) {
-                setDataPatient(res.data)
+                setDataPatient(res.data.data)
+                setPagination(res.data.pagination)
             }
         };
         fetchListPatient()
     }, [user, currentDate])
 
-    console.log('check data patient: ', dataPatient)
+    console.log('check data patient: ', dataPatient, pagination)
 
     const handleBtnConfirm = () => {
 

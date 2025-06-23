@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import { getListPatientForDoctor } from "../../../../services/userService";
 import { useSelector } from "react-redux";
 import dayjs from 'dayjs'; // su dung de set thoi gian ve 00:00:00
+import Pagination from "../../../Pagination/Pagination";
 
 const ManagePatient = () => {
     const user = useSelector(state => state.user.account);
@@ -13,9 +14,12 @@ const ManagePatient = () => {
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dataPatient, setDataPatient] = useState([]);
     const [pagination, setPagination] = useState({});
+    const [currentPage, setCurrentPage] = useState(1);
+    const pageSize = 10;
     // on change datepicker
     const handleOnChangeDatePicker = (date) => {
         setCurrentDate(date);
+        setCurrentPage(1);
         // console.log('Selected date:', format(date, 'dd/MM/yyyy'), date.getTime());
     }
 
@@ -26,14 +30,19 @@ const ManagePatient = () => {
             let res = await getListPatientForDoctor({
                 doctorId: user.id,
                 date: formattedDate,
+                page: currentPage,
+                limit: pageSize,
             })
             if (res && res.errCode === 0) {
                 setDataPatient(res.data.data)
                 setPagination(res.data.pagination)
+            } else {
+                setDataPatient([])
+                setPagination({})
             }
         };
         fetchListPatient()
-    }, [user, currentDate])
+    }, [user, currentDate, currentPage])
 
     console.log('check data patient: ', dataPatient, pagination)
 
@@ -45,6 +54,10 @@ const ManagePatient = () => {
     }
     const handleBtnDelete = () => {
 
+    }
+
+    const handlePageChange = (page) => {
+        setCurrentDate(page);
     }
     return (
         <div className="manage-patient-container ">
@@ -103,6 +116,13 @@ const ManagePatient = () => {
 
                         </tbody>
                     </table>
+                    {pagination.totalPages >= 1 && (
+                        <Pagination
+                            currentPage={currentPage}
+                            totalPages={pagination.totalPages || 1}
+                            onPageChange={handlePageChange}
+                        />
+                    )}
 
                 </div>
             </div>

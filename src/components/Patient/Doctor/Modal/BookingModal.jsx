@@ -138,7 +138,8 @@ const BookingModal = (props) => {
             email: formData.email,
             address: formData.address,
             reason: formData.reason,
-            date: date,
+            date: dataTime.date,     // ngay dat lich
+            birthday: date, // ngay sinh benh nhan
             selectedGender: formData.selectedGender,
             doctorId: formData.doctorId,
             timeType: formData.timeType,

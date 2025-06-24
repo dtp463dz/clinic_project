@@ -82,11 +82,16 @@ const getListPatientForDoctor = (data) => {
     return axios.get(`/api/get-list-patient-for-doctor?doctorId=${data.doctorId}&date=${data.date}`)
 }
 
+// lưu thông tin modal hóa đơn khám bệnh 
+const postSendConfirm = (data) => {
+    return axios.post('/api/send-confirm', data)
+}
+
 export {
     getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService, getDetailInforDoctor,
     saveBulkScheduleDoctor, getScheduleDoctorByDate,
     getExtraInforDoctorById, getProfileDoctorById, postPatientBookAppointment,
     postVerifyBookAppointment, createNewSpecialty, getAllSpecialty,
     getDetailSpecialtyById, createNewClinic, getAllClinic, getDetailClinicById,
-    getListPatientForDoctor
+    getListPatientForDoctor, postSendConfirm,
 }

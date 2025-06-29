@@ -16,7 +16,7 @@ const ModalDeleteUserRedux = (props) => {
     const handleSubmitDeleteUser = async () => {
         if (userDelete && userDelete.id) {
             await dispatch(deleteNewUser(userDelete.id));
-            dispatch(fetchAllUsersStart()); // Refresh user list
+            dispatch(fetchAllUsersStart(1, 10)); // Refresh user list
             handleClose();
         } else {
             toast.error("User data not found!");

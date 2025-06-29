@@ -20,8 +20,8 @@ const postLogin = (email, password) => {
 }
 
 // lay tat ca user
-const getAllUsers = () => {
-    return axios.get(`/api/get-all-users/?id=ALL`)
+const getAllUsers = (page = 1, limit = 10) => {
+    return axios.get(`/api/get-all-users/?id=ALL&page=${page}&limit=${limit}`)
 };
 
 // tạo mới user

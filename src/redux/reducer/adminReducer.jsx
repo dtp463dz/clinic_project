@@ -2,6 +2,10 @@ import actionTypes from "../action/actionTypes";
 
 const INITIAL_STATE = {
     isLoadingGender: false,
+    totalPages: 1,
+    currentPage: 1,
+    totalItems: 0,
+    limit: 10,
     genders: [],
     roles: [],
     positions: [],
@@ -57,16 +61,28 @@ const adminReducer = (state = INITIAL_STATE, action) => {
                 ...state,
             }
 
+        case actionTypes.FETCH_ALL_USERS_START:
+            return {
+                ...state
+            };
         case actionTypes.FETCH_ALL_USERS_SUCCESS:
-            state.users = action.users;
             return {
                 ...state,
-            }
+                users: action.data.users, // Lưu danh sách người dùng
+                totalPages: action.data.totalPages, // Lưu tổng số trang
+                currentPage: action.data.currentPage, // Lưu trang hiện tại
+                totalItems: action.data.totalItems, // Lưu tổng số người dùng
+                limit: action.data.limit // Lưu số lượng item mỗi trang
+            };
         case actionTypes.FETCH_ALL_USERS_FAILDED:
-            state.users = [];
             return {
                 ...state,
-            }
+                users: [], // Đặt lại danh sách người dùng
+                totalPages: 1,
+                currentPage: 1,
+                totalItems: 0,
+                limit: 10
+            };
 
         case actionTypes.FETCH_TOP_DOCTORS_SUCCESS:
             state.topDoctors = action.dataDoctor; // res.data ben action

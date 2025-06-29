@@ -196,31 +196,36 @@ export const updateUserFailded = () => {
 }
 
 // get all list user
-export const fetchAllUsersStart = () => {
+export const fetchAllUsersStart = (page = 1, limit = 10) => {
     return async (dispatch, getState) => {
         try {
-
+            dispatch({ type: actionTypes.FETCH_ALL_USERS_START });
             // call api allcode
-            let res = await getAllUsers("ALL");
-            // let res1 = await getTopDoctorHomeService(3);
-            // console.log('check list doctor: ', res1);
+            let res = await getAllUsers(page, limit);
+            console.log('check res all users: ', res)
             if (res && res.errCode === 0) {
-                dispatch(fetchAllUsersSuccess(res.users));
+                dispatch(fetchAllUsersSuccess({
+                    users: res?.users,
+                    totalPages: res?.totalPages,
+                    currentPage: res?.currentPage,
+                    totalItems: res?.totalItems,
+                    limit: res?.limit
+                }));
             } else {
-                toast.error('Fetch all user error')
+                toast.error('Lấy danh sách người dùng thất bại')
                 dispatch(fetchAllUsersFailded());
             }
         } catch (e) {
-            toast.error('Fetch all user error')
+            toast.error('Lấy danh sách người dùng thất bại')
             dispatch(fetchAllUsersFailded());
             console.log('fetchAllUsersStart error', e);
         }
     }
 };
-export const fetchAllUsersSuccess = (users) => {
+export const fetchAllUsersSuccess = (data) => {
     return {
         type: actionTypes.FETCH_ALL_USERS_SUCCESS,
-        users: users
+        data
     }
 }
 export const fetchAllUsersFailded = () => {

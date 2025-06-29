@@ -4,6 +4,7 @@ import { deleteNewUser, fetchAllUsersStart } from "../../../../redux/action/admi
 import ModalDeleteUserRedux from "./ModalDeleteUserRedux";
 import MarkdownIt from 'markdown-it';
 import MdEditor from 'react-markdown-editor-lite';
+import Pagination from "../../../Pagination/Pagination";
 // import style manually
 import 'react-markdown-editor-lite/lib/index.css';
 
@@ -21,25 +22,27 @@ function handleEditorChange({ html, text }) {
 
 const TableManageUser = (props) => {
     const [showModalDeleteUser, setShowModalDeleteUser] = useState(false);
-    const listUsers = useSelector((state) => state.admin.users)
-
+    const { users, currentPage, totalPages, limit, totalItems } = useSelector((state) => state.admin);
     const [userDelete, setUserDelete] = useState({});
+
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllUsersStart());
-        //    dispatch((id) => deleteNewUser(id)); // delete
-    }, [dispatch])
+        dispatch(fetchAllUsersStart(currentPage, limit));
+    }, [dispatch, currentPage, limit])
+
+    // doi page
+    const handlePageChange = (page) => {
+        dispatch(fetchAllUsersStart(page, limit));
+    };
 
     // btn delte user
     const handleDeleteUser = (user) => {
-        // console.log('check delete user: ', user)
         setShowModalDeleteUser(true);
         setUserDelete(user);
     }
     // btn edit delete user
     const handleUpdateUser = (user) => {
-        // console.log('check edit user: ', user)
         props.handleEditUserFromParent(user)
     }
     return (
@@ -59,11 +62,11 @@ const TableManageUser = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {listUsers && listUsers.length > 0 &&
-                        listUsers.map((item, index) => {
+                    {users && users.length > 0 &&
+                        users.map((item, index) => {
                             return (
                                 <tr key={`table-users-${index}`}>
-                                    <th>{index + 1}</th>
+                                    <th>{(currentPage - 1) * limit + index + 1}</th>
                                     <td>{item.email}</td>
                                     <td>{item.firstName}</td>
                                     <td>{item.lastName}</td>
@@ -86,9 +89,9 @@ const TableManageUser = (props) => {
                             )
                         })
                     }
-                    {listUsers && listUsers.length === 0 &&
+                    {users && users.length === 0 &&
                         <tr>
-                            <td colSpan={'4'}>
+                            <td colSpan={'9'}>
                                 Not Found Data
                             </td>
                         </tr>
@@ -96,6 +99,16 @@ const TableManageUser = (props) => {
 
                 </tbody>
             </table>
+            <div className="total-users my-2">
+                Tổng số người dùng: {totalItems}
+            </div>
+            {totalPages > 1 && (
+                <Pagination
+                    currentPage={currentPage}
+                    totalPages={totalPages}
+                    onPageChange={handlePageChange}
+                />
+            )}
             <ModalDeleteUserRedux
                 show={showModalDeleteUser}
                 setShow={setShowModalDeleteUser}

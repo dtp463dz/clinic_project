@@ -39,7 +39,7 @@ const ManageUserRedux = () => {
         dispatch(fetchGenderStart());
         dispatch(fetchPositionStart());
         dispatch(fetchRoleIdStart());
-        dispatch(fetchAllUsersStart()); // all user
+        dispatch(fetchAllUsersStart(1, 10)); // all user
 
     }, [dispatch]);
 
@@ -132,16 +132,16 @@ const ManageUserRedux = () => {
             dispatch(
                 createNewUser({ userData })
             );
-            toast.success('Create User Success')
+            toast.success('Tạo người dùng thành công')
         } else {
             // fire redux action update
             dispatch(updateUser({ id: userEditId, ...userData }))
-            toast.success('Update User Success')
+            toast.success('Cập nhật người dùng thành công')
         }
 
         // khi nhấn btn save thì table được cập nhật và form trở về trống
         setTimeout(() => {
-            dispatch(fetchAllUsersStart());
+            dispatch(fetchAllUsersStart(1, 10));
             resetForm();
         }, 1000)
     }

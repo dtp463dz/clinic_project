@@ -18,7 +18,7 @@ const MedicalFacility = (props) => {
             try {
                 let res = await getAllClinic();
                 if (res && res.errCode === 0) {
-                    setDataClinic(res.data ? res.data : [])
+                    setDataClinic(res.data.clinics ? res.data.clinics : [])
                 }
                 console.log('check fetchAllClinic: ', res);
             } catch (error) {

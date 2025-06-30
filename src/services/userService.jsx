@@ -54,8 +54,8 @@ const createNewSpecialty = (data) => {
 }
 
 // lấy tất cả chuyên khoa
-const getAllSpecialty = () => {
-    return axios.get(`/api/get-all-specialty`)
+const getAllSpecialty = (page = 1, limit = 10) => {
+    return axios.get(`/api/get-all-specialty?page=${page}&limit=${limit}`)
 }
 
 // lấy chi tiết chuyên khoa theo id và location (tỉnh thành)
@@ -69,8 +69,8 @@ const createNewClinic = (data) => {
     return axios.post('/api/create-new-clinic', data)
 }
 // lấy tất cả phòng khám
-const getAllClinic = () => {
-    return axios.get(`/api/get-all-clinic`)
+const getAllClinic = (page = 1, limit = 10) => {
+    return axios.get(`/api/get-all-clinic?page=${page}&limit=${limit}`)
 }
 // lấy chi tiết phòng khám theo id 
 const getDetailClinicById = (data) => {

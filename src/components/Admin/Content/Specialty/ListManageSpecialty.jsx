@@ -3,8 +3,35 @@ import Pagination from "../../../Pagination/Pagination";
 import { getAllSpecialty } from "../../../../services/userService";
 import "./ListManageSpecialty.scss";
 import { FaEye, FaEdit, FaTrash } from 'react-icons/fa';
+import useDeleteItem from "../../../../hooks/useDeleteItem";
+import { useState } from "react";
+import ModalDelete from "../../../modal/ModalDelete";
+
 const ListManageSpecialty = () => {
-    const { data: specialties, currentPage, totalPages, loading, error, setCurrentPage } = usePagination(getAllSpecialty);
+    const { data: specialties, currentPage, totalPages, loading, error, setCurrentPage, refetch } = usePagination(getAllSpecialty);
+    const { deleteItem, loading: deleteLoading } = useDeleteItem();
+    const [showModal, setShowModal] = useState(false);
+    const [selectedSpecialties, setSelectedSpecialties] = useState(null);
+    const handleDelete = (specialty) => {
+        setSelectedSpecialties(specialty);
+        setShowModal(true);
+    }
+
+    const handleConfirmDelete = async () => {
+        if (selectedSpecialties) {
+            const success = await deleteItem('Specialty', selectedSpecialties.id);
+            if (success) {
+                refetch(); // Tải lại danh sách sau khi xóa
+                setShowModal(false);
+                setSelectedSpecialties(null);
+            }
+        }
+    };
+
+    const handleCloseModal = () => {
+        setShowModal(false);
+        setSelectedSpecialties(null);
+    };
     return (
         <div className="list-manage-specialty">
             <h2>Danh sách chuyên khoa</h2>
@@ -35,7 +62,6 @@ const ListManageSpecialty = () => {
                                 <td>
                                     <button
                                         className="action-btn view-btn"
-                                    // onClick={() => handleView(specialty)}
                                     >
                                         <FaEye />
                                     </button>
@@ -47,7 +73,8 @@ const ListManageSpecialty = () => {
                                     </button>
                                     <button
                                         className="action-btn delete-btn"
-                                    // onClick={() => handleDeleteUser(specialty)}
+                                        onClick={() => handleDelete(specialty)}
+                                        disabled={deleteLoading}
                                     >
                                         <FaTrash />
                                     </button>
@@ -65,6 +92,13 @@ const ListManageSpecialty = () => {
                 currentPage={currentPage}
                 totalPages={totalPages}
                 onPageChange={setCurrentPage}
+            />
+            <ModalDelete
+                show={showModal}
+                onClose={handleCloseModal}
+                onConfirm={handleConfirmDelete}
+                item={selectedSpecialties}
+                type='Specialty'
             />
         </div>
     )

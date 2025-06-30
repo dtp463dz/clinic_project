@@ -87,11 +87,23 @@ const postSendConfirm = (data) => {
     return axios.post('/api/send-confirm', data)
 }
 
+// xóa phòng khám
+const deleteClinic = (clinicId) => {
+    return axios.delete(`/api/delete-clinic`, { data: { id: clinicId } })
+}
+
+// xóa chuyên khoa
+const deleteSpecialty = (specialtyId) => {
+    return axios.delete(`/api/delete-specialty`, { data: { id: specialtyId } })
+
+}
+
+
 export {
     getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService, getDetailInforDoctor,
     saveBulkScheduleDoctor, getScheduleDoctorByDate,
     getExtraInforDoctorById, getProfileDoctorById, postPatientBookAppointment,
     postVerifyBookAppointment, createNewSpecialty, getAllSpecialty,
     getDetailSpecialtyById, createNewClinic, getAllClinic, getDetailClinicById,
-    getListPatientForDoctor, postSendConfirm,
+    getListPatientForDoctor, postSendConfirm, deleteClinic, deleteSpecialty
 }

@@ -77,7 +77,9 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                             <MenuItem component={<Link to='/admin/manage-clinic' />}>
                                 Quản Lý Phòng Khám
                             </MenuItem>
-
+                            <MenuItem component={<Link to='/admin/list-clinic' />}>
+                                Danh Sách Phòng Khám
+                            </MenuItem>
                         </SubMenu>
                     )}
                     {isAdmin && (
@@ -85,7 +87,9 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                             <MenuItem component={<Link to='/admin/manage-specialty' />}>
                                 Quản Lý Chuyên Khoa
                             </MenuItem>
-
+                            <MenuItem component={<Link to='/admin/list-specialty' />}>
+                                Danh Sách Chuyên Khoa
+                            </MenuItem>
                         </SubMenu>
                     )}
                     {isAdmin && (

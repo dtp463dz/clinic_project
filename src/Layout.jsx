@@ -29,6 +29,8 @@ import DetailClinic from './components/Patient/Clinic/DetailClinic.jsx';
 import PrivateRoute from './components/PrivateRouter.jsx';
 import Unauthorized from './components/Unauthorized.jsx';
 import ManagePatient from './components/Admin/Content/Doctor/ManagePatient.jsx';
+import ListManageClinic from './components/Admin/Content/Clinic/ListManageClinic.jsx';
+import ListManageSpecialty from './components/Admin/Content/Specialty/ListManageSpecialty.jsx';
 
 const Layout = () => {
     return (
@@ -47,7 +49,9 @@ const Layout = () => {
                     <Route path="manage-doctor" element={<ManageDoctor />} />
                     <Route path="manage-doctor-schedule" element={<ManageDoctorSchedule />} />
                     <Route path="manage-clinic" element={<ManageClinic />} />
+                    <Route path="list-clinic" element={<ListManageClinic />} />
                     <Route path="manage-specialty" element={<ManageSpecialty />} />
+                    <Route path="list-specialty" element={<ListManageSpecialty />} />
                     <Route path="manage-handbook" element={<ManageHandBook />} />
                     <Route path="manage-patient" element={<ManagePatient />} />
                 </Route>

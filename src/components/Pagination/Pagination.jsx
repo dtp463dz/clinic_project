@@ -52,7 +52,7 @@ const Pagination = (props) => {
             </button>
 
             <span className="pagination-info">
-                Page {currentPage} of {totalPages}
+                Trang {currentPage}/{totalPages}
             </span>
         </div>
     )

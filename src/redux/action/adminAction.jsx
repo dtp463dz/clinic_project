@@ -202,7 +202,7 @@ export const fetchAllUsersStart = (page = 1, limit = 10) => {
             dispatch({ type: actionTypes.FETCH_ALL_USERS_START });
             // call api allcode
             let res = await getAllUsers(page, limit);
-            console.log('check res all users: ', res)
+            // console.log('check res all users: ', res)
             if (res && res.errCode === 0) {
                 dispatch(fetchAllUsersSuccess({
                     users: res?.users,

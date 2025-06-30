@@ -28,10 +28,10 @@ const TableManageUser = (props) => {
 
     const dispatch = useDispatch();
     useEffect(() => {
-        dispatch(fetchAllUsersStart(currentPage, limit));
-    }, [dispatch, currentPage, limit])
+        dispatch(fetchAllUsersStart(1, limit));
+    }, [dispatch, limit])
 
-    // doi page
+    // xử lý thay đổi trang từ Pagination
     const handlePageChange = (page) => {
         dispatch(fetchAllUsersStart(page, limit));
     };
@@ -47,6 +47,9 @@ const TableManageUser = (props) => {
     }
     return (
         <>
+            <div className="total-users my-2">
+                Tổng số người dùng: {totalItems}
+            </div>
             <table className="table table-hover table-bordered">
                 <thead className="table-light">
                     <tr>
@@ -99,9 +102,7 @@ const TableManageUser = (props) => {
 
                 </tbody>
             </table>
-            <div className="total-users my-2">
-                Tổng số người dùng: {totalItems}
-            </div>
+
             {totalPages > 1 && (
                 <Pagination
                     currentPage={currentPage}

@@ -97,6 +97,15 @@ const deleteSpecialty = (specialtyId) => {
     return axios.delete(`/api/delete-specialty`, { data: { id: specialtyId } })
 
 }
+// chỉnh sửa chuyên khoa
+const updateSpecialty = (data) => {
+    return axios.put('/api/edit-specialty', data)
+}
+
+// chỉnh sửa phòng khám
+const updateClinic = (data) => {
+    return axios.put('/api/edit-clinic', data)
+}
 
 
 export {
@@ -105,5 +114,6 @@ export {
     getExtraInforDoctorById, getProfileDoctorById, postPatientBookAppointment,
     postVerifyBookAppointment, createNewSpecialty, getAllSpecialty,
     getDetailSpecialtyById, createNewClinic, getAllClinic, getDetailClinicById,
-    getListPatientForDoctor, postSendConfirm, deleteClinic, deleteSpecialty
+    getListPatientForDoctor, postSendConfirm, deleteClinic, deleteSpecialty,
+    updateSpecialty, updateClinic
 }

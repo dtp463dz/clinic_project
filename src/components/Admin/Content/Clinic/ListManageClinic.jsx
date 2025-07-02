@@ -6,31 +6,56 @@ import usePagination from "../../../../hooks/usePagination";
 import useDeleteItem from "../../../../hooks/useDeleteItem";
 import { useState } from "react";
 import ModalDelete from "../../../modal/ModalDelete";
+import useEditItem from "../../../../hooks/useEditItem";
+import { toast } from 'react-toastify';
+import ModalEdit from "../../../modal/ModalEdit";
 
 const ListManageClinic = () => {
-    const { data: clinics, currentPage, totalPages, loading, error, setCurrentPage, refetch } = usePagination(getAllClinic);
+    // hooks
+    const { data: clinics, currentPage, totalPages, totalItems, loading, error, setCurrentPage, refetch } = usePagination(getAllClinic);
     const { deleteItem, loading: deleteLoading } = useDeleteItem();
-    const [showModal, setShowModal] = useState(false);
-    const [selectedClinic, setSelectedClinic] = useState(null);
+    const { editItem, loading: editLoading } = useEditItem();
 
+    // state
+    const [showDeleteModal, setShowDeleteModal] = useState(false);
+    const [showEditModal, setShowEditModal] = useState(false);
+    const [selectedClinic, setSelectedClinic] = useState(null);
+    // handle xóa
     const handleDelete = (clinic) => {
         setSelectedClinic(clinic);
-        setShowModal(true);
+        setShowDeleteModal(true);
     }
-
+    // handle chỉnh sửa
+    const handleEdit = (clinic) => {
+        setSelectedClinic(clinic);
+        setShowEditModal(true);
+    }
+    // xác nhận xóa
     const handleConfirmDelete = async () => {
         if (selectedClinic) {
             const success = await deleteItem('Clinic', selectedClinic.id);
             if (success) {
                 refetch(); // Tải lại danh sách sau khi xóa
-                setShowModal(false);
+                setShowDeleteModal(false);
                 setSelectedClinic(null);
             }
         }
     };
-
+    // xác nhận chỉnh sửa
+    const handleConfirmEdit = async (data) => {
+        const success = await editItem('Clinic', data);
+        if (success) {
+            await refetch();
+            setShowEditModal(false);
+            setSelectedClinic(null);
+        } else {
+            toast.error('Cập nhật phòng khám thất bại!');
+        }
+    }
+    // đóng modal
     const handleCloseModal = () => {
-        setShowModal(false);
+        setShowDeleteModal(false);
+        setShowEditModal(false);
         setSelectedClinic(null);
     };
     return (
@@ -71,13 +96,15 @@ const ListManageClinic = () => {
                                     </button>
                                     <button
                                         className="action-btn edit-btn"
+                                        onClick={() => handleEdit(clinic)}
+                                        disabled={editLoading || deleteLoading}
                                     >
                                         <FaEdit />
                                     </button>
                                     <button
                                         className="action-btn delete-btn"
                                         onClick={() => handleDelete(clinic)}
-                                        disabled={deleteLoading}
+                                        disabled={deleteLoading || editLoading}
                                     >
                                         <FaTrash />
                                     </button>
@@ -86,7 +113,14 @@ const ListManageClinic = () => {
                         ))
                     ) : (
                         <tr>
-                            <td colSpan="4">Không có phòng khám nào</td>
+                            <td colSpan="4">
+                                {totalItems === 0 ? 'Danh sách phòng khám trống' : 'Không có phòng khám'}
+                                {totalItems > 0 && (
+                                    <button className="btn btn-link" onClick={() => setCurrentPage(1)}>
+                                        Quay về trang đầu
+                                    </button>
+                                )}
+                            </td>
                         </tr>
                     )}
                 </tbody>
@@ -97,11 +131,20 @@ const ListManageClinic = () => {
                 onPageChange={setCurrentPage}
             />
             <ModalDelete
-                show={showModal}
+                show={showDeleteModal}
                 onClose={handleCloseModal}
                 onConfirm={handleConfirmDelete}
                 item={selectedClinic}
                 type='Clinic'
+                deleteLoading={deleteLoading}
+            />
+            <ModalEdit
+                show={showEditModal}
+                onClose={handleCloseModal}
+                onConfirm={handleConfirmEdit}
+                item={selectedClinic}
+                type="Clinic"
+                loading={editLoading}
             />
         </div>
     )

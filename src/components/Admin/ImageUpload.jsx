@@ -1,7 +1,7 @@
 import { FcPlus } from "react-icons/fc";
 import Lightbox from "yet-another-react-lightbox";
 import "yet-another-react-lightbox/styles.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import CommonUtils from "../../utils/commonUtils"; // Đảm bảo đường dẫn đúng
 import "./ImageUpload.scss";
 
@@ -9,6 +9,13 @@ const ImageUpload = ({ onImageChange, initialImage }) => {
     const [previewImage, setPreviewImage] = useState(initialImage || "");
     const [lightBoxOpen, setLightBoxOpen] = useState(false);
     const [image, setImage] = useState("");
+
+    // Đồng bộ previewImage với initialImage khi initialImage thay đổi
+    useEffect(() => {
+        console.log('Initial image:', initialImage); // Debug
+        setPreviewImage(initialImage || "");
+        setImage(initialImage || "");
+    }, [initialImage]);
 
     // Xử lý upload ảnh
     const handleUploadImage = async (event) => {

@@ -9,6 +9,7 @@ import OutStandingDoctor from "./Section/OutStandingDoctor";
 import HandBook from "./Section/HandBook";
 import About from "./Section/About";
 import HomeFooter from "./HomeFooter";
+import ChatBotHome from "./ChatBot/ChatBotHome";
 const HomePage = () => {
 
     // setting slider
@@ -29,6 +30,7 @@ const HomePage = () => {
             <HandBook />
             <About />
             <HomeFooter />
+            <ChatBotHome />
             <div style={{ height: '300px' }}></div>
         </div>
     )

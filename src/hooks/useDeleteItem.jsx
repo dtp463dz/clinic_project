@@ -20,10 +20,8 @@ const useDeleteItem = () => {
             }
 
             if (response.errCode === 0) {
-                toast.success(response.errMessage);
                 return true; // Xóa thành công
             } else {
-                toast.error(response.errMessage);
                 return false; // Xóa thất bại
             }
         } catch (e) {

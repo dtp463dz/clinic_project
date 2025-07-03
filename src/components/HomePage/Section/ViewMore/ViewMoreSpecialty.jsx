@@ -11,7 +11,7 @@ const ViewMoreSpecialty = () => {
             try {
                 let res = await getAllSpecialty();
                 if (res && res.errCode === 0) {
-                    setDataSpecialty(res.data ? res.data : []);
+                    setDataSpecialty(res.data.specialties ? res.data.specialties : []);
                 }
                 console.log("check fetchAllSpecialty: ", res);
             } catch (error) {

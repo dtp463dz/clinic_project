@@ -10,7 +10,9 @@ const MedicalFacility = (props) => {
     const navigate = useNavigate();
 
     // view more
-
+    const handleViewMore = () => {
+        navigate('/view-more-clinic');
+    }
 
     //
     useEffect(() => {
@@ -38,7 +40,7 @@ const MedicalFacility = (props) => {
             <div className='section-container'>
                 <div className='section-header'>
                     <span className='title-section'>Cơ sở y tế</span>
-                    <button className='btn-section'>Xem thêm</button>
+                    <button className='btn-section' onClick={() => handleViewMore()}>Xem thêm</button>
                 </div>
                 <div className='section-body'>
                     <Slider {...props.settings}>
@@ -67,7 +69,7 @@ const MedicalFacility = (props) => {
 
 
             </div>
-        </div>
+        </div >
     )
 }
 

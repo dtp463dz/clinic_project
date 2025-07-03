@@ -31,6 +31,7 @@ import Unauthorized from './components/Unauthorized.jsx';
 import ManagePatient from './components/Admin/Content/Doctor/ManagePatient.jsx';
 import ListManageClinic from './components/Admin/Content/Clinic/ListManageClinic.jsx';
 import ListManageSpecialty from './components/Admin/Content/Specialty/ListManageSpecialty.jsx';
+import ViewMoreClinic from './components/HomePage/Section/ViewMore/ViewMoreClinic.jsx';
 
 const Layout = () => {
     return (
@@ -68,6 +69,7 @@ const Layout = () => {
                 <Route path="/home" element={<HomePage />} />
                 <Route path="/view-more-specialty" element={<ViewMoreSpecialty />} />
                 <Route path="/view-more-doctor" element={<ViewMoreDoctor />} />
+                <Route path="/view-more-clinic" element={<ViewMoreClinic />} />
 
 
                 <Route path='/detail-doctor/:id' element={<DetailDoctor />} />

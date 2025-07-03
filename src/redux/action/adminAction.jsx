@@ -362,8 +362,8 @@ export const getRequiredDoctorInfor = () => {
                     resPrice: resPrice.data,
                     resPayment: resPayment.data,
                     resProvince: resProvince.data,
-                    resSpecialty: resSpecialty.data,
-                    resClinic: resClinic.data
+                    resSpecialty: resSpecialty.data.specialties,
+                    resClinic: resClinic.data.clinics
                 }
                 dispatch(fetchRequiredDoctorInforSuccess(data));
             } else {

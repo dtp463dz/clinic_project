@@ -2,13 +2,13 @@ import './HomeHeader.scss';
 import { FaBars } from "react-icons/fa";
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'></link>
 import { FaPersonCircleQuestion } from "react-icons/fa6";
-import { GoSearch } from "react-icons/go";
 import { ImBook } from "react-icons/im";
 import { FaBookReader, FaUserNurse, FaCaretDown } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import SlideShow from './SlideShow';
 import Dropdown from 'react-bootstrap/Dropdown';
 import { useNavigate } from 'react-router-dom';
+import SearchBar from '../Search/SearchBar';
 
 const HomeHeader = (props) => {
 
@@ -38,13 +38,7 @@ const HomeHeader = (props) => {
                         <div className='child-content'>
                             <div className='title-content'>Sống khỏe</div>
                         </div>
-
-                        {/* Phần tìm kiếm  */}
-                        <div className='search'>
-                            <input type='text' placeholder='Tìm kiếm...' />
-                            <i><GoSearch /></i>
-                        </div>
-
+                        <SearchBar />
                     </div>
                     <div className='right-content'>
                         <div className='support'>

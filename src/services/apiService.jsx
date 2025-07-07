@@ -71,8 +71,21 @@ const getAllCodeService = (inputType) => {
 
 }
 
+
+// Tìm kiếm
+const getSearch = (keyword, limit = 10, page = 1) => {
+    return axios.get(`/api/search`, {
+        params: {
+            keyword,
+            limit,
+            page
+        }
+    })
+}
+
 export {
     postLogin, getAllUsers, postCreateNewUser,
     putUpdateUser, deleteUser, postRegister,
-    getAllCodeService, createNewUserService, editUserService
+    getAllCodeService, createNewUserService, editUserService,
+    getSearch
 }

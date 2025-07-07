@@ -1,8 +1,9 @@
 import './SearchBar.scss';
 import { useNavigate } from 'react-router-dom';
 import { GoSearch } from "react-icons/go";
-import { useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import { getSearch } from '../../services/apiService';
+import { debounce } from 'lodash';
 
 const SearchBar = () => {
     const [keyword, setKeyword] = useState('');
@@ -11,9 +12,8 @@ const SearchBar = () => {
     const [showResults, setShowResults] = useState(false);
     const navigate = useNavigate();
 
-    const handleSearch = async (e) => {
-        const searchTerm = e.target.value;
-        setKeyword(searchTerm);
+    // call api
+    const fetchSearchResults = async (searchTerm) => {
         if (searchTerm.trim() === '') {
             setResults({ doctors: [], clinics: [], specialties: [] });
             setShowResults(false);
@@ -37,7 +37,19 @@ const SearchBar = () => {
         } finally {
             setIsLoading(false);
         }
-    };
+    }
+    // memo hóa hàm debounce để k bị tạo lại mỗi lần re-render
+    const debouncedSearch = useMemo(() =>
+        debounce(fetchSearchResults, 300), []
+    );
+    // goi debounce mỗi khi keyword thay đổi
+    useEffect(() => {
+        debouncedSearch(keyword);
+        // cancel khi component bị unmount
+        return () => {
+            debouncedSearch.cancel();
+        };
+    }, [keyword, debouncedSearch])
 
     const handleResultClick = (type, id) => {
         setShowResults(false);
@@ -57,7 +69,7 @@ const SearchBar = () => {
                     type="text"
                     placeholder='Tìm kiếm bác sĩ, phòng khám, chuyên khoa...'
                     value={keyword}
-                    onChange={handleSearch}
+                    onChange={(e) => setKeyword(e.target.value)}
                 />
                 <i><GoSearch /></i>
             </div>

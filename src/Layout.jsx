@@ -16,7 +16,6 @@ import Dashboard from './components/Admin/Content/DashBoard.jsx';
 import HomePage from './components/HomePage/HomePage.jsx';
 import ManageClinic from './components/Admin/Content/Clinic/ManageClinic.jsx';
 import ManageSpecialty from './components/Admin/Content/Specialty/ManageSpecialty.jsx';
-import ManageHandBook from './components/Admin/Content/ManageHandBook.jsx';
 import ManageUserRedux from './components/Admin/Content/AdminRedux/ManageUserRedux.jsx';
 import ManageDoctor from './components/Admin/Content/AdminRedux/ManageDoctor.jsx';
 import DetailDoctor from './components/Patient/Doctor/DetailDoctor.jsx';
@@ -32,6 +31,8 @@ import ManagePatient from './components/Admin/Content/Doctor/ManagePatient.jsx';
 import ListManageClinic from './components/Admin/Content/Clinic/ListManageClinic.jsx';
 import ListManageSpecialty from './components/Admin/Content/Specialty/ListManageSpecialty.jsx';
 import ViewMoreClinic from './components/HomePage/Section/ViewMore/ViewMoreClinic.jsx';
+import ListHandBook from './components/Admin/Content/HandBook/ListHandBook.jsx';
+import ManageHandBook from './components/Admin/Content/HandBook/ManageHandBook.jsx';
 
 const Layout = () => {
     return (
@@ -54,6 +55,7 @@ const Layout = () => {
                     <Route path="manage-specialty" element={<ManageSpecialty />} />
                     <Route path="list-specialty" element={<ListManageSpecialty />} />
                     <Route path="manage-handbook" element={<ManageHandBook />} />
+                    <Route path="list-handbook" element={<ListHandBook />} />
                     <Route path="manage-patient" element={<ManagePatient />} />
                 </Route>
 

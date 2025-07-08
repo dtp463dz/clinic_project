@@ -97,6 +97,9 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                             <MenuItem component={<Link to='/admin/manage-handbook' />}>
                                 Quản Lý Cẩm Nang
                             </MenuItem>
+                            <MenuItem component={<Link to='/admin/list-handbook' />}>
+                                Danh Sách Cẩm Nang
+                            </MenuItem>
                         </SubMenu>
                     )}
 

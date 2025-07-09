@@ -4,6 +4,10 @@ import ChiPhiHutMo from '../../../assets/HandBook/chiphihutmotay.png';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FcNext, FcPrevious } from "react-icons/fc";
+import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { getAllHandBook } from '../../../services/hanbookService';
+
 
 function SampleNextArrow(props) {
     const { onClick } = props;
@@ -29,7 +33,7 @@ function SamplePrevArrow(props) {
     );
 }
 
-const HandBook = (props) => {
+const HandBook = () => {
     const settings = {
         dots: false,
         infinite: true,
@@ -40,63 +44,55 @@ const HandBook = (props) => {
         prevArrow: <SamplePrevArrow />,
     };
 
+    // state
+    const [dataHandBook, setDataHandBook] = useState([])
+    const navigate = useNavigate();
+
+    const handleViewMore = () => {
+        navigate('/view-more-handbook');
+    }
+    const handleViewDetailHandBook = (handbook) => {
+        navigate(`/detail-clinic/${handbook.id}`)
+    }
+
+    useEffect(() => {
+        const fetchAllHandBook = async () => {
+            try {
+                let res = await getAllHandBook();
+                if (res && res.errCode === 0) {
+                    setDataHandBook(res.data.handbooks ? res.data.handbooks : [])
+                }
+                console.log('check fetchAllHandBook: ', res);
+            } catch (error) {
+                console.error('Failed all handbook:', error);
+            }
+        };
+        fetchAllHandBook();
+    }, [])
+
     return (
         <div className='section-handbook'>
             <div className='section-container'>
                 <div className='section-header'>
                     <span className='title-section'>Cẩm nang</span>
-                    <button className='btn-section'>Xem thêm</button>
+                    <button className='btn-section' onClick={() => handleViewMore()}>Xem thêm</button>
                 </div>
                 <div className='section-body'>
                     <Slider {...settings}>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${ChiPhiHutMo})` }}
-                                />
-                                <div className='section-content'>Chi phí hút mỡ bắp tay tại các địa chỉ uy tín Hà Nội là bao nhiêu?</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${ChiPhiHutMo})` }}
-                                />
-                                <div className='section-content'>Chi phí hút mỡ bắp tay tại các địa chỉ uy tín Hà Nội là bao nhiêu?</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${ChiPhiHutMo})` }}
-                                />
-                                <div className='section-content'>Chi phí hút mỡ bắp tay tại các địa chỉ uy tín Hà Nội là bao nhiêu?</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${ChiPhiHutMo})` }}
-                                />
-                                <div className='section-content'>Chi phí hút mỡ bắp tay tại các địa chỉ uy tín Hà Nội là bao nhiêu?</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${ChiPhiHutMo})` }}
-                                />
-                                <div className='section-content'>Chi phí hút mỡ bắp tay tại các địa chỉ uy tín Hà Nội là bao nhiêu?</div>
-                            </div>
-                        </div>
-                        <div className='section-customize'>
-                            <div className="outline">
-                                <div className='bg-image'
-                                    style={{ backgroundImage: `url(${ChiPhiHutMo})` }}
-                                />
-                                <div className='section-content'>Chi phí hút mỡ bắp tay tại các địa chỉ uy tín Hà Nội là bao nhiêu?</div>
-                            </div>
-                        </div>
+                        {dataHandBook && dataHandBook.length > 0 &&
+                            dataHandBook.map((item, index) => {
+                                return (
+                                    <div className='section-customize' key={index.id} onClick={() => handleViewDetailHandBook(item)}>
+                                        <div className="outline handbook-child">
+                                            <div className='bg-image'
+                                                style={{ backgroundImage: `url(${item.image})` }}
+                                            />
+                                            <div className='section-content section-name'>{item.title}</div>
+                                        </div>
+                                    </div>
+                                )
+                            })
+                        }
                     </Slider>
                 </div>
             </div>

@@ -4,7 +4,7 @@ import MdEditor from 'react-markdown-editor-lite';
 import { toast } from 'react-toastify';
 import ImageUpload from "../../ImageUpload";
 import CustomDatePicker from "../../../Input/CustomDatePicker";
-import { format } from 'date-fns'; // format lai ngay
+import { format, startOfDay } from 'date-fns'; // format lai ngay
 import { createNewHandBook } from "../../../../services/hanbookService";
 
 
@@ -21,7 +21,8 @@ const ManageHandBook = () => {
         publicationDate: format(new Date(), 'yyyy-MM-dd'),
     })
     const reSetForm = () => {
-        setImage('')
+        setImage('');
+        setCurrentDate(new Date());
         setFormBook({
             author: '',
             title: '',
@@ -44,7 +45,7 @@ const ManageHandBook = () => {
         setCurrentDate(date);
         setFormBook(prevState => ({
             ...prevState,
-            publicationDate: format(date, 'yyyy-MM-dd') // Lưu định dạng yyyy-MM-dd
+            publicationDate: date ? format(startOfDay(date), 'yyyy-MM-dd') : ''
         }));
         console.log('Selected date:', format(date, 'dd/MM/yyyy'), date.getTime());
     };
@@ -57,13 +58,27 @@ const ManageHandBook = () => {
     }
     const handleSaveHandBook = async () => {
         try {
-            const publicationDateTimestamp = new Date(formBook.publicationDate).getTime();
+            // Chuyển publicationDate thành timestamp (chuẩn hóa về đầu ngày)
+            let publicationDateTimestamp = null;
+            if (formBook.publicationDate) {
+                const parsedDate = new Date(formBook.publicationDate);
+                if (!isNaN(parsedDate.getTime())) {
+                    publicationDateTimestamp = startOfDay(parsedDate).getTime();
+                } else {
+                    toast.error('Ngày xuất bản không hợp lệ');
+                    return;
+                }
+            } else {
+                toast.error('Vui lòng chọn ngày xuất bản');
+                return;
+            }
             const data = {
                 author: formBook.author,
                 title: formBook.title,
                 descriptionHTML: formBook.descriptionHTML,
                 descriptionMarkdown: formBook.descriptionMarkdown,
                 publicationDate: publicationDateTimestamp,
+                lastUpdateDate: publicationDateTimestamp,
                 image: image,
             }
             // call api

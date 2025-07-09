@@ -46,6 +46,16 @@ $bg-color: #C2EFFF;
             }
 
             .section-customize {
+                .handbook-child {
+                    cursor: pointer;
+
+                    .section-name {
+                        &:hover {
+                            color: blue;
+                        }
+                    }
+                }
+
                 .bg-image {
                     width: 100%;
                     height: 120px;

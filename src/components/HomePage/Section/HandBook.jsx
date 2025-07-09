@@ -1,12 +1,11 @@
 import './HandBook.scss';
 import Slider from "react-slick";
-import ChiPhiHutMo from '../../../assets/HandBook/chiphihutmotay.png';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 import { FcNext, FcPrevious } from "react-icons/fc";
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState } from 'react';
-import { getAllHandBook } from '../../../services/hanbookService';
+import { getAllHandBook } from '../../../services/handbookService';
 
 
 function SampleNextArrow(props) {
@@ -52,7 +51,7 @@ const HandBook = () => {
         navigate('/view-more-handbook');
     }
     const handleViewDetailHandBook = (handbook) => {
-        navigate(`/detail-clinic/${handbook.id}`)
+        navigate(`/detail-handbook/${handbook.id}`)
     }
 
     useEffect(() => {

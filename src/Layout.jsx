@@ -33,6 +33,8 @@ import ListManageSpecialty from './components/Admin/Content/Specialty/ListManage
 import ViewMoreClinic from './components/HomePage/Section/ViewMore/ViewMoreClinic.jsx';
 import ListHandBook from './components/Admin/Content/HandBook/ListHandBook.jsx';
 import ManageHandBook from './components/Admin/Content/HandBook/ManageHandBook.jsx';
+import DetailHandBook from './components/Patient/HandBook/DetailHandBook.jsx';
+import ViewMoreHandBook from './components/HomePage/Section/ViewMore/ViewMoreHandBook.jsx';
 
 const Layout = () => {
     return (
@@ -72,11 +74,13 @@ const Layout = () => {
                 <Route path="/view-more-specialty" element={<ViewMoreSpecialty />} />
                 <Route path="/view-more-doctor" element={<ViewMoreDoctor />} />
                 <Route path="/view-more-clinic" element={<ViewMoreClinic />} />
+                <Route path="/view-more-handbook" element={<ViewMoreHandBook />} />
 
 
                 <Route path='/detail-doctor/:id' element={<DetailDoctor />} />
                 <Route path='/detail-specialty/:id' element={<DetailSpecialty />} />
                 <Route path='/detail-clinic/:id' element={<DetailClinic />} />
+                <Route path='/detail-handbook/:id' element={<DetailHandBook />} />
 
 
             </Routes>

@@ -1,0 +1,77 @@
+.view-more-container {
+    padding: 40px;
+    background: linear-gradient(135deg, #f0f7ff 0%, #ffffff 100%);
+    border-radius: 20px;
+    margin: 30px auto;
+    max-width: 1000px;
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+
+    h2 {
+        font-size: 32px;
+        color: #1e3a8a;
+        margin-bottom: 30px;
+        font-weight: 700;
+        text-transform: uppercase;
+        text-align: center;
+        letter-spacing: 1px;
+    }
+
+    .handbook-list {
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+
+        .handbook-item {
+            display: flex;
+            align-items: center;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 12px;
+            border: 1px solid #e0e7ff;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+            cursor: pointer;
+
+            &:hover {
+                transform: translateY(-5px);
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+                background-color: #f8faff;
+            }
+
+            img {
+                width: 250px;
+                height: 120px;
+                object-fit: cover;
+                border-radius: 8px;
+                margin-right: 20px;
+                filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+            }
+
+            .handbook-content {
+                flex: 1;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+
+                h3 {
+                    font-size: 18px;
+                    color: #1f2937;
+                    font-weight: 600;
+                    line-height: 1.4;
+                    margin: 0;
+                    overflow: hidden;
+                    text-overflow: ellipsis;
+                    display: -webkit-box;
+                    -webkit-box-orient: vertical;
+                }
+
+                p {
+                    font-size: 14px;
+                    color: #6b7280;
+                    font-weight: 400;
+                    margin: 0;
+                }
+            }
+        }
+    }
+}

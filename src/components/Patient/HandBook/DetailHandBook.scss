@@ -1,0 +1,91 @@
+.detail-handbook-container {
+    font-family: 'Roboto', sans-serif;
+    color: #333;
+    background-color: #f5f6fa;
+    min-height: 100vh;
+
+    .handbook-banner {
+        width: 100%;
+        height: 300px;
+        background-size: cover;
+        background-position: center;
+        background-repeat: no-repeat;
+        margin-bottom: 20px;
+        border-radius: 0 0 10px 10px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    .handbook-content {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 0 20px;
+
+        .container {
+            background-color: #fff;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+
+            .handbook-title {
+                font-size: 32px;
+                font-weight: 700;
+                color: #1a3c6d;
+                margin-bottom: 15px;
+                line-height: 1.3;
+            }
+
+            .meta-info {
+                font-size: 14px;
+                color: #6b7280;
+                margin-bottom: 20px;
+                font-style: italic;
+            }
+
+            .content-body {
+                font-size: 16px;
+                line-height: 1.8;
+                color: #4b5563;
+                margin-bottom: 20px;
+
+                p {
+                    margin-bottom: 15px;
+                }
+
+                strong {
+                    color: #1a3c6d;
+                }
+            }
+
+            .appointment-btn {
+                background-color: #1a73e8;
+                color: #fff;
+                padding: 12px 24px;
+                border: none;
+                border-radius: 6px;
+                font-size: 16px;
+                font-weight: 500;
+                cursor: pointer;
+                transition: background-color 0.3s ease;
+
+                &:hover {
+                    background-color: #1557b0;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        .handbook-title {
+            font-size: 24px;
+        }
+
+        .content-body {
+            font-size: 15px;
+        }
+
+        .appointment-btn {
+            width: 100%;
+            text-align: center;
+        }
+    }
+}

@@ -9,6 +9,11 @@ const createNewHandBook = (data) => {
 const getAllHandBook = (page = 1, limit = 10) => {
     return axios.get(`/api/get-all-handbook?page=${page}&limit=${limit}`)
 }
+
+// lấy chi tiết phòng khám theo id 
+const getDetailHandBookById = (data) => {
+    return axios.get(`/api/get-detail-handbook-by-id?id=${data.id}}`)
+}
 export {
-    createNewHandBook, getAllHandBook
+    createNewHandBook, getAllHandBook, getDetailHandBookById
 }

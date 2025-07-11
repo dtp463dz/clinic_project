@@ -7,6 +7,7 @@ import dayjs from 'dayjs'; // su dung de set thoi gian ve 00:00:00
 import Pagination from "../../../Pagination/Pagination";
 import ConFirmModal from "./ConFirmModal";
 import { toast } from 'react-toastify';
+import PrintInvoiceModal from "./PrintInvoiceModal";
 
 const ManagePatient = () => {
     const user = useSelector(state => state.user.account);
@@ -17,13 +18,15 @@ const ManagePatient = () => {
 
     // modal
     const [showModalConfirm, setShowModalConfirm] = useState(false);
+    const [showModalPrint, setShowModalPrint] = useState(false);
     const [dataModal, setDataModal] = useState({});
+    const [dataModalPrint, setDataModalPrint] = useState({});
+
     const pageSize = 10;
     // on change datepicker
     const handleOnChangeDatePicker = (date) => {
         setCurrentDate(date);
         setCurrentPage(1);
-        // console.log('Selected date:', format(date, 'dd/MM/yyyy'), date.getTime());
     }
     const fetchListPatient = useCallback(async () => {
         const formattedDate = dayjs(currentDate).startOf('day').valueOf();
@@ -49,7 +52,6 @@ const ManagePatient = () => {
     // console.log('check data patient: ', dataPatient, pagination)
 
     const handleBtnConfirm = (item) => {
-        console.log(item);
         let data = {
             doctorId: item.doctorId,
             patientId: item.patientId,
@@ -57,9 +59,27 @@ const ManagePatient = () => {
             timeType: item.timeType,
             patientName: item.patientData.firstName,
         }
-        console.log('check data handle confirm: ', data)
         setShowModalConfirm(true)
         setDataModal(data)
+    }
+    // in hóa đơn 
+    const handlePrintInvoices = (item) => {
+        let data = {
+            patientName: item.patientData.firstName + ' ' + item.patientData.lastName,
+            patientEmail: item.patientData.email,
+            patientPhone: item.patientData.phoneNumber || 'N/A',
+            patientAddress: item.patientData.address || 'N/A',
+            gender: item.patientData.genderData?.valueVi || 'N/A',
+            bookingId: item.id,
+            bookingDate: dayjs(currentDate).format('DD/MM/YYYY'),
+            timeType: item.timeTypeDataPatient?.valueVi || 'N/A',
+            doctorName: user.firstName + ' ' + user.lastName || 'N/A',
+            clinicName: user.clinicName || 'N/A',
+            clinicAddress: user.clinicAddress || 'N/A',
+        };
+        console.log('Dữ liệu gửi modal in:', data); // Debug bookingId
+        setDataModalPrint(data);
+        setShowModalPrint(true);
     }
     const handlePageChange = (page) => {
         setCurrentDate(page);
@@ -122,6 +142,12 @@ const ManagePatient = () => {
                                                 className="btn btn-primary mx-3"
                                                 onClick={() => handleBtnConfirm(item)}
                                             >Xác Nhận</button>
+                                            <button
+                                                className="btn btn-secondary"
+                                                onClick={() => handlePrintInvoices(item)}
+                                            >
+                                                In Hóa Đơn
+                                            </button>
                                         </td>
                                     </tr>
                                 ))
@@ -144,6 +170,11 @@ const ManagePatient = () => {
                         setShow={setShowModalConfirm}
                         dataModal={dataModal}
                         sendConfirm={handleSend}
+                    />
+                    <PrintInvoiceModal
+                        show={showModalPrint}
+                        setShow={setShowModalPrint}
+                        dataModal={dataModalPrint}
                     />
                 </div>
             </div>

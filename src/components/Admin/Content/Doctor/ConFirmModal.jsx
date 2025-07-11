@@ -1,7 +1,6 @@
 import Modal from 'react-bootstrap/Modal';
 import { FcPlus } from "react-icons/fc";
 import Button from 'react-bootstrap/Button';
-import { toast } from 'react-toastify';
 import { useEffect, useState } from 'react';
 import CommonUtils from '../../../../utils/commonUtils';
 
@@ -15,8 +14,6 @@ const ConFirmModal = (props) => {
     const handleClose = () => {
         setShow(false)
     }
-    console.log('check dataModal: ', dataModal)
-
     useEffect(() => {
         setEmail(dataModal.email)
     }, [dataModal.email])

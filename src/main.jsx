@@ -13,17 +13,16 @@ import {
 
 import Layout from './Layout.jsx';
 import 'nprogress/nprogress.css'; // thư viện dùng cho loading bar
+import LoadingProvider from './contexts/LoadingContext.jsx';
 
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
-    <Provider store={store}>
+  <Provider store={store}>
+    <LoadingProvider>
       <BrowserRouter>
         <Layout />
-
       </BrowserRouter>
-    </Provider>
-
-  </StrictMode>,
+    </LoadingProvider>
+  </Provider>
 )
 

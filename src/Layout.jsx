@@ -35,10 +35,20 @@ import ListHandBook from './components/Admin/Content/HandBook/ListHandBook.jsx';
 import ManageHandBook from './components/Admin/Content/HandBook/ManageHandBook.jsx';
 import DetailHandBook from './components/Patient/HandBook/DetailHandBook.jsx';
 import ViewMoreHandBook from './components/HomePage/Section/ViewMore/ViewMoreHandBook.jsx';
+import { useContext, useEffect } from 'react';
+import { LoadingContext } from './contexts/LoadingContext';
+import { registerGlobalLoading } from './utils/axios.jsx';
+import FullScreenSpinner from './components/common/FullScreenSpinner';
 
 const Layout = () => {
+    const { isLoading, setIsLoading } = useContext(LoadingContext);
+
+    useEffect(() => {
+        registerGlobalLoading(setIsLoading);
+    }, [setIsLoading]);
     return (
         <>
+            {isLoading && <FullScreenSpinner message="Đang tải dữ liệu..." />}
             <Routes>
                 <Route path="/" element={<App />}>
                     {/* <Route index element={<HomePage />} /> */}

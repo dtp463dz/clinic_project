@@ -15,12 +15,15 @@ const ManagePatient = () => {
     const [dataPatient, setDataPatient] = useState([]);
     const [pagination, setPagination] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
+    const [isSending, setIsSending] = useState(false);
+
 
     // modal
     const [showModalConfirm, setShowModalConfirm] = useState(false);
     const [showModalPrint, setShowModalPrint] = useState(false);
     const [dataModal, setDataModal] = useState({});
     const [dataModalPrint, setDataModalPrint] = useState({});
+
 
     const pageSize = 10;
     // on change datepicker
@@ -174,6 +177,8 @@ const ManagePatient = () => {
                         setShow={setShowModalConfirm}
                         dataModal={dataModal}
                         sendConfirm={handleSend}
+                        isSending={isSending}
+                        setIsSending={setIsSending}
                     />
                     <PrintInvoiceModal
                         show={showModalPrint}

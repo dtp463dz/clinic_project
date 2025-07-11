@@ -3,6 +3,7 @@ import { FcPlus } from "react-icons/fc";
 import Button from 'react-bootstrap/Button';
 import { useEffect, useState } from 'react';
 import CommonUtils from '../../../../utils/commonUtils';
+import { getPatientPdf } from '../../../../services/pdfService';
 
 const ConFirmModal = (props) => {
 
@@ -10,32 +11,73 @@ const ConFirmModal = (props) => {
     const [previewImage, setPreviewImage] = useState("");
     const [email, setEmail] = useState("");
     const [image, setImage] = useState("");
+    const [pdfFile, setPdfFile] = useState("");
+
 
     const handleClose = () => {
         setShow(false)
+        reSetForm();
     }
     useEffect(() => {
         setEmail(dataModal.email)
     }, [dataModal.email])
 
-    const handleSendConfirm = () => {
-        sendConfirm({
-            email: email,
-            image: image,
-        })
+    const reSetForm = () => {
+        setImage("");
+        setPdfFile("");
+        setPreviewImage("");
+    }
+
+    const handleSendConfirm = async () => {
+        try {
+            let finalPdfBase64 = pdfFile;
+
+            // Nếu người dùng không upload file PDF, thì gọi BE để lấy PDF
+            if (!image && !pdfFile) {
+                const response = await getPatientPdf(dataModal.bookingId);
+                if (response.status !== 200 || !response.data) {
+                    throw new Error('Không thể tải file PDF từ hệ thống');
+                }
+                const pdfBlob = response.data;
+                finalPdfBase64 = await CommonUtils.getBase64(pdfBlob);
+            }
+            sendConfirm({
+                email: email,
+                image: image || null,
+                pdfBase64: finalPdfBase64 || null
+            })
+            // reset
+            reSetForm();
+        } catch (error) {
+            console.error('Lỗi khi gửi xác nhận kèm PDF: ', error);
+        }
+
     }
 
     // upload hinh anh
-    const handleUploadImage = async (event) => {
-        let data = event.target.files;
-        let file = data[0];
-        if (file) {
+    const handleUploadFile = async (event) => {
+        const file = event.target.files?.[0];
+        if (!file) return;
+        const fileType = file.type;
+
+        // reset trước
+        reSetForm();
+        if (fileType.startsWith("image/")) {
             // convert file to base64
             let base64 = await CommonUtils.getBase64(file);
             // hien thi anh dung url.createObjectUrl se chuyen sang blob
             setPreviewImage(URL.createObjectURL(file));
             setImage(base64)
+            setPdfFile("");
+        } else if (fileType === "application/pdf") {
+            const base64 = await CommonUtils.getBase64(file);
+            setPreviewImage(URL.createObjectURL(file));
+            setPdfFile(base64);
+            setImage("");
+        } else {
+            alert('Chỉ hỗ trợ file ảnh hoặc PDF');
         }
+
     }
 
     return (
@@ -63,27 +105,49 @@ const ConFirmModal = (props) => {
                         </div>
                     </div>
                 </div>
-                <div className='col-12 form-group my-2'>
-                    <div>
-                        <label className="form-label label-upload" htmlFor='labelUpload'>
-                            <FcPlus />Chọn hóa đơn
-                        </label>
-                        <input
-                            type="file"
-                            id='labelUpload' hidden
-                            onChange={(event) => handleUploadImage(event)}
-                        />
-                    </div>
-
+                <div className='col-6 form-group  my-2'>
+                    <label className="form-label label-upload" htmlFor='labelUpload'>
+                        <FcPlus />Chọn hóa đơn (ảnh hoặc PDF)
+                    </label>
+                    <input
+                        type="file"
+                        id='labelUpload'
+                        hidden
+                        onChange={handleUploadFile}
+                    />
                 </div>
                 {/* preview hình ảnh xem trước */}
-                <div className='col-md-12 img-preview'>
-                    {previewImage ?
-                        <img src={previewImage} />
-                        :
-                        <span>Preview Image</span>
-                    }
+                <div className='col-12 my-3' style={{ maxHeight: '400px', overflow: 'auto' }}>
+                    {previewImage ? (
+                        pdfFile ? (
+                            <embed
+                                src={previewImage}
+                                type="application/pdf"
+                                width="100%"
+                                height="400px"
+                                style={{ border: '1px solid #ccc', borderRadius: '8px' }}
+                            />
+                        ) : (
+                            <img src={previewImage} alt="preview" style={{ maxWidth: '100%' }} />
+                        )
+                    ) : (
+                        <span>Chưa có nội dung</span>
+                    )}
                 </div>
+                {previewImage && (
+                    <div className="text-end">
+                        <button
+                            className="btn btn-sm btn-outline-danger"
+                            onClick={() => {
+                                setPreviewImage("");
+                                setImage("");
+                                setPdfFile("");
+                            }}
+                        >
+                            Xóa file
+                        </button>
+                    </div>
+                )}
 
             </Modal.Body>
             <Modal.Footer>

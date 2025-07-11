@@ -58,6 +58,7 @@ const ManagePatient = () => {
             email: item.patientData.email,
             timeType: item.timeType,
             patientName: item.patientData.firstName,
+            bookingId: item.id
         }
         setShowModalConfirm(true)
         setDataModal(data)
@@ -65,7 +66,7 @@ const ManagePatient = () => {
     // in hóa đơn 
     const handlePrintInvoices = (item) => {
         let data = {
-            patientName: item.patientData.firstName + ' ' + item.patientData.lastName,
+            patientName: item.patientData.firstName,
             patientEmail: item.patientData.email,
             patientPhone: item.patientData.phoneNumber || 'N/A',
             patientAddress: item.patientData.address || 'N/A',
@@ -86,9 +87,12 @@ const ManagePatient = () => {
     }
     const handleSend = async (dataChildFromModal) => {
         console.log('Image to BE:', dataChildFromModal.image);
+        console.log('PDF to BE: ', dataChildFromModal.pdfBase64);
+
         let res = await postSendConfirm({
             email: dataChildFromModal.email,
             image: dataChildFromModal.image,
+            pdfBase64: dataChildFromModal.pdfBase64,
             doctorId: dataModal.doctorId,
             patientId: dataModal.patientId,
             timeType: dataModal.timeType,

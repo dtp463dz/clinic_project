@@ -1,8 +1,7 @@
+import ManageMedicalData from "../ManageMedicalData"
 
 const ManageSymptoms = () => {
-    return (
-        <div>ManageSymptoms</div>
-    )
+    return <ManageMedicalData entityType="symptom" />;
 }
 
 export default ManageSymptoms

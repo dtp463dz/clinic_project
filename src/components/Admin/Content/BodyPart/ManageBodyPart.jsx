@@ -1,8 +1,7 @@
+import ManageMedicalData from "../ManageMedicalData"
 
 const ManageBodyPart = () => {
-    return (
-        <div>ManageBodyPart</div>
-    )
+    return <ManageMedicalData entityType="bodypart" />;
 }
 
 export default ManageBodyPart

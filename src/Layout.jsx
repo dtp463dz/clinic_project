@@ -39,6 +39,10 @@ import { useContext, useEffect } from 'react';
 import { LoadingContext } from './contexts/LoadingContext';
 import { registerGlobalLoading } from './utils/axios.jsx';
 import FullScreenSpinner from './components/common/FullScreenSpinner';
+import ManageSymptoms from './components/Admin/Content/Symptoms/ManageSymptoms.jsx';
+import ManageDrugs from './components/Admin/Content/Drugs/ManageDrugs.jsx';
+import ManageMedicinal from './components/Admin/Content/MedicinalHerb/ManageMedicinal.jsx';
+import ManageBodyPart from './components/Admin/Content/BodyPart/ManageBodyPart.jsx';
 
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
@@ -69,6 +73,12 @@ const Layout = () => {
                     <Route path="manage-handbook" element={<ManageHandBook />} />
                     <Route path="list-handbook" element={<ListHandBook />} />
                     <Route path="manage-patient" element={<ManagePatient />} />
+
+                    <Route path="symptoms" element={<ManageSymptoms />} />
+                    <Route path="drugs" element={<ManageDrugs />} />
+                    <Route path="medicinal-herb" element={<ManageMedicinal />} />
+                    <Route path="body-part" element={<ManageBodyPart />} />
+
                 </Route>
 
 

@@ -1,7 +1,7 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { FaGem, FaGithub, FaUser, FaClinicMedical, FaBookMedical } from 'react-icons/fa';
 import './SideBar.scss';
-import { MdDashboard, MdFolderSpecial } from "react-icons/md";
+import { MdDashboard, MdFolderSpecial, MdSick, MdMedication } from "react-icons/md";
 import { DiReact } from "react-icons/di";
 import { Link } from 'react-router-dom';
 
@@ -103,6 +103,28 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                         </SubMenu>
                     )}
 
+                    {isAdmin && (
+                        <>
+                            <MenuItem
+                                icon={<MdSick />}
+                                component={<Link to='/admin/symptoms' />}
+                            >
+                                Triệu Chứng Bệnh
+                            </MenuItem>
+                            <SubMenu label="Thuốc & Dược liệu" icon={<MdMedication />}>
+                                <MenuItem component={<Link to='/admin/drugs' />}>
+                                    Thuốc
+                                </MenuItem>
+                                <MenuItem component={<Link to='/admin/medicinal-herb' />}>
+                                    Dược liệu
+                                </MenuItem>
+                                <MenuItem component={<Link to='/admin/body-part' />}>
+                                    Bộ phận cơ thể
+                                </MenuItem>
+                            </SubMenu>
+                        </>
+                    )}
+
                     {!isAdmin && (
                         <SubMenu label="Quản Lý" icon={<FaUser />}>
                             <MenuItem component={<Link to={'/admin/manage-doctor-schedule'} />}>
@@ -113,6 +135,8 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                             </MenuItem>
                         </SubMenu>
                     )}
+
+
 
 
                 </Menu>

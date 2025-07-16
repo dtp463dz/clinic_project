@@ -1,0 +1,67 @@
+.search-hero {
+    background-image: url('../../assets/bgco.jpg');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    color: white;
+    padding: 60px 20px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 520px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    // Lớp phủ để làm mờ nền cho dễ nhìn chữ
+    &::before {
+        content: '';
+        position: absolute;
+        inset: 0;
+        background: rgba(0, 0, 0, 0.4); // màu tối mờ
+        z-index: 0;
+    }
+
+    &__content {
+        position: relative; // đảm bảo nội dung nằm trên lớp phủ
+        z-index: 2;
+        max-width: 1200px;
+        margin: 0 auto;
+        width: 100%;
+        padding: 0 16px;
+    }
+
+    &__text {
+        max-width: 700px;
+        margin: 0 auto 30px;
+
+        h1 {
+            font-size: 32px;
+            font-weight: 700;
+            margin-bottom: 10px;
+
+            @media (min-width: 768px) {
+                font-size: 40px;
+            }
+        }
+
+        p {
+            font-size: 16px;
+            line-height: 1.6;
+
+            @media (min-width: 768px) {
+                font-size: 18px;
+            }
+        }
+    }
+
+    &__search {
+        display: flex;
+        justify-content: center;
+
+        .search-container {
+            width: 100%;
+            max-width: 700px;
+        }
+    }
+}

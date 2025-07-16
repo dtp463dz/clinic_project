@@ -1,77 +1,15 @@
 import './HomeHeader.scss';
-import { FaBars } from "react-icons/fa";
 <link href='https://fonts.googleapis.com/css?family=Montserrat' rel='stylesheet'></link>
-import { FaPersonCircleQuestion } from "react-icons/fa6";
 import { ImBook } from "react-icons/im";
 import { FaBookReader, FaUserNurse, FaCaretDown } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
 import SlideShow from './SlideShow';
-import Dropdown from 'react-bootstrap/Dropdown';
-import { useNavigate } from 'react-router-dom';
-import SearchBar from '../Search/SearchBar';
+import Header from '../../pages/Hearder/Header';
 
 const HomeHeader = (props) => {
-
-    const navigate = useNavigate();
-    const returnHome = () => {
-        navigate('/home');
-    }
     return (
         <>
-            <div className="home-header-container">
-                <div className='home-header-content'>
-                    <div className='left-content'>
-                        <i className='fa-bars'> <FaBars /></i>
-                        <div className='header-logo' onClick={() => returnHome()}></div>
-                    </div>
-                    <div className='center-content'>
-                        <div className='child-content'>
-                            <div className='title-content'>Tất cả</div>
-                        </div>
-                        <div className='child-content'>
-                            <div className='title-content'>Tại nhà</div>
-                        </div>
-                        <div className='child-content'>
-                            <div className='title-content'>Tại viện</div>
-
-                        </div>
-                        <div className='child-content'>
-                            <div className='title-content'>Sống khỏe</div>
-                        </div>
-                        <SearchBar />
-                    </div>
-                    <div className='right-content'>
-                        <div className='support'>
-                            <FaPersonCircleQuestion className='support-icons' />
-                            <span>Hỗ trợ khách hàng</span>
-                        </div>
-                        <div className='language-vi' >
-                            <Dropdown className="custom-dropdown">
-                                <Dropdown.Toggle variant="none" id="dropdown-basic" style={{ border: 'none', boxShadow: 'none' }} >
-                                    <img src="https://phenikaamec.com/assets/image/header/lang1.svg"
-                                        alt="Vietnamese Flag"
-                                        className='flag-icon'
-                                    />
-                                </Dropdown.Toggle>
-
-                                <Dropdown.Menu>
-                                    <Dropdown.Item >
-                                        <div className='dropdow-menu'>
-                                            <img src="https://phenikaamec.com/assets/image/header/lang1.svg"
-                                                alt="Vietnamese Flag"
-                                                className='flag-icon'
-                                            />
-                                            <span>Tiếng Việt</span>
-                                        </div>
-                                    </Dropdown.Item>
-                                </Dropdown.Menu>
-                            </Dropdown>
-                        </div>
-
-
-                    </div>
-                </div>
-            </div >
+            <Header />
             {props.isShowBanner === true &&
                 <div className='home-header-banner' >
                     <div className='banner-up'>

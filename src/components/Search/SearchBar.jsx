@@ -15,7 +15,7 @@ const SearchBar = () => {
     // call api
     const fetchSearchResults = async (searchTerm) => {
         if (searchTerm.trim() === '') {
-            setResults({ doctors: [], clinics: [], specialties: [] });
+            setResults({ doctors: [], clinics: [], specialties: [], handbooks: [] });
             setShowResults(false);
             return;
         }
@@ -27,12 +27,12 @@ const SearchBar = () => {
                 setShowResults(true);
             } else {
                 console.error(response.errMessage);
-                setResults({ doctors: [], clinics: [], specialties: [] });
+                setResults({ doctors: [], clinics: [], specialties: [], handbooks: [] });
                 setShowResults(false);
             }
         } catch (error) {
             console.error('Lỗi khi gọi API tìm kiếm:', error);
-            setResults({ doctors: [], clinics: [], specialties: [] });
+            setResults({ doctors: [], clinics: [], specialties: [], handbooks: [] });
             setShowResults(false);
         } finally {
             setIsLoading(false);
@@ -60,6 +60,8 @@ const SearchBar = () => {
             navigate(`/detail-clinic/${id}`);
         } else if (type === 'specialty') {
             navigate(`/detail-specialty/${id}`);
+        } else if (type === 'handbook') {
+            navigate(`/detail-handbook/${id}`);
         }
     };
     return (
@@ -123,9 +125,25 @@ const SearchBar = () => {
                                     ))}
                                 </div>
                             )}
+                            {results.handbooks.length > 0 && (
+                                <div className="result-section">
+                                    <h4>Cẩm nang</h4>
+                                    {results.handbooks.map(handbook => (
+                                        <div
+                                            key={handbook.id}
+                                            className="result-item"
+                                            onClick={() => handleResultClick('handbook', handbook.id)}
+                                        >
+                                            {handbook.title}
+                                        </div>
+                                    ))}
+                                </div>
+                            )}
+
 
                             {results.doctors.length === 0 &&
                                 results.clinics.length === 0 &&
+                                results.handbooks.length === 0 &&
                                 results.specialties.length === 0 && (
                                     <div className="no-results">Không tìm thấy kết quả</div>
                                 )}

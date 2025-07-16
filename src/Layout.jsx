@@ -43,6 +43,7 @@ import ManageSymptoms from './components/Admin/Content/Symptoms/ManageSymptoms.j
 import ManageDrugs from './components/Admin/Content/Drugs/ManageDrugs.jsx';
 import ManageMedicinal from './components/Admin/Content/MedicinalHerb/ManageMedicinal.jsx';
 import ManageBodyPart from './components/Admin/Content/BodyPart/ManageBodyPart.jsx';
+import HomeNews from './components/HomePage/News/HomeNews.jsx';
 
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
@@ -102,6 +103,7 @@ const Layout = () => {
                 <Route path='/detail-clinic/:id' element={<DetailClinic />} />
                 <Route path='/detail-handbook/:id' element={<DetailHandBook />} />
 
+                <Route path='/tin-tuc' element={<HomeNews />} />
 
             </Routes>
             <ToastContainer

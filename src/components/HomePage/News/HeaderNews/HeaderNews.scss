@@ -1,0 +1,127 @@
+.header-news {
+    border-bottom: 1px solid #e5e7eb;
+    background-color: white;
+
+    .header-top {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        padding: 12px 24px;
+
+        @media (max-width: 768px) {
+            flex-direction: column;
+            align-items: stretch;
+            gap: 10px;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+
+            .header-toggle-button {
+                display: none;
+                background: none;
+                border: none;
+                cursor: pointer;
+                color: #333;
+
+                @media (max-width: 768px) {
+                    display: block;
+                }
+            }
+
+            .header-logo {
+                background: url('../../../../assets/logoooo.png') center center no-repeat;
+                height: 70px;
+                width: 200px;
+                background-size: contain;
+                cursor: pointer;
+
+                @media (max-width: 480px) {
+                    width: 160px;
+                    height: 50px;
+                }
+            }
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 6px;
+            padding: 6px 10px;
+
+            input {
+                border: none;
+                outline: none;
+                background: transparent;
+                padding: 6px 8px;
+                font-size: 14px;
+                width: 250px;
+
+                @media (max-width: 480px) {
+                    width: 180px;
+                }
+
+                &::placeholder {
+                    color: #888;
+                }
+            }
+
+            .search-icon {
+                background: transparent;
+                border: none;
+                cursor: pointer;
+                font-size: 16px;
+                color: #666;
+                display: flex;
+                align-items: center;
+            }
+        }
+    }
+
+    .header-menu {
+        border-top: 1px solid #e5e7eb;
+        padding: 8px 100px;
+
+        ul {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            list-style: none;
+            margin: 0;
+            padding: 0;
+
+            @media (max-width: 768px) {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+                padding-top: 10px;
+                display: none;
+            }
+
+            li {
+                font-size: 14px;
+                font-weight: 500;
+                color: #111827;
+                cursor: pointer;
+
+                &:hover {
+                    color: #0074e8;
+                }
+
+                .home-icon {
+                    font-size: 16px;
+                }
+            }
+        }
+    }
+
+    &.menu-open {
+        .header-menu ul {
+            display: flex !important;
+        }
+    }
+}

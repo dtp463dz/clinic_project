@@ -1,7 +1,7 @@
-import ManageMedicalData from "../ManageMedicalData"
+import ManageMedicalData from "../MedicalData/ManageMedicalData"
 
 const ManageDrugs = () => {
-    return <ManageMedicalData entityType="drug" />
+    return <ManageMedicalData entityType="drugs" />
 }
 
 export default ManageDrugs

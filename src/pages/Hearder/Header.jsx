@@ -1,22 +1,51 @@
 import { useNavigate, Link } from 'react-router-dom';
 import './Header.scss';
-import { FaBars } from "react-icons/fa";
-import SearchBar from '../../components/Search/SearchBar.jsx';
-import Dropdown from 'react-bootstrap/Dropdown';
-import { FaPersonCircleQuestion } from "react-icons/fa6";
+import { FaBars, FaUserCircle } from "react-icons/fa";
 import { useState } from 'react';
+import { useSelector, useDispatch } from 'react-redux';
+import { toast } from 'react-toastify';
+import { postLogout } from '../../services/apiService';
+import { doLogout } from '../../redux/action/userAction';
+
 
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+    const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const navigate = useNavigate();
+    const dispatch = useDispatch();
+    const { account, isAuthenticated } = useSelector((state) => state.user);
+    const accessToken = account?.accessToken || localStorage.getItem('accessToken');
+
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
+    };
+
+    const toggleUserMenu = () => {
+        setIsUserMenuOpen(!isUserMenuOpen);
     };
 
     const handleNavigate = (path) => {
         navigate(path);
         setIsMobileMenuOpen(false);
+        setIsUserMenuOpen(false);
     };
+
+    const handleLogout = async () => {
+        try {
+            const response = await postLogout(accessToken);
+            console.log('check response: ', response)
+            if (response.errCode === 0) {
+                dispatch(doLogout());
+                navigate('/home');
+                toast.success('Đăng xuất thành công!');
+            } else {
+                toast.error(response.data.message);
+            }
+        } catch (error) {
+            toast.error('Lỗi server, vui lòng thử lại!');
+            console.log('Lỗi handleLogout', error)
+        }
+    }
     return (
         <header className="header">
             <div className='header-container'>
@@ -70,10 +99,25 @@ const Header = () => {
                     </ul>
                 </nav>
                 <div className="header-right">
-                    <Link to="/login" className="header-login-btn">Đăng nhập</Link>
+                    {isAuthenticated && account ? (
+                        <div className="user-section" onClick={toggleUserMenu}>
+                            <FaUserCircle size={24} className="user-avatar" />
+                            <span className="welcome-text">Chào mừng, {account.firstName} {account.lastName}</span>
+                            {isUserMenuOpen && (
+                                <ul className="user-dropdown">
+                                    <li onClick={() => handleNavigate('/profile')}>
+                                        <span>Profile</span>
+                                    </li>
+                                    <li onClick={handleLogout}>
+                                        <span>Đăng xuất</span>
+                                    </li>
+                                </ul>
+                            )}
+                        </div>
+                    ) : (
+                        <Link to="/login" className="header-login-btn">Đăng nhập</Link>
+                    )}
                 </div>
-
-
             </div>
         </header >
     )

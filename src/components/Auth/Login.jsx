@@ -41,7 +41,6 @@ const Login = () => {
         // submit api
         try {
             let data = await postLogin(email, password);
-            console.log('check data login: ', data);
             if (data && data.errCode === 0) {
                 dispatch(doLogin(data)) // user action 
                 toast.success(data.message);
@@ -52,6 +51,7 @@ const Login = () => {
                     navigate('/admin')
                 }
                 if (roleId === 'R2') navigate('/admin/manage-doctor-schedule')
+                if (roleId === 'R3') navigate('/home')
             }
             if (data && +data.errCode !== 0) {
                 toast.error(data.message);
@@ -60,6 +60,7 @@ const Login = () => {
         } catch (error) {
             toast.error("Lỗi kết nối đến server.");
             console.error(error);
+            setIsLoading(false);
         }
     }
     return (

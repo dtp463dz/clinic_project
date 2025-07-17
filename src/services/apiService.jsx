@@ -19,6 +19,15 @@ const postLogin = (email, password) => {
     });
 }
 
+// logout
+const postLogout = (accessToken) => {
+    return axios.post(`/api/logout`, {}, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+}
+
 // lay tat ca user
 const getAllUsers = (page = 1, limit = 10) => {
     return axios.get(`/api/get-all-users/?id=ALL&page=${page}&limit=${limit}`)
@@ -84,7 +93,7 @@ const getSearch = (keyword, limit = 10, page = 1) => {
 }
 
 export {
-    postLogin, getAllUsers, postCreateNewUser,
+    postLogin, getAllUsers, postLogout, postCreateNewUser,
     putUpdateUser, deleteUser, postRegister,
     getAllCodeService, createNewUserService, editUserService,
     getSearch

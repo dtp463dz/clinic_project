@@ -1,12 +1,13 @@
 import Header from './components/Header/Header.jsx'
 import { Outlet } from "react-router-dom";
 import './App.scss';
+import HomePage from './components/HomePage/HomePage.jsx';
 
 function App() {
   return (
     <div className="app-container">
       <div className='header-container'>
-        <Header />
+        <HomePage />
 
       </div>
       <div className='main-container'>

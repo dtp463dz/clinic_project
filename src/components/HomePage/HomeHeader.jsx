@@ -3,7 +3,6 @@ import './HomeHeader.scss';
 import { ImBook } from "react-icons/im";
 import { FaBookReader, FaUserNurse, FaCaretDown } from "react-icons/fa";
 import { MdPayment } from "react-icons/md";
-import SlideShow from './SlideShow';
 import Header from '../../pages/Hearder/Header';
 import SearchHero from '../Search/SearchHero';
 

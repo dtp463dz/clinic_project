@@ -5,8 +5,10 @@ import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { postRegister } from '../../services/apiService';
+import { useDispatch } from 'react-redux';
+import { doLogin } from '../../redux/action/userAction';
 
-const Register = (props) => {
+const Register = () => {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [firstName, setFirstName] = useState("");
@@ -15,6 +17,7 @@ const Register = (props) => {
     const [isShowPassword, setIsShowPassword] = useState(false); // false la dong
 
     const navigate = useNavigate();
+    const dispatch = useDispatch();
     // validate email
     const isValidateEmail = (email) => {
         return String(email)
@@ -26,22 +29,27 @@ const Register = (props) => {
 
     const handleRegister = async () => {
         // validate
-        if (!email || !password) {
-            toast.error("Vui lòng nhập đầy đủ email và mật khẩu");
+        if (!email || !password || !firstName || !lastName) {
+            toast.error("Vui lòng nhập đầy đủ email và mật khẩu, tên và họ");
             return;
         }
         if (!isValidateEmail(email)) {
             toast.error("Email không hợp lệ, hãy thử lại");
             return;
         }
-        // submit api
+        if (password.length < 6) {
+            toast.error("Mật khẩu phải có ít nhất 6 ký tự.");
+            return;
+        }
+
+        // call api
 
         try {
             let data = await postRegister(email, password, firstName, lastName)
-            console.log('check data register: ', data);
             if (data && data.errCode === 0) {
+                dispatch(doLogin(data));
                 toast.success(data.errMessage);
-                navigate('/');
+                navigate('/home');
             }
             if (data && data.errCode !== 0) {
                 toast.error(data.errMessage);

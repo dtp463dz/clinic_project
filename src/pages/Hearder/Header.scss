@@ -134,6 +134,64 @@
                 color: white;
             }
         }
+
+        .user-section {
+            position: relative;
+            display: flex;
+            align-items: center;
+            cursor: pointer;
+            gap: 8px;
+
+            .user-avatar {
+                color: #2A3F88;
+            }
+
+            .welcome-text {
+                font-weight: 600;
+                color: #111827;
+                font-size: 15px;
+            }
+
+            .user-dropdown {
+                display: none;
+                position: absolute;
+                top: 100%;
+                right: 0;
+                background-color: #ffffff;
+                border-radius: 12px;
+                box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+                min-width: 200px;
+                padding: 12px 0;
+                z-index: 100;
+
+                li {
+                    padding: 12px 20px;
+                    cursor: pointer;
+                    transition: background-color 0.3s ease;
+                    list-style-type: none;
+
+                    span {
+                        display: block;
+                        font-weight: 600;
+                        color: #111827;
+                        font-size: 15px;
+
+                        &:hover {
+                            color: #03428E;
+                        }
+                    }
+
+                    &:hover {
+                        background-color: #f3f4f6; // gray-100
+                    }
+                }
+            }
+
+            &:hover .user-dropdown,
+            &.user-section-clicked .user-dropdown {
+                display: block;
+            }
+        }
     }
 
     // Mobile responsive
@@ -194,6 +252,23 @@
             display: flex;
             justify-content: flex-end;
             margin-top: 10px;
+
+            .user-section {
+                flex-direction: column;
+                text-align: center;
+                gap: 4px;
+
+                .user-dropdown {
+                    position: static;
+                    width: 100%;
+                    box-shadow: none;
+                    border-radius: 0;
+
+                    li {
+                        padding: 10px 20px;
+                    }
+                }
+            }
         }
     }
 }

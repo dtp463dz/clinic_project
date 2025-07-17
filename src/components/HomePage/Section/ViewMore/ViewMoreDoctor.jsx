@@ -15,7 +15,7 @@ const ViewMoreDoctor = () => {
                 if (res && res.errCode === 0) {
                     setDataDoctor(res.data ? res.data : []);
                 }
-                console.log("check fetchAllSpecialty: ", res);
+                // console.log("check fetchAllSpecialty: ", res);
             } catch (error) {
                 console.error("Failed all specialty:", error);
             }

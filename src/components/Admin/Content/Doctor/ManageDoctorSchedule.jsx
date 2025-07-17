@@ -101,7 +101,7 @@ const ManageDoctorSchedule = () => {
                 timeType: schedule.keyMap
             }));
 
-            console.log('Data sent to API:', { arrSchedule, doctorId: selectedDoctor.value, formattedDate });
+            // console.log('Data sent to API:', { arrSchedule, doctorId: selectedDoctor.value, formattedDate });
 
             const res = await saveBulkScheduleDoctor({
                 arrSchedule,

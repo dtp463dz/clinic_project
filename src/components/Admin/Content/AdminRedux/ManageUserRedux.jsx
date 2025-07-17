@@ -74,7 +74,6 @@ const ManageUserRedux = () => {
         if (file) {
             // convert file to base64
             let base64 = await CommonUtils.getBase64(file);
-            console.log('check image base64', base64);
             // hien thi anh dung url.createObjectUrl se chuyen sang blob
             setPreviewImage(URL.createObjectURL(file));
             setImage(base64)
@@ -126,7 +125,6 @@ const ManageUserRedux = () => {
             positionId: position,
             image,
         };
-        console.log('userData gửi đi:', userData); // Kiểm tra dữ liệu
         if (!isEditMode) {
             // fire redux action create
             dispatch(

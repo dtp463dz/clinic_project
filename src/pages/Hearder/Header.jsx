@@ -33,7 +33,7 @@ const Header = () => {
     const handleLogout = async () => {
         try {
             const response = await postLogout(accessToken);
-            console.log('check response: ', response)
+            // console.log('check response: ', response)
             if (response.errCode === 0) {
                 dispatch(doLogout());
                 navigate('/home');

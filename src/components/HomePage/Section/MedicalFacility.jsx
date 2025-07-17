@@ -22,7 +22,7 @@ const MedicalFacility = (props) => {
                 if (res && res.errCode === 0) {
                     setDataClinic(res.data.clinics ? res.data.clinics : [])
                 }
-                console.log('check fetchAllClinic: ', res);
+                // console.log('check fetchAllClinic: ', res);
             } catch (error) {
                 console.error('Failed all clinic:', error);
             }

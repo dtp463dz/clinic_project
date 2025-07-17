@@ -48,13 +48,13 @@ const ManageClinic = () => {
     }
 
     const handleSaveClinic = async () => {
-        console.log('Check state: ', {
-            Name: formClinic.name,
-            Addres: formClinic.address,
-            HTML: formClinic.descriptionHTML,
-            Markdown: formClinic.descriptionMarkdown,
-            Image: image
-        })
+        // console.log('Check state: ', {
+        //     Name: formClinic.name,
+        //     Addres: formClinic.address,
+        //     HTML: formClinic.descriptionHTML,
+        //     Markdown: formClinic.descriptionMarkdown,
+        //     Image: image
+        // })
 
         // call api
         let res = await createNewClinic({

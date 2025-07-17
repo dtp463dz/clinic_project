@@ -15,7 +15,6 @@ const ModalDeleteUser = (props) => {
 
     const handleSubmitDeleteUser = async () => {
         let data = await deleteUser(dataDelete.id);
-        console.log("check data delete", data);
 
         if (data && data.errCode === 0) {
             toast.success(data.errMessage);

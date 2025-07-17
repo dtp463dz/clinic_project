@@ -70,22 +70,22 @@ const ManageDoctor = () => {
         setSelectedSpecialty(null)
     };
     const handleSaveContentMarkdown = () => {
-        console.log('State values:', {
-            contentMarkdown,
-            contentHTML,
-            selectedDoctor,
-            description,
-            listDoctors,
-            selectedPrice,
-            selectedPayment,
-            selectedProvince,
-            nameClinic,
-            addressClinic,
-            note,
+        // console.log('State values:', {
+        //     contentMarkdown,
+        //     contentHTML,
+        //     selectedDoctor,
+        //     description,
+        //     listDoctors,
+        //     selectedPrice,
+        //     selectedPayment,
+        //     selectedProvince,
+        //     nameClinic,
+        //     addressClinic,
+        //     note,
 
-            selectedSpecialty,
-            selectedClinic,
-        });
+        //     selectedSpecialty,
+        //     selectedClinic,
+        // });
 
         dispatch(saveDetailDoctor({
             contentHTML: contentHTML,
@@ -138,7 +138,6 @@ const ManageDoctor = () => {
                 selectedClinic = listClinic.find(item => {
                     return item && item.value === clinicId
                 })
-                console.log('check findItem find arrray: ', selectedPayment, selectedPrice, selectedProvince, selectedSpecialty, selectedClinic)
             }
             setContentMarkdown(markdown.contentMarkdown)
             setContentHTML(markdown.contentHTML)
@@ -170,12 +169,10 @@ const ManageDoctor = () => {
             setSelectedClinic('');
             setSelectedSpecialty('');
         }
-        console.log('Option selected:', res);
     }
     // handleChangeSelectDoctorInfor Hàm xử lý sự kiện khi người dùng chọn option từ các Select (giá, phương thức thanh toán, tỉnh thành)
     const handleChangeSelectDoctorInfor = async (selectedOption, name) => {
         let stateName = name.name;
-        console.log('check new select on change: ', selectedOption, stateName)
         // Dựa vào tên state, cập nhật state tương ứng với giá trị mới được chọn
         switch (stateName) {
             case 'selectedPrice':
@@ -199,7 +196,6 @@ const ManageDoctor = () => {
     }
     const handleOnChangeText = (event, id) => {
         const value = event.target.value;
-        console.log(`handleOnChangeText: id = ${id}, value = ${value}`);
         switch (id) {
             case 'description':
                 setDescription(value);
@@ -280,7 +276,6 @@ const ManageDoctor = () => {
             let dataSelectSpecialty = buildDataInputSelect(resSpecialty, 'SPECIALTY');
             let dataSelectClinic = buildDataInputSelect(resClinic, 'CLINIC');
 
-            console.log('data new: ', dataSelectPrice, dataSelectPayment, dataSelectProvince, dataSelectSpecialty)
             setListPrice(dataSelectPrice);
             setListPayment(dataSelectPayment);
             setListProvince(dataSelectProvince);

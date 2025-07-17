@@ -1,7 +1,7 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { FaGem, FaGithub, FaUser, FaClinicMedical, FaBookMedical } from 'react-icons/fa';
 import './SideBar.scss';
-import { MdDashboard, MdFolderSpecial, MdSick, MdMedication } from "react-icons/md";
+import { MdDashboard, MdFolderSpecial, MdSick, MdMedication, MdLogout } from "react-icons/md";
 import { DiReact } from "react-icons/di";
 import { Link } from 'react-router-dom';
 
@@ -122,23 +122,27 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                                     Bộ phận cơ thể
                                 </MenuItem>
                             </SubMenu>
+                            <MenuItem icon={<MdLogout />} component={<Link to='/login' />}>
+                                Đăng xuất
+                            </MenuItem>
                         </>
                     )}
 
                     {!isAdmin && (
-                        <SubMenu label="Quản Lý" icon={<FaUser />}>
-                            <MenuItem component={<Link to={'/admin/manage-doctor-schedule'} />}>
-                                Quản Lý Kế Hoạch Bác Sĩ
+                        <>
+                            <SubMenu label="Quản Lý" icon={<FaUser />}>
+                                <MenuItem component={<Link to={'/admin/manage-doctor-schedule'} />}>
+                                    Quản Lý Kế Hoạch Bác Sĩ
+                                </MenuItem>
+                                <MenuItem component={<Link to={'/admin/manage-patient'} />}>
+                                    Quản Lý Bệnh Nhân Khám Bệnh
+                                </MenuItem>
+                            </SubMenu>
+                            <MenuItem icon={<MdLogout />} component={<Link to='/login' />}>
+                                Đăng xuất
                             </MenuItem>
-                            <MenuItem component={<Link to={'/admin/manage-patient'} />}>
-                                Quản Lý Bệnh Nhân Khám Bệnh
-                            </MenuItem>
-                        </SubMenu>
+                        </>
                     )}
-
-
-
-
                 </Menu>
 
                 {/* Footer menu */}

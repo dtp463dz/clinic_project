@@ -22,7 +22,7 @@ const Specialty = (props) => {
                 if (res && res.errCode === 0) {
                     setDataSpecialty(res.data.specialties ? res.data.specialties : [])
                 }
-                console.log('check fetchAllSpecialty: ', res);
+                //console.log('check fetchAllSpecialty: ', res);
             } catch (error) {
                 console.error('Failed all specialty:', error);
             }

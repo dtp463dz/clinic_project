@@ -6,7 +6,7 @@ const PrintInvoiceModal = (props) => {
     const { show, setShow, dataModal, onConfirm } = props;
     const handleConfirmPrint = async () => {
         try {
-            console.log('Đang tải PDF cho bookingId:', dataModal.bookingId); // Debug bookingId
+            // console.log('Đang tải PDF cho bookingId:', dataModal.bookingId); // Debug bookingId
             if (!dataModal.bookingId) {
                 throw new Error('bookingId không hợp lệ');
             }

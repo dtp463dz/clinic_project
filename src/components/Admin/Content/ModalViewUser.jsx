@@ -34,7 +34,6 @@ const ModalViewUser = (props) => {
     // chạy khi và chỉ khi data update thay đổi
     // hiển thị thông tin ban đầu 
     useEffect(() => {
-        console.log("run useEffect: ", dataView) // hiển thị thông tin user khi view
         //  nếu ko rỗng
         if (!_.isEmpty(dataView)) {
             // update state vào modal  

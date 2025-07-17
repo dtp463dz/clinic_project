@@ -35,7 +35,6 @@ const ModalUpdateUser = (props) => {
     // chạy khi và chỉ khi data update thay đổi
     // hiển thị thông tin ban đầu trước khi update
     useEffect(() => {
-        console.log("run useEffect: ", dataUpdate) // hiển thị thông tin user trước khi update
         //  nếu ko rỗng
         if (!_.isEmpty(dataUpdate)) {
             // update state vào modal  
@@ -81,7 +80,6 @@ const ModalUpdateUser = (props) => {
         try {
             // call api
             let data = await putUpdateUser(dataUpdate.id, firstName, lastName, roleId, image);
-            console.log('check update user: ', data);
 
             // xử lý thành công (tùy bạn muốn làm gì)
             if (data && data.errCode === 0) {

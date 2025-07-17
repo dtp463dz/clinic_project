@@ -65,7 +65,6 @@ const ModalCreateUser = (props) => {
         try {
             // call api
             let data = await postCreateNewUser(email, password, firstName, lastName, roleId, image);
-            console.log('check call new user: ', data);
 
             // xử lý thành công (tùy bạn muốn làm gì)
             if (data && data.errCode === 0) {

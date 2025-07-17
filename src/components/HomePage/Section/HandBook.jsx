@@ -61,7 +61,7 @@ const HandBook = () => {
                 if (res && res.errCode === 0) {
                     setDataHandBook(res.data.handbooks ? res.data.handbooks : [])
                 }
-                console.log('check fetchAllHandBook: ', res);
+                // console.log('check fetchAllHandBook: ', res);
             } catch (error) {
                 console.error('Failed all handbook:', error);
             }

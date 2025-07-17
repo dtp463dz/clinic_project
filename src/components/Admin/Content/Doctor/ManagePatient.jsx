@@ -81,7 +81,7 @@ const ManagePatient = () => {
             clinicName: user.clinicName || 'N/A',
             clinicAddress: user.clinicAddress || 'N/A',
         };
-        console.log('Dữ liệu gửi modal in:', data); // Debug bookingId
+        // console.log('Dữ liệu gửi modal in:', data); // Debug bookingId
         setDataModalPrint(data);
         setShowModalPrint(true);
     }
@@ -89,8 +89,8 @@ const ManagePatient = () => {
         setCurrentDate(page);
     }
     const handleSend = async (dataChildFromModal) => {
-        console.log('Image to BE:', dataChildFromModal.image);
-        console.log('PDF to BE: ', dataChildFromModal.pdfBase64);
+        // console.log('Image to BE:', dataChildFromModal.image);
+        // console.log('PDF to BE: ', dataChildFromModal.pdfBase64);
 
         let res = await postSendConfirm({
             email: dataChildFromModal.email,
@@ -102,7 +102,6 @@ const ManagePatient = () => {
             patientName: dataModal.patientName,
         });
 
-        console.log('Parent check modal res: ', res)
         if (res && res.errCode === 0) {
             toast.success('Xác nhận lưu hóa đơn khám bệnh thành công')
             setShowModalConfirm(false)

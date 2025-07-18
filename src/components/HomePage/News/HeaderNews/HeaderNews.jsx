@@ -3,6 +3,7 @@ import './HeaderNews.scss';
 import { FaHome, FaBars } from 'react-icons/fa';
 import { GoSearch } from 'react-icons/go';
 import { useNavigate, Link } from 'react-router-dom';
+import HeaderMenu from './HeaderMenu';
 
 const HeaderNews = () => {
     const navigate = useNavigate();
@@ -34,14 +35,7 @@ const HeaderNews = () => {
             </div>
 
             {/* Menu Section */}
-            <div className="header-menu">
-                <ul>
-                    <li><FaHome className="home-icon" /></li>
-                    <li>Tra cứu bệnh</li>
-                    <li>Tra cứu Thuốc & Dược liệu</li>
-                    <li>Bản tin sức khỏe</li>
-                </ul>
-            </div>
+            <HeaderMenu navigate={navigate} />
         </div>
     );
 };

@@ -1,0 +1,115 @@
+.header-menu {
+    display: flex;
+    list-style: none;
+    gap: 24px;
+    align-items: center;
+    padding: 10px 0;
+    font-family: 'Inter', sans-serif;
+
+    .menu-item {
+        position: relative;
+        cursor: pointer;
+        font-size: 16px;
+        color: #333;
+        font-weight: 500;
+        transition: color 0.3s ease;
+
+        &:hover {
+            color: #007bff;
+
+            .dropdown-list {
+                opacity: 1;
+                visibility: visible;
+                transform: translateY(0);
+            }
+        }
+
+        .home-icon {
+            font-size: 20px;
+            color: #555;
+            transition: color 0.3s ease;
+
+            &:hover {
+                color: #007bff;
+            }
+        }
+
+        .dropdown-list {
+            position: absolute;
+            top: 100%;
+            left: 0;
+            background: #fff;
+            list-style: none;
+            padding: 8px 0;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+            z-index: 1000;
+            min-width: 200px;
+            max-height: 250px;
+            overflow-y: auto;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(10px);
+            transition: opacity 0.2s ease, transform 0.2s ease, visibility 0.2s;
+
+            li {
+                display: block; // Đảm bảo mỗi li là khối dọc
+                padding: 8px 16px;
+                font-size: 14px;
+                color: #007bff;
+                transition: background 0.2s ease, color 0.2s ease;
+                width: 100%; // Đảm bảo li chiếm toàn bộ chiều rộng
+                box-sizing: border-box; // Bao gồm padding trong chiều rộng
+
+                &:hover {
+                    background: #f0f0f0;
+                    color: #0056b3;
+                }
+
+                a {
+                    text-decoration: none;
+                    color: inherit;
+                    display: block; // Đảm bảo link chiếm toàn bộ li
+                    white-space: nowrap; // Ngăn văn bản xuống dòng
+                }
+            }
+
+            // Loại bỏ bất kỳ display flex hoặc inline nào
+            display: block !important; // Đảm bảo dropdown-list là khối dọc
+
+            &::-webkit-scrollbar {
+                width: 6px;
+            }
+
+            &::-webkit-scrollbar-track {
+                background: #f1f1f1;
+                border-radius: 8px;
+            }
+
+            &::-webkit-scrollbar-thumb {
+                background: #888;
+                border-radius: 8px;
+            }
+
+            &::-webkit-scrollbar-thumb:hover {
+                background: #555;
+            }
+        }
+    }
+}
+
+@media (max-width: 768px) {
+    .header-menu {
+        gap: 12px;
+        flex-wrap: wrap;
+
+        .menu-item {
+            font-size: 14px;
+
+            .dropdown-list {
+                min-width: 160px;
+                max-height: 200px;
+            }
+        }
+    }
+}

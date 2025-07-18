@@ -9,10 +9,11 @@ const INITIAL_STATE = {
         roleId: '',
         firstName: '',
         lastName: '',
-        accessToken: '',
+        accessToken: localStorage.getItem('accessToken') || null,
         refreshToken: ''
     },
-    isAuthenticated: false // biến xem người dùng đã đăng nhập chưa
+    // isAuthenticated: false // biến xem người dùng đã đăng nhập chưa
+    isAuthenticated: !!localStorage.getItem('accessToken'),
 };
 const userReducer = (state = INITIAL_STATE, action) => {
     switch (action.type) {

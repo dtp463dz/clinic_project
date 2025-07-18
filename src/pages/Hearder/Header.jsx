@@ -14,7 +14,7 @@ const Header = () => {
     const navigate = useNavigate();
     const dispatch = useDispatch();
     const { account, isAuthenticated } = useSelector((state) => state.user);
-    const accessToken = account?.accessToken || localStorage.getItem('accessToken');
+    const accessToken = account?.accessToken;
 
     const toggleMobileMenu = () => {
         setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -32,20 +32,33 @@ const Header = () => {
 
     const handleLogout = async () => {
         try {
-            const response = await postLogout(accessToken);
-            // console.log('check response: ', response)
-            if (response.errCode === 0) {
+            const token = localStorage.getItem('accessToken');
+            if (!token) {
                 dispatch(doLogout());
-                navigate('/home');
+                navigate('/login');
+                return;
+            }
+
+            const response = await postLogout(token);
+
+            // Dù có lỗi vẫn cần xóa local/redux
+            dispatch(doLogout());
+            localStorage.removeItem('accessToken');
+
+            if (response.errCode === 0) {
                 toast.success('Đăng xuất thành công!');
             } else {
-                toast.error(response.data.message);
+                toast.warning('Đã đăng xuất. Token không hợp lệ hoặc đã hết hạn.');
             }
+
         } catch (error) {
-            toast.error('Lỗi server, vui lòng thử lại!');
-            console.log('Lỗi handleLogout', error)
+            dispatch(doLogout());
+            localStorage.removeItem('accessToken');
+            toast.error('Lỗi server, đã đăng xuất khỏi hệ thống!');
+            navigate('/home');
         }
     }
+
     return (
         <header className="header">
             <div className='header-container'>

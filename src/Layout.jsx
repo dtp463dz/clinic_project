@@ -44,6 +44,10 @@ import ManageDrugs from './components/Admin/Content/Drugs/ManageDrugs.jsx';
 import ManageMedicinal from './components/Admin/Content/MedicinalHerb/ManageMedicinal.jsx';
 import ManageBodyPart from './components/Admin/Content/BodyPart/ManageBodyPart.jsx';
 import HomeNews from './components/HomePage/News/HomeNews.jsx';
+import DetailSymptom from './components/HomePage/News/DetailPage/DetailSymptom.jsx';
+import DetailDrug from './components/HomePage/News/DetailPage/DetailDrug.jsx';
+import DetailHerb from './components/HomePage/News/DetailPage/DetailHerb.jsx';
+import DetailBodyPart from './components/HomePage/News/DetailPage/DetailBodyPart.jsx';
 
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
@@ -104,6 +108,10 @@ const Layout = () => {
                 <Route path='/detail-handbook/:id' element={<DetailHandBook />} />
 
                 <Route path='/tin-tuc' element={<HomeNews />} />
+                <Route path='/symptoms/:id' element={<DetailSymptom />} />
+                <Route path='/drugs/:id' element={<DetailDrug />} />
+                <Route path='/herbs/:id' element={<DetailHerb />} />
+                <Route path='/bodyParts/:id' element={<DetailBodyPart />} />
 
             </Routes>
             <ToastContainer

@@ -1,0 +1,125 @@
+.search-container {
+    position: relative;
+    width: 100%;
+    max-width: 400px;
+
+    .search-box {
+        display: flex;
+        align-items: center;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        padding: 6px 10px;
+
+        input {
+            border: none;
+            outline: none;
+            background: transparent;
+            padding: 6px 8px;
+            font-size: 14px;
+            width: 250px;
+
+            @media (max-width: 480px) {
+                width: 180px;
+            }
+
+            &::placeholder {
+                color: #888;
+            }
+        }
+
+        .search-icon {
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            font-size: 16px;
+            display: flex;
+            align-items: center;
+        }
+    }
+
+    .search-results {
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        border: 1px solid #e5e7eb;
+        border-radius: 6px;
+        box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        z-index: 1000;
+        max-height: 300px;
+        overflow-y: auto;
+
+        .loading {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .no-results {
+            padding: 10px;
+            text-align: center;
+        }
+
+        .result-section {
+            padding: 10px;
+
+            h4 {
+                margin: 0 0 5px;
+                font-size: 14px;
+            }
+
+            .result-item {
+                padding: 5px 10px;
+                cursor: pointer;
+                font-size: 14px;
+
+                &:hover {
+                    background-color: #f0f0f0;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 768px) {
+        max-width: 300px;
+
+        .search-box {
+            input {
+                width: 80%;
+            }
+        }
+
+        .search-results {
+            max-height: 250px;
+        }
+    }
+
+    @media (max-width: 480px) {
+        max-width: 200px;
+
+        .search-box {
+            input {
+                width: 70%;
+                font-size: 12px;
+            }
+
+            .search-icon {
+                font-size: 14px;
+            }
+        }
+
+        .search-results {
+            max-height: 200px;
+
+            .result-section {
+                h4 {
+                    font-size: 12px;
+                }
+
+                .result-item {
+                    font-size: 12px;
+                    padding: 4px 8px;
+                }
+            }
+        }
+    }
+}

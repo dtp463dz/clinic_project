@@ -42,8 +42,20 @@ const getDetailBodyPartById = (data) => {
     return axios.get(`/api/get-detail-body-part-by-id?id=${data.id}`)
 }
 
+// Tìm kiếm
+const getSearchMedical = (keyword, limit = 10, page = 1) => {
+    return axios.get(`/api/searchMedical`, {
+        params: {
+            keyword,
+            limit,
+            page
+        }
+    })
+}
+
 export {
     createNewSymptom, createNewDrug, createNewMedicinal, createNewBodyPart,
     getAllSymptom, getAllDrug, getAllMedicinal, getAllBodyPart,
-    getDetailSymptomById, getDetailDrugById, getDetailMedicinalById, getDetailBodyPartById
+    getDetailSymptomById, getDetailDrugById, getDetailMedicinalById, getDetailBodyPartById,
+    getSearchMedical
 }

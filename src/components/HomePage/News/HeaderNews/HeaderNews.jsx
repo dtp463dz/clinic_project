@@ -4,6 +4,7 @@ import { FaHome, FaBars } from 'react-icons/fa';
 import { GoSearch } from 'react-icons/go';
 import { useNavigate, Link } from 'react-router-dom';
 import HeaderMenu from './HeaderMenu';
+import SearchNews from './SearchNews';
 
 const HeaderNews = () => {
     const navigate = useNavigate();
@@ -26,12 +27,7 @@ const HeaderNews = () => {
                     </button>
                     <div className='header-logo' onClick={() => navigate('/home')}></div>
                 </div>
-                <div className="search-box">
-                    <input type="text" placeholder="Tìm kiếm bài viết, thông tin bệnh, thuốc ..." />
-                    <button className="search-icon">
-                        <GoSearch />
-                    </button>
-                </div>
+                <SearchNews />
             </div>
 
             {/* Menu Section */}

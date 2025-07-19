@@ -1,0 +1,98 @@
+.detail-item-container {
+    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+
+    .intro-item {
+        .content-right {
+            .position-item {
+                margin-bottom: 20px;
+
+                h1 {
+                    font-size: 2em;
+                    color: #333;
+                }
+            }
+
+            .introduce-detail-item {
+                .introduce-title {
+                    margin-bottom: 15px;
+                    color: #666;
+                    line-height: 1.6;
+
+                    ul {
+                        list-style-type: disc;
+                        padding-left: 20px;
+                    }
+                }
+            }
+        }
+    }
+
+    .additional-info {
+        margin-top: 20px;
+        text-align: center;
+
+        img {
+            max-width: 100%;
+            height: auto;
+        }
+    }
+
+    // Responsive design
+    @media (max-width: 768px) {
+        padding: 10px;
+
+        .intro-item {
+            flex-direction: column;
+
+            .content-right {
+                .position-item {
+                    h1 {
+                        font-size: 1.5em;
+                    }
+                }
+
+                .introduce-detail-item {
+                    .introduce-title {
+                        font-size: 0.9em;
+                    }
+                }
+            }
+        }
+
+        .additional-info {
+            margin-top: 10px;
+
+            img {
+                max-height: 150px;
+            }
+        }
+    }
+
+    @media (max-width: 480px) {
+        padding: 5px;
+
+        .intro-item {
+            .content-right {
+                .position-item {
+                    h1 {
+                        font-size: 1.2em;
+                    }
+                }
+
+                .introduce-detail-item {
+                    .introduce-title {
+                        font-size: 0.8em;
+                    }
+                }
+            }
+        }
+
+        .additional-info {
+            img {
+                max-height: 100px;
+            }
+        }
+    }
+}

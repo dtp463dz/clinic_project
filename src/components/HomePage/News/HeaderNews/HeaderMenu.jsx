@@ -1,28 +1,17 @@
 import { useState } from 'react';
 import { FaHome } from 'react-icons/fa';
 import { getAllBodyPart, getAllDrug, getAllMedicinal, getAllSymptom } from '../../../../services/medicalDataService';
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import './HeaderMenu.scss';
 
 const HeaderMenu = () => {
+    const navigate = useNavigate();
     const [dropdowns, setDropdowns] = useState({
         symptoms: { show: false, data: [] },
         drugs: { show: false, data: [] },
         herbs: { show: false, data: [] },
         bodyParts: { show: false, data: [] },
     });
-
-    const toggleDropdown = async (type) => {
-        setDropdowns((prev) => {
-            const newState = { ...prev };
-            // nếu đang đóng => mở + fetch dữ liệu
-            if (!prev[type].show && prev[type].data.length === 0) {
-                fetchData(type);
-            }
-            newState[type].show = !prev[type].show;
-            return newState;
-        })
-    }
 
     const fetchData = async (type) => {
         try {
@@ -101,7 +90,7 @@ const HeaderMenu = () => {
     }
     return (
         <ul className="header-menu">
-            <li><FaHome className="home-icon" /></li>
+            <li><FaHome className="home-icon" onClick={() => navigate('/tin-tuc')} /></li>
             {renderDropdown('symptoms', 'Tra cứu bệnh')}
             {renderDropdown('drugs', 'Tra cứu thuốc')}
             {renderDropdown('herbs', 'Tra cứu dược liệu')}

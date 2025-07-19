@@ -36,6 +36,7 @@ const HeaderNews = () => {
 
             {/* Menu Section */}
             <HeaderMenu navigate={navigate} />
+
         </div>
     );
 };

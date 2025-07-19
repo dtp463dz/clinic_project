@@ -48,6 +48,7 @@ import DetailSymptom from './components/HomePage/News/DetailPage/DetailSymptom.j
 import DetailDrug from './components/HomePage/News/DetailPage/DetailDrug.jsx';
 import DetailHerb from './components/HomePage/News/DetailPage/DetailHerb.jsx';
 import DetailBodyPart from './components/HomePage/News/DetailPage/DetailBodyPart.jsx';
+import DetailItem from './components/HomePage/News/DetailPage/DetailItem.jsx';
 
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
@@ -108,10 +109,10 @@ const Layout = () => {
                 <Route path='/detail-handbook/:id' element={<DetailHandBook />} />
 
                 <Route path='/tin-tuc' element={<HomeNews />} />
-                <Route path='/symptoms/:id' element={<DetailSymptom />} />
-                <Route path='/drugs/:id' element={<DetailDrug />} />
-                <Route path='/herbs/:id' element={<DetailHerb />} />
-                <Route path='/bodyParts/:id' element={<DetailBodyPart />} />
+                <Route path='/symptoms/:id' element={<DetailItem />} />
+                <Route path='/drugs/:id' element={<DetailItem />} />
+                <Route path='/herbs/:id' element={<DetailItem />} />
+                <Route path='/bodyParts/:id' element={<DetailItem />} />
 
             </Routes>
             <ToastContainer

@@ -14,6 +14,16 @@ const getAllHandBook = (page = 1, limit = 10) => {
 const getDetailHandBookById = (data) => {
     return axios.get(`/api/get-detail-handbook-by-id?id=${data.id}}`)
 }
+
+// xóa phòng khám
+const deleteHandBook = (handBookId) => {
+    return axios.delete(`/api/delete-handbook`, { data: { id: handBookId } })
+}
+
+// chỉnh sửa chuyên khoa
+const updateHandBook = (data) => {
+    return axios.put('/api/edit-handbook', data)
+}
 export {
-    createNewHandBook, getAllHandBook, getDetailHandBookById
+    createNewHandBook, getAllHandBook, getDetailHandBookById, deleteHandBook, updateHandBook
 }

@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { deleteClinic, deleteSpecialty } from "../services/userService";
 import { toast } from 'react-toastify';
+import { deleteHandBook } from "../services/handbookService";
 
 const useDeleteItem = () => {
     const [loading, setLoading] = useState(false);
@@ -15,6 +16,8 @@ const useDeleteItem = () => {
                 response = await deleteClinic(id);
             } else if (type === 'Specialty') {
                 response = await deleteSpecialty(id);
+            } else if (type === 'HandBook') {
+                response = await deleteHandBook(id);
             } else {
                 throw new Error('Loại mục không hợp lệ');
             }

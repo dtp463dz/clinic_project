@@ -1,0 +1,64 @@
+.list-manage-handbook {
+    padding: 20px;
+
+    h2 {
+        margin-bottom: 20px;
+        font-size: 24px;
+        font-weight: bold;
+    }
+
+    .table {
+        width: 100%;
+        border-collapse: collapse;
+
+        th,
+        td {
+            padding: 10px;
+            text-align: left;
+            vertical-align: middle;
+        }
+
+        th {
+            background-color: #f8f9fa;
+        }
+
+        .handbook-image {
+            max-width: 100px;
+            max-height: 100px;
+            object-fit: cover;
+        }
+    }
+
+    .action-btn {
+        border: none;
+        background: none;
+        cursor: pointer;
+        font-size: 18px;
+        margin-right: 10px;
+
+        &.view-btn {
+            color: #007bff;
+        }
+
+        &.edit-btn {
+            color: #28a745;
+        }
+
+        &.delete-btn {
+            color: #dc3545;
+        }
+    }
+
+    .loading,
+    .error {
+        text-align: center;
+        margin: 20px 0;
+    }
+
+    .pagination-container {
+        margin-top: 20px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+}

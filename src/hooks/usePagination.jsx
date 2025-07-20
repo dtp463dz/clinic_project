@@ -15,7 +15,8 @@ const usePagination = (apiFunction, defaultLimit = 5) => {
             if (response.errCode === 0) {
                 const specialties = response.data.specialties;
                 const clinics = response.data.clinics;
-                setData(specialties || clinics || []);
+                const handbooks = response.data.handbooks;
+                setData(specialties || clinics || handbooks || []);
                 setCurrentPage(response.data.currentPage);
                 setTotalPages(response.data.totalPages);
                 setTotalItems(response.data.totalItems);
@@ -44,7 +45,8 @@ const usePagination = (apiFunction, defaultLimit = 5) => {
             if (response.errCode === 0) {
                 const specialties = response.data.specialties;
                 const clinics = response.data.clinics;
-                const fetchedData = specialties || clinics || [];
+                const handbooks = response.data.handbooks;
+                const fetchedData = specialties || clinics || handbooks || [];
                 const fetchedTotalPages = response.data.totalPages || 1;
 
                 setData(fetchedData);

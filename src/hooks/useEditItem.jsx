@@ -2,6 +2,7 @@
 import { useState } from 'react';
 import { updateClinic, updateSpecialty } from '../services/userService';
 import { toast } from 'react-toastify';
+import { updateHandBook } from '../services/handbookService';
 
 const useEditItem = () => {
     const [loading, setLoading] = useState(false);
@@ -16,6 +17,8 @@ const useEditItem = () => {
                 response = await updateSpecialty(data);
             } else if (type === 'Clinic') {
                 response = await updateClinic(data);
+            } else if (type === 'HandBook') {
+                response = await updateHandBook(data);
             } else {
                 throw new Error('Loại mục không hợp lệ');
             }

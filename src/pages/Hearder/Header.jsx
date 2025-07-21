@@ -1,63 +1,23 @@
 import { useNavigate, Link } from 'react-router-dom';
 import './Header.scss';
-import { FaBars, FaUserCircle } from "react-icons/fa";
+import { FaBars, FaUserCircle } from 'react-icons/fa';
 import { useState } from 'react';
-import { useSelector, useDispatch } from 'react-redux';
-import { toast } from 'react-toastify';
-import { postLogout } from '../../services/apiService';
-import { doLogout } from '../../redux/action/userAction';
-
+import { useSelector } from 'react-redux';
+import useLogout from '../../hooks/useLogout'; // Import hook
+import './Header.scss';
 
 const Header = () => {
     const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
     const [isUserMenuOpen, setIsUserMenuOpen] = useState(false);
     const navigate = useNavigate();
-    const dispatch = useDispatch();
     const { account, isAuthenticated } = useSelector((state) => state.user);
-    const accessToken = account?.accessToken;
-
-    const toggleMobileMenu = () => {
-        setIsMobileMenuOpen(!isMobileMenuOpen);
-    };
-
-    const toggleUserMenu = () => {
-        setIsUserMenuOpen(!isUserMenuOpen);
-    };
+    const handleLogout = useLogout(); // Sử dụng hook
 
     const handleNavigate = (path) => {
         navigate(path);
         setIsMobileMenuOpen(false);
         setIsUserMenuOpen(false);
     };
-
-    const handleLogout = async () => {
-        try {
-            const token = localStorage.getItem('accessToken');
-            if (!token) {
-                dispatch(doLogout());
-                navigate('/login');
-                return;
-            }
-
-            const response = await postLogout(token);
-
-            // Dù có lỗi vẫn cần xóa local/redux
-            dispatch(doLogout());
-            localStorage.removeItem('accessToken');
-
-            if (response.errCode === 0) {
-                toast.success('Đăng xuất thành công!');
-            } else {
-                toast.warning('Đã đăng xuất. Token không hợp lệ hoặc đã hết hạn.');
-            }
-
-        } catch (error) {
-            dispatch(doLogout());
-            localStorage.removeItem('accessToken');
-            toast.error('Lỗi server, đã đăng xuất khỏi hệ thống!');
-            navigate('/home');
-        }
-    }
 
     return (
         <header className="header">
@@ -66,13 +26,12 @@ const Header = () => {
                     <button
                         className="header-toggle-button"
                         aria-label="Toggle navigation"
-                        onClick={toggleMobileMenu}
+                        onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
                     >
                         <FaBars size={24} />
                     </button>
                     <div className='header-logo' onClick={() => navigate('/home')}></div>
                 </div>
-
                 <nav className={`header-nav ${isMobileMenuOpen ? 'open' : ''}`}>
                     <ul className="header-menu">
                         <li className="header-item dropdown">
@@ -113,7 +72,7 @@ const Header = () => {
                 </nav>
                 <div className="header-right">
                     {isAuthenticated && account ? (
-                        <div className="user-section" onClick={toggleUserMenu}>
+                        <div className="user-section" onClick={() => setIsUserMenuOpen(!isUserMenuOpen)}>
                             <FaUserCircle size={24} className="user-avatar" />
                             <span className="welcome-text">Chào mừng, {account.firstName} {account.lastName}</span>
                             {isUserMenuOpen && (
@@ -132,8 +91,8 @@ const Header = () => {
                     )}
                 </div>
             </div>
-        </header >
-    )
-}
+        </header>
+    );
+};
 
-export default Header
+export default Header;

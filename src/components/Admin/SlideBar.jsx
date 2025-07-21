@@ -1,11 +1,14 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { FaGem, FaGithub, FaUser, FaClinicMedical, FaBookMedical } from 'react-icons/fa';
-import './SideBar.scss';
 import { MdDashboard, MdFolderSpecial, MdSick, MdMedication, MdLogout } from "react-icons/md";
 import { DiReact } from "react-icons/di";
 import { Link } from 'react-router-dom';
+import useLogout from '../../hooks/useLogout'; // Import hook
+import './SideBar.scss';
 
 const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
+    const handleLogout = useLogout(); // Sử dụng hook
+
     return (
         <div style={{ display: 'flex', height: '100vh' }}>
             <Sidebar
@@ -29,7 +32,7 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                         color: '#333'
                     }}
                 >
-                    <DiReact size={'3rem'} color='00bfff' />  {/** logo react */}
+                    <DiReact size={'3rem'} color='00bfff' /> {/* logo react */}
                     {isAdmin ? 'ADMIN' : 'DOCTOR'}
                 </div>
 
@@ -102,7 +105,6 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                             </MenuItem>
                         </SubMenu>
                     )}
-
                     {isAdmin && (
                         <>
                             <MenuItem
@@ -122,12 +124,11 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                                     Bộ phận cơ thể
                                 </MenuItem>
                             </SubMenu>
-                            <MenuItem icon={<MdLogout />} component={<Link to='/login' />}>
+                            <MenuItem icon={<MdLogout />} onClick={handleLogout}>
                                 Đăng xuất
                             </MenuItem>
                         </>
                     )}
-
                     {!isAdmin && (
                         <>
                             <SubMenu label="Quản Lý" icon={<FaUser />}>
@@ -138,7 +139,7 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                                     Quản Lý Bệnh Nhân Khám Bệnh
                                 </MenuItem>
                             </SubMenu>
-                            <MenuItem icon={<MdLogout />} component={<Link to='/login' />}>
+                            <MenuItem icon={<MdLogout />} onClick={handleLogout}>
                                 Đăng xuất
                             </MenuItem>
                         </>

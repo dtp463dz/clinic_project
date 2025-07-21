@@ -1,6 +1,5 @@
 import App from './App.jsx';
 import {
-    BrowserRouter,
     Routes,
     Route,
 } from "react-router-dom";
@@ -44,18 +43,21 @@ import ManageDrugs from './components/Admin/Content/Drugs/ManageDrugs.jsx';
 import ManageMedicinal from './components/Admin/Content/MedicinalHerb/ManageMedicinal.jsx';
 import ManageBodyPart from './components/Admin/Content/BodyPart/ManageBodyPart.jsx';
 import HomeNews from './components/HomePage/News/HomeNews.jsx';
-import DetailSymptom from './components/HomePage/News/DetailPage/DetailSymptom.jsx';
-import DetailDrug from './components/HomePage/News/DetailPage/DetailDrug.jsx';
-import DetailHerb from './components/HomePage/News/DetailPage/DetailHerb.jsx';
-import DetailBodyPart from './components/HomePage/News/DetailPage/DetailBodyPart.jsx';
 import DetailItem from './components/HomePage/News/DetailPage/DetailItem.jsx';
-
+import { useDispatch } from 'react-redux';
+import { doLogout } from './redux/action/userAction';
+import { persistor } from './redux/store.jsx';
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
+    const dispatch = useDispatch();
 
     useEffect(() => {
+        // Xóa trạng thái redux-persist khi ứng dụng khởi động
+        persistor.purge().then(() => {
+            dispatch(doLogout()); // Reset Redux state
+        });
         registerGlobalLoading(setIsLoading);
-    }, [setIsLoading]);
+    }, [setIsLoading, dispatch]);
     return (
         <>
             {isLoading && <FullScreenSpinner message="Đang tải dữ liệu..." />}

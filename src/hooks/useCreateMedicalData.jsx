@@ -1,6 +1,10 @@
 import {
     createNewBodyPart, createNewDrug, createNewMedicinal,
-    createNewSymptom, getAllBodyPart, getAllDrug, getAllMedicinal, getAllSymptom
+    createNewSymptom, deleteBodyPart, deleteDrug, deleteMedicinal, deleteSymptom, getAllBodyPart, getAllDrug, getAllMedicinal, getAllSymptom,
+    updateBodyPart,
+    updateDrug,
+    updateMedicinal,
+    updateSymptom
 } from "../services/medicalDataService";
 
 const useCreateMedicalData = () => {
@@ -54,7 +58,57 @@ const useCreateMedicalData = () => {
             throw error;
         }
     }
-    return { createData, getAllData }
+    const updateData = async (entityType, data) => {
+        try {
+            let res;
+            switch (entityType) {
+                case 'symptoms':
+                    res = await updateSymptom(data);
+                    break;
+                case 'drugs':
+                    res = await updateDrug(data);
+                    break;
+                case 'herbs':
+                    res = await updateMedicinal(data);
+                    break;
+                case 'bodyParts':
+                    res = await updateBodyPart(data);
+                    break;
+                default:
+                    throw new Error('Loại đối tượng không hợp lệ');
+            }
+            return res;
+        } catch (error) {
+            console.error(`Lỗi khi cập nhật ${entityType}: `, error);
+            throw error;
+        }
+    };
+    const deleteData = async (entityType, id) => {
+        try {
+            let res;
+            switch (entityType) {
+                case 'symptoms':
+                    res = await deleteSymptom(id);
+                    break;
+                case 'drugs':
+                    res = await deleteDrug(id);
+                    break;
+                case 'herbs':
+                    res = await deleteMedicinal(id);
+                    break;
+                case 'bodyParts':
+                    res = await deleteBodyPart(id);
+                    break;
+                default:
+                    throw new Error('Loại đối tượng không hợp lệ');
+            }
+            return res;
+        } catch (error) {
+            console.error(`Lỗi khi xóa ${entityType}: `, error);
+            throw error;
+        }
+    };
+    return { createData, getAllData, updateData, deleteData }
 }
 
 export default useCreateMedicalData;

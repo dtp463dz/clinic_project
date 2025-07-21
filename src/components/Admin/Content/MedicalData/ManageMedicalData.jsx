@@ -9,9 +9,11 @@ import "../../../../styles/manageStyle.scss";
 
 const mdParser = new MarkdownIt(/* Markdown-it options */);
 const ManageMedicalData = ({ entityType }) => {
-    const { createData } = useCreateMedicalData();
+    const { createData, updateData } = useCreateMedicalData();
     const [image, setImage] = useState("");
     const [isShowForm, setIsShowForm] = useState(false);
+    const [isEditMode, setIsEditMode] = useState(false);
+    const [editId, setEditId] = useState(null);
     const [formData, setFormData] = useState({
         name: '',
         descriptionHTML: '',
@@ -54,6 +56,8 @@ const ManageMedicalData = ({ entityType }) => {
             descriptionHTML: '',
             descriptionMarkdown: '',
         });
+        setIsEditMode(false);
+        setEditId(null);
         setIsShowForm(false);
     };
 
@@ -75,37 +79,92 @@ const ManageMedicalData = ({ entityType }) => {
             ...prevState,
             [id]: valueInput
         }))
-    }
+    };
+    const handleEdit = (item) => {
+        setFormData({
+            name: item.name,
+            descriptionHTML: item.descriptionHTML,
+            descriptionMarkdown: item.descriptionMarkdown,
+        });
+        setImage(item.image || '');
+        setIsEditMode(true);
+        setEditId(item.id);
+        setIsShowForm(true);
+    };
+    const validateForm = () => {
+        // Kiểm tra tên
+        if (!formData.name) {
+            toast.error(`${entityLabels[entityType].nameLabel} không được để trống`);
+            return false;
+        }
+        if (formData.name.length < 3) {
+            toast.error(`${entityLabels[entityType].nameLabel} phải có ít nhất 3 ký tự`);
+            return false;
+        }
+
+        // Kiểm tra descriptionMarkdown
+        if (!formData.descriptionMarkdown) {
+            toast.error('Mô tả Markdown không được để trống');
+            return false;
+        }
+        if (formData.descriptionMarkdown.length < 10) {
+            toast.error('Mô tả Markdown phải có ít nhất 10 ký tự');
+            return false;
+        }
+
+        // Kiểm tra descriptionHTML
+        if (!formData.descriptionHTML) {
+            toast.error('Mô tả HTML không được để trống');
+            return false;
+        }
+
+        // Kiểm tra image (nếu có)
+        if (image && !image.startsWith('data:image/')) {
+            toast.error('Ảnh không đúng định dạng base64');
+            return false;
+        }
+
+        return true;
+    };
 
     const handleSave = async () => {
         try {
-            if (!formData.name || !formData.descriptionHTML || !formData.descriptionMarkdown) {
-                toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+            if (!validateForm()) {
                 return;
             }
+
             const data = {
+                id: isEditMode ? editId : null,
                 name: formData.name,
                 descriptionHTML: formData.descriptionHTML,
                 descriptionMarkdown: formData.descriptionMarkdown,
                 image: image || null,
             };
-
-            const res = await createData(entityType, data);
-            if (res && res.errCode === 0) {
-                toast.success(`Tạo ${entityLabels[entityType].title} thành công`);
-                reSetForm();
-                setRefreshTable(prev => !prev); // làm mới bảng
+            let res;
+            if (isEditMode) {
+                res = await updateData(entityType, data);
             } else {
-                toast.error(`Tạo ${entityLabels[entityType].title} thất bại: ${res.errMessage || 'Lỗi không xác định'}`);
+                res = await createData(entityType, data);
+            }
+            if (res && res.errCode === 0) {
+                toast.success(`${isEditMode ? 'Cập nhật' : 'Tạo'} ${entityLabels[entityType].title} thành công`);
+                reSetForm();
+                setRefreshTable(prev => !prev); // Làm mới bảng
+            } else {
+                toast.error(`${isEditMode ? 'Cập nhật' : 'Tạo'} ${entityLabels[entityType].title} thất bại: ${res.errMessage || 'Lỗi không xác định'}`);
             }
 
         } catch (error) {
-            toast.error(`Lỗi khi tạo ${entityLabels[entityType].title}`);
+            toast.error(`Lỗi khi ${isEditMode ? 'cập nhật' : 'tạo'} ${entityLabels[entityType].title}`);
             console.error('Lỗi khi gọi API:', error);
         }
     };
     const toggleForm = () => {
-        setIsShowForm(!isShowForm);
+        if (isShowForm && isEditMode) {
+            reSetForm();
+        } else {
+            setIsShowForm(!isShowForm);
+        }
     };
 
     return (
@@ -142,12 +201,16 @@ const ManageMedicalData = ({ entityType }) => {
                             <button
                                 className="btn btn-primary"
                                 onClick={handleSave}
-                            >Lưu</button>
+                            >{isEditMode ? 'Cập nhật' : 'Lưu'}</button>
                         </div>
                     </div>
                 )}
                 <div className="table-container mt-4">
-                    <TableMedicalData entityType={entityType} refreshTable={refreshTable} />
+                    <TableMedicalData
+                        entityType={entityType}
+                        refreshTable={refreshTable}
+                        onEdit={handleEdit}
+                    />
                 </div>
 
             </div>

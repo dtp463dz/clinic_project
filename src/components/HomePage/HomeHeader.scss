@@ -1,12 +1,10 @@
 .home-header-banner {
-    max-width: 1400px;
     background-color: #C2EFFF;
-
-    margin: 0 auto;
     padding: 20px 0;
     display: flex;
     flex-direction: column;
     gap: 20px;
+    width: 100%;
 
     .banner-up {
         height: 400px;

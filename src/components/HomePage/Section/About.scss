@@ -1,11 +1,10 @@
 .section-share {
-    height: 400px;
-    background: url('../../../assets/doctor/backgroundDoctor.png');
     padding: 20px 0;
+    background: url('../../../assets/doctor/backgroundDoctor.png');
+    background-size: cover;
 
     &.section-about {
-        height: 500px !important;
-
+        padding: 30px 0;
     }
 
     .section-bg {
@@ -13,32 +12,66 @@
         border-top: 1px solid #f5f5f5;
         border-bottom: 1px solid #f5f5f5;
 
-        .section-about-header {
-            padding: 20px 10px;
-            font-size: 22px;
-            font-weight: 600;
-        }
-
         .section-about-content {
             display: flex;
-            gap: 25px;
-            width: 100%;
+            gap: 30px;
 
             .content-left {
-                width: 60%;
+                flex: 1;
+
+                .video-title {
+                    margin-top: 10px;
+                    font-weight: 600;
+                    font-size: 16px;
+                }
             }
 
             .content-right {
-                width: 40%;
+                flex: 1;
 
-                p {
-                    text-align: justify;
-                    font-style: italic;
-                    padding: 15px;
+                h3 {
+                    font-size: 18px;
+                    font-weight: bold;
+                    margin-bottom: 10px;
                 }
+
+                .handbook-list {
+                    display: grid;
+                    grid-template-columns: repeat(2, 1fr); // 2 cột
+                    gap: 15px;
+                    margin-top: 10px;
+
+                    .handbook-item {
+                        display: flex;
+                        align-items: center;
+                        gap: 10px;
+                        background: #fff;
+                        border-radius: 6px;
+                        padding: 10px;
+                        box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+                        cursor: pointer;
+                        transition: background 0.2s;
+
+                        &:hover {
+                            background-color: #f0f8ff;
+                        }
+
+                        img {
+                            width: 60px;
+                            height: 60px;
+                            object-fit: cover;
+                            border-radius: 4px;
+                        }
+
+                        p {
+                            font-size: 14px;
+                            font-weight: 500;
+                        }
+                    }
+                }
+
             }
+
         }
     }
-
-
 }

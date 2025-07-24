@@ -4,12 +4,41 @@ import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import Header from './Header';
+import CancelButton from './Profile/CancelButton';
 
 const Profile = () => {
     const { account, isAuthenticated, accessToken } = useSelector((state) => state.user);
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [statuses, setStatuses] = useState({}); // lưu trạng thái 
+    const fetchProfile = async () => {
+        try {
+            setLoading(true);
+            toast.info('Đang tải hồ sơ ... ');
+            const statusResponse = await getAllCodeService('STATUS');
+            if (statusResponse.errCode === 0) {
+                const statusMap = {};
+                statusResponse.data.forEach(status => {
+                    statusMap[status.keyMap] = status.valueVi;
+                });
+                setStatuses(statusMap);
+            }
+            const response = await getUserProfile(account.accessToken);
+            toast.dismiss();
+            if (response.errCode === 0) {
+                setProfile(response.data);
+                toast.success('Tải hồ sơ thành công!')
+            } else {
+                toast.error(response.errMessage || 'Không thể tải hồ sơ')
+            }
+        } catch (err) {
+            console.log('Lỗi fetchProfile: ', err)
+            toast.dismiss();
+            toast.error('Lỗi khi tải thông tin hồ sơ. Vui lòng thử lại sau,')
+        } finally {
+            setLoading(false);
+        }
+    };
 
     useEffect(() => {
         if (!isAuthenticated || !account) {
@@ -17,46 +46,14 @@ const Profile = () => {
             return;
         }
 
-        const fetchProfile = async () => {
-            try {
-                setLoading(true);
-                toast.info('Đang tải hồ sơ ... ');
-                const statusResponse = await getAllCodeService('STATUS');
-                if (statusResponse.errCode === 0) {
-                    const statusMap = {};
-                    statusResponse.data.forEach(status => {
-                        statusMap[status.keyMap] = status.valueVi;
-                    });
-                    setStatuses(statusMap);
-                }
-                const response = await getUserProfile(account.accessToken);
-                toast.dismiss();
-                if (response.errCode === 0) {
-                    setProfile(response.data);
-                    toast.success('Tải hồ sơ thành công!')
-                } else {
-                    toast.error(response.errMessage || 'Không thể tải hồ sơ')
-                }
-            } catch (err) {
-                console.log('Lỗi fetchProfile: ', err)
-                toast.dismiss();
-                toast.error('Lỗi khi tải thông tin hồ sơ. Vui lòng thử lại sau,')
-            } finally {
-                setLoading(false);
-            }
-        };
+
         fetchProfile();
 
     }, [isAuthenticated, accessToken, account])
-    if (!isAuthenticated) {
-        return null; // Không render gì, toast đã hiển thị lỗi
-    }
-
-    if (loading || !profile) {
+    if (!isAuthenticated || loading || !profile) {
         return null; // Toast sẽ hiển thị trạng thái tải hoặc lỗi
     }
-    console.log(profile.patientData)
-    console.log(statuses)
+    console.log('check profile patientData: ', profile.patientData)
 
     return (
         <>
@@ -100,7 +97,13 @@ const Profile = () => {
                                     <p><strong>Ngày khám:</strong> {new Date(Number(profile.patientData.date)).toLocaleDateString('vi-VN')}</p>
                                     <p><strong>Thời gian:</strong> {profile.patientData.timeTypeDataPatient?.valueVi || 'Chưa cập nhật'}</p>
                                 </div>
-
+                                {profile.patientData.statusId === 'S1' && (
+                                    <CancelButton
+                                        accessToken={account.accessToken}
+                                        bookingId={profile.patientData.id}
+                                        onCancelSuccess={fetchProfile}
+                                    />
+                                )}
                             </div>
                         </div>
                     ) : (

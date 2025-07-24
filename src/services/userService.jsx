@@ -48,6 +48,15 @@ const postVerifyBookAppointment = (data) => {
     return axios.post('/api/verify-book-appointment', data)
 }
 
+// người dùng hủy lịch khám 
+const cancelAppointment = (accessToken, bookingId) => {
+    return axios.post(`/api/cancel-appointment`, { bookingId }, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+}
+
 // tạo chuyên khoa mới
 const createNewSpecialty = (data) => {
     return axios.post('/api/create-new-specialty', data)
@@ -112,7 +121,7 @@ export {
     getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService, getDetailInforDoctor,
     saveBulkScheduleDoctor, getScheduleDoctorByDate,
     getExtraInforDoctorById, getProfileDoctorById, postPatientBookAppointment,
-    postVerifyBookAppointment, createNewSpecialty, getAllSpecialty,
+    postVerifyBookAppointment, cancelAppointment, createNewSpecialty, getAllSpecialty,
     getDetailSpecialtyById, createNewClinic, getAllClinic, getDetailClinicById,
     getListPatientForDoctor, postSendConfirm, deleteClinic, deleteSpecialty,
     updateSpecialty, updateClinic

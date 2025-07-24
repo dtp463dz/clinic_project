@@ -1,0 +1,135 @@
+.profile-container {
+    max-width: 960px;
+    margin: 0 auto;
+    padding: 24px;
+    font-family: 'Segoe UI', sans-serif;
+
+    .profile-title {
+        font-size: 2.4rem;
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 32px;
+        color: #2a2a2a;
+        border-bottom: 2px solid #dedede;
+        padding-bottom: 8px;
+    }
+
+    .profile-section {
+        background: #f9f9f9;
+        border: 1px solid #e1e1e1;
+        border-radius: 10px;
+        padding: 24px;
+        margin-bottom: 24px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+
+        .section-title {
+            font-size: 1.8rem;
+            font-weight: 600;
+            color: #0d6efd;
+            margin-bottom: 20px;
+            border-left: 4px solid #0d6efd;
+            padding-left: 12px;
+        }
+
+        .info-column {
+            display: inline-block;
+            vertical-align: top;
+            width: 48%;
+            margin-bottom: 20px;
+
+            p {
+                font-size: 1rem;
+                margin: 8px 0;
+                color: #333;
+
+                strong {
+                    display: inline-block;
+                    min-width: 120px;
+                    color: #555;
+                }
+            }
+
+
+        }
+
+        .booking-list {
+            display: flex;
+            flex-direction: column;
+            gap: 16px;
+
+            .booking-card {
+                background: #fff;
+                padding: 20px;
+                border: 1px solid #ddd;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+
+                .booking-header {
+                    display: flex;
+                    justify-content: space-between;
+                    align-items: center;
+                    margin-bottom: 16px;
+
+                    .booking-id {
+                        font-weight: bold;
+                        color: #0d6efd;
+                        font-size: 1.1rem;
+                    }
+
+                    .booking-status {
+                        font-weight: 600;
+                        padding: 6px 10px;
+                        border-radius: 6px;
+                        font-size: 0.9rem;
+                        background-color: #e0e0e0;
+                        color: #444;
+
+                        &.status-S1 {
+                            background: #ffc107;
+                            color: #000;
+                        }
+
+                        &.status-S2 {
+                            background: #198754;
+                            color: #fff;
+                        }
+
+                        &.status-S3 {
+                            background: #0d6efd;
+                            color: #fff;
+                        }
+
+                        &.status-S4 {
+                            background: #dc3545;
+                            color: #fff;
+                        }
+                    }
+                }
+
+                .booking-details {
+                    p {
+                        margin: 4px 0;
+                        font-size: 0.95rem;
+                        color: #555;
+
+                        strong {
+                            color: #333;
+                        }
+                    }
+                }
+
+
+            }
+        }
+
+        .no-data {
+            text-align: center;
+            font-style: italic;
+            color: #888;
+            padding: 12px;
+            background-color: #fafafa;
+            border-radius: 8px;
+            border: 1px dashed #ccc;
+        }
+    }
+}

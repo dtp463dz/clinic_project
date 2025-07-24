@@ -47,6 +47,7 @@ import DetailItem from './components/HomePage/News/DetailPage/DetailItem.jsx';
 import { useDispatch } from 'react-redux';
 import { doLogout } from './redux/action/userAction';
 import { persistor } from './redux/store.jsx';
+import Profile from './pages/Hearder/Profile.jsx';
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
     const dispatch = useDispatch();
@@ -115,6 +116,8 @@ const Layout = () => {
                 <Route path='/drugs/:id' element={<DetailItem />} />
                 <Route path='/herbs/:id' element={<DetailItem />} />
                 <Route path='/bodyParts/:id' element={<DetailItem />} />
+
+                <Route path="/profile" element={<Profile />} />
 
             </Routes>
             <ToastContainer

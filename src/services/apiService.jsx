@@ -92,9 +92,19 @@ const getSearch = (keyword, limit = 10, page = 1) => {
     })
 }
 
+// xem hồ sơ bệnh nhân
+const getUserProfile = (accessToken) => {
+    return axios.get(`/api/get-user-profile`, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+}
+
+
 export {
     postLogin, getAllUsers, postLogout, postCreateNewUser,
     putUpdateUser, deleteUser, postRegister,
     getAllCodeService, createNewUserService, editUserService,
-    getSearch
+    getSearch, getUserProfile
 }

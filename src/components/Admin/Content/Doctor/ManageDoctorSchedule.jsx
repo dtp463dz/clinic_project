@@ -4,6 +4,7 @@ import Select from 'react-select';
 import { useEffect, useState } from 'react';
 import { fetchAllDoctor, fetchAllScheduleTime } from '../../../../redux/action/adminAction';
 import CustomDatePicker from '../../../Input/CustomDatePicker';
+import { subDays } from 'date-fns';
 import { format } from 'date-fns'; // format lai ngay
 import { toast } from 'react-toastify';
 import _ from 'lodash'; // sử dụng lodash để check obj có rỗng hay ko
@@ -138,7 +139,10 @@ const ManageDoctorSchedule = () => {
                 </div>
                 <div className="col-6 form-group">
                     <div className="title-label mx-3">Chọn Ngày</div>
-                    <CustomDatePicker onChange={handleOnChangeDatePicker} />
+                    <CustomDatePicker
+                        onChange={handleOnChangeDatePicker}
+                        minDate={subDays(new Date(), 5)} // Giới hạn từ 5 ngày trước
+                    />
                 </div>
                 <div className="col-12 pick-hour-container">
                     {rangeTime && rangeTime.map((item, index) => (

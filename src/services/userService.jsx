@@ -57,6 +57,8 @@ const cancelAppointment = (accessToken, bookingId) => {
     });
 }
 
+
+
 // tạo chuyên khoa mới
 const createNewSpecialty = (data) => {
     return axios.post('/api/create-new-specialty', data)
@@ -96,6 +98,15 @@ const postSendConfirm = (data) => {
     return axios.post('/api/send-confirm', data)
 }
 
+// bác sĩ hủy lịch khám 
+const cancelConfirm = (accessToken, bookingId, doctorId) => {
+    return axios.post(`/api/cancel-confirm`, { bookingId, doctorId }, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+}
+
 // xóa phòng khám
 const deleteClinic = (clinicId) => {
     return axios.delete(`/api/delete-clinic`, { data: { id: clinicId } })
@@ -121,7 +132,7 @@ export {
     getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService, getDetailInforDoctor,
     saveBulkScheduleDoctor, getScheduleDoctorByDate,
     getExtraInforDoctorById, getProfileDoctorById, postPatientBookAppointment,
-    postVerifyBookAppointment, cancelAppointment, createNewSpecialty, getAllSpecialty,
+    postVerifyBookAppointment, cancelAppointment, cancelConfirm, createNewSpecialty, getAllSpecialty,
     getDetailSpecialtyById, createNewClinic, getAllClinic, getDetailClinicById,
     getListPatientForDoctor, postSendConfirm, deleteClinic, deleteSpecialty,
     updateSpecialty, updateClinic

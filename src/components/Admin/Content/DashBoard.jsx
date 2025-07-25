@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from "react";
-import { FaUser, FaClinicMedical, FaCalendarCheck, FaDollarSign } from "react-icons/fa";
+import { useEffect, useState } from "react";
+import { FaUser, FaClinicMedical, FaCalendarCheck, FaDollarSign, FaCalendarTimes } from "react-icons/fa";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from "recharts";
 import "./Dashboard.scss";
 import { getDashboardData } from "../../../services/dashboardService";
@@ -10,6 +10,7 @@ const Dashboard = ({ isAdmin }) => {
             totalPatients: 0,
             totalClinics: 0,
             totalAppointments: 0,
+            totalCancelAppointments: 0,
             totalRevenue: 0,
         },
         chartData: [],
@@ -67,6 +68,15 @@ const Dashboard = ({ isAdmin }) => {
                         <div>
                             <h3>Lịch Hẹn</h3>
                             <p>{dashboardData.metrics.totalAppointments}</p>
+                        </div>
+                    </div>
+                </div>
+                <div className="metric-card">
+                    <div className="metric-content">
+                        <FaCalendarTimes className="metric-icon" />
+                        <div>
+                            <h3>Lịch Đã Hủy</h3>
+                            <p>{dashboardData.metrics.totalCancelAppointments}</p>
                         </div>
                     </div>
                 </div>

@@ -1,30 +1,31 @@
 import CustomDatePicker from "../../../Input/CustomDatePicker";
 import "./ManagePatient.scss";
 import { useCallback, useEffect, useState } from 'react';
-import { getListPatientForDoctor, postSendConfirm } from "../../../../services/userService";
+import { cancelConfirm, getListPatientForDoctor, postSendConfirm } from "../../../../services/userService";
 import { useSelector } from "react-redux";
 import dayjs from 'dayjs'; // su dung de set thoi gian ve 00:00:00
 import Pagination from "../../../Pagination/Pagination";
 import ConFirmModal from "./ConFirmModal";
 import { toast } from 'react-toastify';
 import PrintInvoiceModal from "./PrintInvoiceModal";
+import CancelConfirmModal from "./CancelConfirmModal";
 
 const ManagePatient = () => {
     const user = useSelector(state => state.user.account);
+    console.log('check user: ', user);
     const [currentDate, setCurrentDate] = useState(new Date());
     const [dataPatient, setDataPatient] = useState([]);
     const [pagination, setPagination] = useState({});
     const [currentPage, setCurrentPage] = useState(1);
     const [isSending, setIsSending] = useState(false);
 
-
     // modal
     const [showModalConfirm, setShowModalConfirm] = useState(false);
     const [showModalPrint, setShowModalPrint] = useState(false);
+    const [showModalCancel, setShowModalCancel] = useState(false);
     const [dataModal, setDataModal] = useState({});
     const [dataModalPrint, setDataModalPrint] = useState({});
-
-
+    const [dataModalCancel, setDataModalCancel] = useState({});
     const pageSize = 10;
     // on change datepicker
     const handleOnChangeDatePicker = (date) => {
@@ -51,8 +52,6 @@ const ManagePatient = () => {
     useEffect(() => {
         fetchListPatient()
     }, [fetchListPatient])
-
-    // console.log('check data patient: ', dataPatient, pagination)
 
     const handleBtnConfirm = (item) => {
         let data = {
@@ -111,6 +110,25 @@ const ManagePatient = () => {
             console.log('Lỗi lưu hóa đơn: ', res)
         }
     }
+    const handleCancelButton = async (item) => {
+        let data = {
+            bookingId: item.id,
+            doctorId: user.id,
+            patientName: item.patientData.firstName,
+            timeType: item.timeTypeDataPatient?.valueVi || 'N/A',
+            bookingDate: dayjs(currentDate).format('DD/MM/YYYY')
+        };
+        setDataModalCancel(data);
+        setShowModalCancel(true);
+    };
+    const handleCancelConfirm = async (data) => {
+        const res = await cancelConfirm(user.accessToken, data.bookingId, data.doctorId);
+        if (res && res.errCode === 0) {
+            await fetchListPatient(); // Làm mới danh sách bệnh nhân
+        } else {
+            toast.error(res.errMessage || 'Hủy lịch hẹn thất bại');
+        }
+    };
     return (
         <div className="manage-patient-container ">
             <div className="m-p-title h4 px-4 py-2">
@@ -145,15 +163,22 @@ const ManagePatient = () => {
                                         <td>{item?.timeTypeDataPatient?.valueVi}</td>
                                         <td>
                                             <button
-                                                className="btn btn-primary mx-3"
+                                                className="btn btn-primary"
                                                 onClick={() => handleBtnConfirm(item)}
                                             >Xác Nhận</button>
                                             <button
-                                                className="btn btn-secondary"
+                                                className="btn btn-secondary mx-2"
                                                 onClick={() => handlePrintInvoices(item)}
                                             >
                                                 In Hóa Đơn
                                             </button>
+                                            <button
+                                                className="btn btn-danger"
+                                                onClick={() => handleCancelButton(item)}
+                                            >
+                                                Hủy Lịch Hẹn
+                                            </button>
+
                                         </td>
                                     </tr>
                                 ))
@@ -183,6 +208,12 @@ const ManagePatient = () => {
                         show={showModalPrint}
                         setShow={setShowModalPrint}
                         dataModal={dataModalPrint}
+                    />
+                    <CancelConfirmModal
+                        show={showModalCancel}
+                        setShow={setShowModalCancel}
+                        dataModal={dataModalCancel}
+                        handleCancelConfirm={handleCancelConfirm}
                     />
                 </div>
             </div>

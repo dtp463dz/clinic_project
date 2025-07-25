@@ -16,6 +16,9 @@ dayjs.locale('vi');
 
 const BookingModal = (props) => {
     const { show, setShow, dataTime } = props;
+    const user = useSelector(state => state.user.account); // lấy thông tin người dùng 
+    const isAuthenticated = useSelector(state => state.user.isAuthenticated); // Kiểm tra trạng thái đăng nhập
+
     const [formData, setFormData] = useState({
         fullName: '',
         phoneNumber: '',
@@ -27,7 +30,30 @@ const BookingModal = (props) => {
         doctorId: '',
         genders: '',
         timeType: ''
-    })
+    });
+    // Điền sẵn thông tin nếu người dùng đã đăng nhập
+    useEffect(() => {
+        if (isAuthenticated && user) {
+            setFormData(prevState => ({
+                ...prevState,
+                fullName: user.firstName || '',
+                email: user.email || '',
+            }));
+        }
+    }, [isAuthenticated, user]);
+
+    // Cập nhật doctorId và timeType khi dataTime thay đổi
+    useEffect(() => {
+        if (dataTime && !_.isEmpty(dataTime)) {
+            let doctorId = dataTime.doctorId;
+            let timeType = dataTime.timeType;
+            setFormData(prevState => ({
+                ...prevState,
+                doctorId: doctorId,
+                timeType: timeType,
+            }))
+        }
+    }, [dataTime])
     // dong modal
     const handleClose = () => {
         setShow(false);
@@ -36,9 +62,9 @@ const BookingModal = (props) => {
 
     const resetForm = () => {
         setFormData({
-            fullName: '',
+            fullName: isAuthenticated && user ? user.firstName || '' : '',
             phoneNumber: '',
-            email: '',
+            email: isAuthenticated && user ? user.email || '' : '',
             address: '',
             reason: '',
             birthday: '',
@@ -49,18 +75,6 @@ const BookingModal = (props) => {
         });
     };
 
-    useEffect(() => {
-        if (dataTime && !_.isEmpty(dataTime)) {
-            console.log("check dataTime: ", dataTime);
-            let doctorId = dataTime.doctorId;
-            let timeType = dataTime.timeType;
-            setFormData(prevState => ({
-                ...prevState,
-                doctorId: doctorId,
-                timeType: timeType,
-            }))
-        }
-    }, [dataTime])
     // thay doi input
     const handleOnChangeInput = (event, id) => {
         const valueInput = event.target.value;
@@ -75,7 +89,6 @@ const BookingModal = (props) => {
             ...prevState,
             birthday: date
         }));
-        console.log('Selected date:', format(date, 'dd/MM/yyyy'), date.getTime());
     };
     // thay doi select
     const handleChangeSelect = (event, id) => {
@@ -84,16 +97,14 @@ const BookingModal = (props) => {
             ...prevState,
             [id]: valueInput
         }));
-        console.log(valueInput);
     }
     // lay fetchGenderStart từ redux
     const dispatch = useDispatch();
     useEffect(() => {
         dispatch(fetchGenderStart());
-
     }, [dispatch])
     const genderArr = useSelector((state) => state.admin.genders)
-    // render time
+    // render time Format thời gian đặt lịch
     const buildTimeBooking = (dataTime) => {
         // console.log('check dataTime inside time booking: ', dataTime)
         if (dataTime && !_.isEmpty(dataTime)) {
@@ -115,45 +126,47 @@ const BookingModal = (props) => {
     }
     // xác nhận đặt lịch
     const handleConfirmBooking = async () => {
-        console.log('Thông tin đặt lịch:', {
-            Họ_tên: formData.fullName,
-            SĐT: formData.phoneNumber,
-            Email: formData.email,
-            Địa_chỉ: formData.address,
-            Lý_do_khám: formData.reason,
-            Ngày_sinh: formData.birthday
-                ? format(formData.birthday, 'dd/MM/yyyy')
-                : '',
-            Giới_tính: formData.selectedGender,
-            Mã_bác_sĩ: formData.doctorId
-        });
         let date = new Date(formData.birthday).getTime()
         let timeString = buildTimeBooking(dataTime);
         let doctorName = buildDoctorName(dataTime);
 
         // validate input
-        let res = await postPatientBookAppointment({
+        if (!formData.fullName || !formData.email || !formData.address || !formData.selectedGender || !formData.birthday) {
+            toast.error('Vui lòng điền đầy đủ thông tin bắt buộc');
+            return;
+        }
+        const data = {
             fullName: formData.fullName,
             phoneNumber: formData.phoneNumber,
             email: formData.email,
             address: formData.address,
             reason: formData.reason,
-            date: dataTime.date,     // ngay dat lich
+            date: dataTime.date, // ngay dat lich
             birthday: date, // ngay sinh benh nhan
             selectedGender: formData.selectedGender,
             doctorId: formData.doctorId,
             timeType: formData.timeType,
-            timeString: timeString, // thời gian đặt lịch   
-            doctorName: doctorName, // tên bác sĩ
-        })
-        if (res && res.errCode === 0) {
-            toast.success('Đặt lịch khám thành công')
-            setShow(false);
-            resetForm()
-        } else {
-            toast.error('Đặt lịch khám thất bại')
+            timeString: timeString,
+            doctorName: doctorName
+        };
+        // Thêm patientId nếu người dùng đã đăng nhập
+        if (isAuthenticated && user) {
+            data.patientId = user.id;
         }
-    }
+        try {
+            const res = await postPatientBookAppointment(data, isAuthenticated ? user.access_token : null);
+            if (res && res.errCode === 0) {
+                toast.success('Đặt lịch khám thành công');
+                setShow(false);
+                resetForm();
+            } else {
+                toast.error(res.errMessage || 'Đặt lịch khám thất bại');
+            }
+        } catch (error) {
+            toast.error('Lỗi từ server khi đặt lịch');
+            console.log('Error booking appointment:', error);
+        }
+    };
 
     // console.log('check dataTime: ', dataTime)
     return (
@@ -185,10 +198,11 @@ const BookingModal = (props) => {
 
                         <div className='row'>
                             <div className='col-6 form-group'>
-                                <label>Họ tên</label>
+                                <label>Họ tên <span style={{ color: 'red' }}>*</span></label>
                                 <input className='form-control'
                                     value={formData.fullName}
                                     onChange={(event) => handleOnChangeInput(event, 'fullName')}
+                                    disabled={isAuthenticated && user.firstName}
                                 />
                             </div>
                             <div className='col-6 form-group'>
@@ -199,10 +213,11 @@ const BookingModal = (props) => {
                                 />
                             </div>
                             <div className='col-6 form-group'>
-                                <label>Địa chỉ Email</label>
+                                <label>Địa chỉ Email <span style={{ color: 'red' }}>*</span></label>
                                 <input className='form-control'
                                     value={formData.email}
                                     onChange={(event) => handleOnChangeInput(event, 'email')}
+                                    disabled={isAuthenticated && user.email}
                                 />
                             </div>
                             <div className='col-6 form-group'>
@@ -220,14 +235,14 @@ const BookingModal = (props) => {
                                 />
                             </div>
                             <div className='col-6 form-group'>
-                                <label>Ngày sinh</label>
+                                <label>Ngày sinh <span style={{ color: 'red' }}>*</span></label>
                                 <DatePickerModal
                                     onChange={handleOnChangeDatePicker}
                                     selected={formData.birthday}
                                 />
                             </div>
                             <div className='col-6 form-group'>
-                                <label>Giới tính</label>
+                                <label>Giới tính <span style={{ color: 'red' }}>*</span></label>
                                 <select
                                     className="form-control"
                                     onChange={(event) => handleChangeSelect(event, 'selectedGender')}

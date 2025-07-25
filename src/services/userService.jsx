@@ -39,7 +39,13 @@ const getProfileDoctorById = (inputId) => {
     return axios.get(`/api/get-profile-doctor-by-id?doctorId=${inputId}`)
 }
 // post patient book appointment
-const postPatientBookAppointment = (data) => {
+const postPatientBookAppointment = (data, accessToken = null) => {
+    const config = {};
+    if (accessToken) {
+        config.headers = {
+            Authorization: `Bearer ${accessToken}`
+        };
+    }
     return axios.post('/api/patient-book-appointment', data)
 }
 

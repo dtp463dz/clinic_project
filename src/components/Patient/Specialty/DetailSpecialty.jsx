@@ -84,8 +84,6 @@ const DetailSpecialty = () => {
 
     return (
         <div className="detail-specialty-container">
-            <Slogan />
-            <HomeHeader />
             <div className="detail-specialty-body">
                 <div className="description-specialty">
                     {dataDetailSpecialty && !_.isEmpty(dataDetailSpecialty)

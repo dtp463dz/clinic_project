@@ -24,8 +24,6 @@ const ViewMoreDoctor = () => {
     }, []);
     return (
         <>
-            <Slogan />
-            <HomeHeader />
             <div className="view-more-container">
                 <h2>Bác sĩ</h2>
                 <div className="doctor-grid">

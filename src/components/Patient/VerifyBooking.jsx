@@ -36,8 +36,6 @@ const VerifyBooking = () => {
     }, [location])
     return (
         <>
-            <Slogan />
-            <HomeHeader />
             <div className="verify-booking-container">
                 <div className="verify-box">
                     <h2>Xác nhận đặt lịch khám</h2>

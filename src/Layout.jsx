@@ -48,6 +48,7 @@ import { useDispatch } from 'react-redux';
 import { doLogout } from './redux/action/userAction';
 import { persistor } from './redux/store.jsx';
 import Profile from './pages/Hearder/Profile.jsx';
+import MainLayout from './MainLayout.jsx';
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
     const dispatch = useDispatch();
@@ -96,20 +97,8 @@ const Layout = () => {
                 <Route path='/login' element={<Login />} />
                 <Route path='/register' element={<Register />} />
                 <Route path='*' element={<NotFound />} />
-                <Route path='/verify-booking' element={<VerifyBooking />} />
-
-
                 <Route path="/home" element={<HomePage />} />
-                <Route path="/view-more-specialty" element={<ViewMoreSpecialty />} />
-                <Route path="/view-more-doctor" element={<ViewMoreDoctor />} />
-                <Route path="/view-more-clinic" element={<ViewMoreClinic />} />
-                <Route path="/view-more-handbook" element={<ViewMoreHandBook />} />
-
-
                 <Route path='/detail-doctor/:id' element={<DetailDoctor />} />
-                <Route path='/detail-specialty/:id' element={<DetailSpecialty />} />
-                <Route path='/detail-clinic/:id' element={<DetailClinic />} />
-                <Route path='/detail-handbook/:id' element={<DetailHandBook />} />
 
                 <Route path='/tin-tuc' element={<HomeNews />} />
                 <Route path='/symptoms/:id' element={<DetailItem />} />
@@ -117,7 +106,19 @@ const Layout = () => {
                 <Route path='/herbs/:id' element={<DetailItem />} />
                 <Route path='/bodyParts/:id' element={<DetailItem />} />
 
-                <Route path="/profile" element={<Profile />} />
+                {/* Bọc các route cần Header/Footer */}
+                <Route element={<MainLayout />}>
+                    <Route path="/view-more-doctor" element={<ViewMoreDoctor />} />
+                    <Route path="/view-more-specialty" element={<ViewMoreSpecialty />} />
+                    <Route path="/view-more-clinic" element={<ViewMoreClinic />} />
+                    <Route path="/view-more-handbook" element={<ViewMoreHandBook />} />
+
+                    <Route path='/detail-specialty/:id' element={<DetailSpecialty />} />
+                    <Route path='/detail-clinic/:id' element={<DetailClinic />} />
+                    <Route path='/detail-handbook/:id' element={<DetailHandBook />} />
+                    <Route path='/verify-booking' element={<VerifyBooking />} />
+                    <Route path="/profile" element={<Profile />} />
+                </Route>
 
             </Routes>
             <ToastContainer

@@ -1,6 +1,8 @@
 import { Sidebar, Menu, MenuItem, SubMenu } from 'react-pro-sidebar';
 import { FaGem, FaGithub, FaUser, FaClinicMedical, FaBookMedical } from 'react-icons/fa';
 import { MdDashboard, MdFolderSpecial, MdSick, MdMedication, MdLogout } from "react-icons/md";
+import { LuMessageCircleMore } from "react-icons/lu";
+import { IoMdNotificationsOutline } from "react-icons/io";
 import { DiReact } from "react-icons/di";
 import { Link } from 'react-router-dom';
 import useLogout from '../../hooks/useLogout'; // Import hook
@@ -139,6 +141,12 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                                     Quản Lý Bệnh Nhân Khám Bệnh
                                 </MenuItem>
                             </SubMenu>
+                            <MenuItem icon={<LuMessageCircleMore />} component={<Link to='/admin/messages' />}>
+                                Tin nhắn
+                            </MenuItem>
+                            <MenuItem icon={<IoMdNotificationsOutline />} component={<Link to='/admin/notifications' />}>
+                                Thông báo
+                            </MenuItem>
                             <MenuItem icon={<MdLogout />} onClick={handleLogout}>
                                 Đăng xuất
                             </MenuItem>

@@ -1,0 +1,265 @@
+.message-doctor-container {
+    display: flex;
+    height: calc(100vh - 60px);
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background-color: #f8f9fa;
+    margin: 0;
+    padding: 20px;
+
+    .patient-list {
+        width: 300px;
+        background-color: #fff;
+        border-right: 1px solid #dee2e6;
+        padding: 20px;
+        overflow-y: auto;
+
+        h3 {
+            font-size: 1.2rem;
+            font-weight: 600;
+            color: #0d6efd;
+            margin-bottom: 20px;
+        }
+
+        ul {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+
+            .patient-item {
+                padding: 10px 15px;
+                cursor: pointer;
+                border-radius: 8px;
+                transition: background-color 0.2s ease;
+
+                &:hover {
+                    background-color: #f0e9ff;
+                }
+
+                &.active {
+                    background-color: #e0d4ff;
+                    font-weight: 600;
+                }
+
+                span {
+                    font-size: 0.95rem;
+                    color: #333;
+                }
+            }
+        }
+
+        p {
+            color: #888;
+            font-size: 0.9rem;
+            text-align: center;
+        }
+    }
+
+    .chat-section {
+        flex: 1;
+        display: flex;
+        flex-direction: column;
+        background-color: #fff;
+        border-radius: 12px;
+        margin-left: 20px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+
+        .chat-header {
+            background-color: #0d6efd;
+            color: #fff;
+            padding: 12px 20px;
+            border-top-left-radius: 12px;
+            border-top-right-radius: 12px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            h3 {
+                margin: 0;
+                font-size: 1.2rem;
+                font-weight: 600;
+            }
+
+            .close-icon {
+                cursor: pointer;
+                font-size: 1.2rem;
+                transition: transform 0.2s ease-in-out;
+
+                &:hover {
+                    transform: scale(1.1);
+                }
+            }
+        }
+
+        .chat-body {
+            flex: 1;
+            padding: 15px;
+            overflow-y: auto;
+            background-color: #f8f9fa;
+
+            .message {
+                margin-bottom: 15px;
+                display: flex;
+                flex-direction: column;
+                max-width: 80%;
+
+                p {
+                    margin: 0;
+                    padding: 10px 15px;
+                    border-radius: 12px;
+                    line-height: 1.4;
+                    font-size: 0.95rem;
+                }
+
+                .timestamp {
+                    font-size: 0.75rem;
+                    color: #888;
+                    margin-top: 5px;
+                    align-self: flex-end;
+                }
+
+                &.sent {
+                    align-self: flex-end;
+                    margin-left: auto;
+
+                    p {
+                        background-color: #0d6efd;
+                        color: #fff;
+                    }
+                }
+
+                &.received {
+                    align-self: flex-start;
+                    margin-right: auto;
+
+                    p {
+                        background-color: #e9ecef;
+                        color: #333;
+                    }
+                }
+            }
+        }
+
+        .chat-footer {
+            display: flex;
+            padding: 10px;
+            border-top: 1px solid #dee2e6;
+            position: relative !important;
+
+            input {
+                flex: 1;
+                padding: 10px;
+                border: none;
+                border-radius: 20px;
+                background-color: #f1f3f5;
+                font-size: 0.9rem;
+                max-width: calc(100% - 50px);
+                /* Giới hạn chiều rộng của input, chừa không gian cho button */
+                box-sizing: border-box;
+                /* Đảm bảo padding không làm tăng kích thước */
+                outline: none;
+
+                &::placeholder {
+                    color: #888;
+                }
+            }
+
+            button {
+                background-color: #0d6efd;
+                color: #fff;
+                border: none;
+                border-radius: 50%;
+                width: 40px;
+                height: 40px;
+                margin-left: 10px;
+                display: flex;
+                align-items: center;
+                justify-content: center;
+                cursor: pointer;
+                transition: background-color 0.2s ease;
+
+                &:hover {
+                    background-color: #0056b3;
+                }
+            }
+        }
+
+        .no-chat {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #888;
+            font-size: 1rem;
+        }
+    }
+
+    @media (max-width: 768px) {
+        flex-direction: column;
+
+        .patient-list {
+            width: 100%;
+            max-height: 200px;
+            border-right: none;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .chat-section {
+            margin-left: 0;
+            margin-top: 20px;
+            border-radius: 8px;
+        }
+    }
+
+    @media (max-width: 576px) {
+        padding: 10px;
+
+        .patient-list {
+            h3 {
+                font-size: 1rem;
+            }
+
+            .patient-item {
+                padding: 8px 10px;
+
+                span {
+                    font-size: 0.9rem;
+                }
+            }
+        }
+
+        .chat-section {
+            .chat-header {
+                h3 {
+                    font-size: 1rem;
+                }
+
+                .close-icon {
+                    font-size: 1rem;
+                }
+            }
+
+            .chat-body {
+                .message {
+                    p {
+                        font-size: 0.9rem;
+                    }
+
+                    .timestamp {
+                        font-size: 0.7rem;
+                    }
+                }
+            }
+
+            .chat-footer {
+                input {
+                    font-size: 0.85rem;
+                }
+
+                button {
+                    width: 35px;
+                    height: 35px;
+                }
+            }
+        }
+    }
+}

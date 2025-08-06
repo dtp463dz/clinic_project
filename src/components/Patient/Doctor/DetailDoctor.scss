@@ -1,118 +1,281 @@
 .doctor-detail-container {
-    height: auto;
-    margin: 0 100px;
-    max-width: 100%;
+    padding: 2rem 1rem;
+    font-family: 'Segoe UI', Roboto, sans-serif;
+    background-color: #fff;
+    color: #333;
+    max-width: 1200px;
+    margin: 0 auto;
+    overflow: auto;
+    /* Ngăn cuộn tự động ngoài ý muốn */
+    scroll-behavior: auto;
+    /* Đặt hành vi cuộn mặc định */
 
     .intro-doctor {
         display: flex;
+        flex-wrap: wrap;
+        gap: 2rem;
 
         .content-left {
-            margin-top: 20px;
-            width: 20%;
+            flex: 1;
+            min-width: 280px;
+            max-width: 400px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 1.5rem;
 
             .img-detail-doctor {
-                display: flex;
-                justify-content: center;
+                width: 120px;
+                height: 130px;
+                overflow: hidden;
+                // border: 4px solid #0d6efd;
+                // box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+                transition: transform 0.3s ease-in-out;
+
+                &:hover {
+                    transform: scale(1.05);
+                }
 
                 img {
                     width: 120px;
                     height: 120px;
-                    border-radius: 50%;
                     margin: 10px 20px;
+                    object-fit: cover;
                 }
             }
 
             .contact-detail-doctor {
                 display: flex;
-                gap: 10px;
                 justify-content: center;
+                align-items: center;
+                gap: 1rem;
 
                 img {
                     width: 10%;
+                    cursor: pointer;
+                    transition: transform 0.2s ease-in-out;
+
+                    &:hover {
+                        transform: scale(1.1);
+                    }
                 }
             }
 
             .booking-doctor {
+                background-color: #0d6efd;
+                color: #fff;
+                padding: 0 12px;
+                border-radius: 15px;
+                font-weight: 600;
+                font-size: 0.9375rem;
                 display: flex;
                 align-items: center;
-                justify-content: center;
-                background: #013779;
-                border-radius: 50px;
-                width: 140px;
-                height: 30px;
-                margin-top: 15px;
-                margin-left: 45px;
+                gap: 0.5rem;
                 cursor: pointer;
+                box-shadow: 0 4px 12px rgba(13, 110, 253, 0.3);
+                transition: background-color 0.3s ease, transform 0.2s ease;
 
                 &:hover {
-                    background: #012b5e;
-
+                    background-color: #0056b3;
+                    transform: translateY(-2px);
                 }
 
                 .booking-icon {
-                    color: #fff;
-                    padding-right: 5px;
+                    font-size: 1.125rem;
+                    margin-top: 8px;
+                }
+
+                .booking-text {
+                    margin: 0;
+                }
+            }
+
+            .chat-doctor {
+                background-color: #28a745;
+                color: #fff;
+                padding: 0 12px;
+                border-radius: 999px;
+                font-weight: 600;
+                font-size: 0.9375rem;
+                display: flex;
+                align-items: center;
+                gap: 0.5rem;
+                cursor: pointer;
+                box-shadow: 0 4px 12px rgba(40, 167, 69, 0.3);
+                transition: background-color 0.3s ease, transform 0.2s ease;
+
+                &:hover {
+                    background-color: #218838;
+                    transform: translateY(-2px);
+                }
+
+                .chat-icon {
+                    font-size: 1.125rem;
                     margin-top: 8px;
 
                 }
 
-                .booking-text {
-                    font-weight: 600;
-                    color: #fff;
-                    font-size: 15px;
-                    margin-top: 14px;
+                .chat-text {
+                    margin: 0;
                 }
             }
 
             .schedule-doctor {
-                margin-top: 25px;
-                padding: 10px 0;
-                min-height: 150px;
+                width: 100%;
+                background-color: #f9f9f9;
+                padding: 1.25rem;
+                border-radius: 0.75rem;
+                box-shadow: 0 2px 10px rgba(0, 0, 0, 0.05);
+                font-size: 0.875rem;
 
                 .schedule-content-up {
-                    width: 100%;
+                    margin-bottom: 0.75rem;
                 }
 
                 .schedule-content-down {
-                    margin-top: 30px;
-                    border-top: 1px solid gray;
-                    width: 100%;
+                    color: #333;
                 }
             }
         }
 
         .content-right {
-            width: 80%;
-            display: flex;
-            flex-direction: column;
-            padding-left: 10px;
+            flex: 2;
+            min-width: 280px;
 
             .position-doctor {
-                margin-top: 15px;
+                margin-bottom: 1.5rem;
 
                 .name-detail-doctor {
-                    color: #03428E;
-                    font-size: 14px;
-                    text-transform: uppercase;
-                    font-weight: 600;
-                    margin: 15px;
+                    font-size: 1.75rem;
+                    font-weight: 700;
+                    color: #0d6efd;
                 }
             }
 
             .introduce-detail-doctor {
+                background: #fff;
+                padding: 1.5rem;
+                border-radius: 0.75rem;
+                box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+
                 .introduce-title {
-                    font-size: 14px;
-                    margin: 15px;
-                    font-weight: 500;
+                    font-size: 1rem;
+                    margin-bottom: 1.25rem;
+                    color: #444;
                 }
 
                 .detail-infor-doctor {
-                    margin: 15px;
+                    line-height: 1.7;
 
-                    img {
-                        margin-top: 10px;
-                        margin-left: 30px;
-                        width: 80%;
+                    h1,
+                    h2,
+                    h3 {
+                        color: #0d6efd;
+                        margin-bottom: 0.5rem;
+                        font-size: 20px;
+                    }
+
+                    p {
+                        color: #555;
+                        margin-bottom: 0.625rem;
+                    }
+
+                    ul {
+                        margin-left: 1.25rem;
+                        list-style: disc;
+                        color: #555;
+                    }
+                }
+            }
+        }
+    }
+
+    .schedule-doctor {
+        margin-top: 2rem;
+    }
+
+    .comment-doctor {
+        margin-top: 3rem;
+    }
+
+    @media (max-width: 768px) {
+        padding: 1.5rem 1rem;
+
+        .intro-doctor {
+            flex-direction: column;
+            align-items: center;
+
+            .content-left,
+            .content-right {
+                width: 100%;
+                max-width: 100%;
+            }
+
+            .content-left {
+                .img-detail-doctor {
+                    width: 120px;
+                    height: 120px;
+                }
+
+                .contact-detail-doctor img {
+                    width: 1.5rem;
+                    height: 1.5rem;
+                }
+
+                .booking-doctor,
+                .chat-doctor {
+                    padding: 0.625rem 1.5rem;
+                    font-size: 0.875rem;
+
+                    .booking-icon,
+                    .chat-icon {
+                        font-size: 1rem;
+                    }
+                }
+            }
+
+            .content-right {
+                .position-doctor {
+                    .name-detail-doctor {
+                        font-size: 1.5rem;
+                    }
+                }
+
+                .introduce-detail-doctor {
+                    padding: 1rem;
+                }
+            }
+        }
+    }
+
+    @media (max-width: 576px) {
+        padding: 1rem 0.5rem;
+
+        .intro-doctor {
+            gap: 1.5rem;
+
+            .content-left {
+                .img-detail-doctor {
+                    width: 100px;
+                    height: 100px;
+                }
+
+                .contact-detail-doctor img {
+                    width: 1.25rem;
+                    height: 1.25rem;
+                }
+
+                .booking-doctor,
+                .chat-doctor {
+                    padding: 0.5rem 1.25rem;
+                    font-size: 0.8125rem;
+                }
+            }
+
+            .content-right {
+                .position-doctor {
+                    .name-detail-doctor {
+                        font-size: 1.25rem;
                     }
                 }
             }

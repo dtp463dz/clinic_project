@@ -57,7 +57,6 @@ const Profile = () => {
 
     return (
         <>
-            <Header />
             <div className='profile-container'>
                 <h1 className='profile-title'>Hồ sơ bệnh nhân</h1>
 

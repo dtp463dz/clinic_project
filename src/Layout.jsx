@@ -49,6 +49,8 @@ import { doLogout } from './redux/action/userAction';
 import { persistor } from './redux/store.jsx';
 import Profile from './pages/Hearder/Profile.jsx';
 import MainLayout from './MainLayout.jsx';
+import MessageDoctor from './components/Admin/Content/Doctor/MessageDoctor.jsx';
+import Notifications from './components/Admin/Content/Doctor/Notifications.jsx';
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
     const dispatch = useDispatch();
@@ -88,6 +90,9 @@ const Layout = () => {
                     <Route path="drugs" element={<ManageDrugs />} />
                     <Route path="medicinal-herb" element={<ManageMedicinal />} />
                     <Route path="body-part" element={<ManageBodyPart />} />
+
+                    <Route path="messages" element={<MessageDoctor />} />
+                    <Route path="notifications" element={<Notifications />} />
 
                 </Route>
 

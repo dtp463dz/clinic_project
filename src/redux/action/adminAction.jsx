@@ -107,7 +107,7 @@ export const fetchRoleIdFailded = () => {
 export const createNewUser = (data) => {
     return async (dispatch, getState) => {
         try {
-            console.log('Data nhận được trong action:', data);
+            // console.log('Data nhận được trong action:', data);
             // call create user
             let res = await createNewUserService(data)
             if (res && res.errCode === 0) {
@@ -240,7 +240,7 @@ export const fetchTopDoctor = () => {
     return async (dispatch, getState) => {
         try {
             let res = await getTopDoctorHomeService('');
-            console.log('check res', res);
+            // console.log('check res', res);
             if (res && res.errCode === 0) {
                 dispatch({
                     type: actionTypes.FETCH_TOP_DOCTORS_SUCCESS,
@@ -290,7 +290,7 @@ export const saveDetailDoctor = (data) => {
     return async (dispatch, getState) => {
         try {
             let res = await saveDetailDoctorService(data);
-            console.log('check res', res);
+            // console.log('check res', res);
             if (res && res.errCode === 0) {
                 toast.success('Save Infor Detail Doctor Succeed!')
                 dispatch({

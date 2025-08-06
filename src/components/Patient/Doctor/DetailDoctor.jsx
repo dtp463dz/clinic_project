@@ -6,22 +6,26 @@ import './DetailDoctor.scss';
 import FBImage from '../../../assets/doctor/facebook.png';
 import ZaloImage from '../../../assets/doctor/zalo_icon.svg';
 import PhoneImage from '../../../assets/doctor/whatsapp.png';
-import { FaCalendarAlt } from "react-icons/fa";
+import { FaCalendarAlt, FaComments } from "react-icons/fa";
 import { getDetailInforDoctor } from "../../../services/userService";
 import { Buffer } from 'buffer';
 import DoctorSchedule from "./DoctorSchedule";
 import DoctorExtraInfor from "./DoctorExtraInfor";
 import { useNavigate } from 'react-router-dom';
+import Footer from "../../HomePage/News/Footer";
+import ChatWindow from "./Chat/ChatWindow";
 
 
 const DetailDoctor = () => {
     const { id } = useParams(); // Lấy id từ URL
     const [detailDoctor, setDetailDoctor] = useState({});
+    const [isChatOpen, setIsChatOpen] = useState(false);
 
     useEffect(() => {
         if (id) {
-            fetchDetaiInforDoctor()
+            fetchDetaiInforDoctor();
         }
+        window.scrollTo(0, 0);
     }, [id]);
 
     const fetchDetaiInforDoctor = async () => {
@@ -41,10 +45,9 @@ const DetailDoctor = () => {
     }
     const navigate = useNavigate();
 
-
-    const handleBooking = () => {
-        navigate('/')
-    }
+    const handleToggleChat = () => {
+        setIsChatOpen(!isChatOpen);
+    };
 
     // console.log('check state', detailDoctor)
     let nameDetailDoctor = `${detailDoctor.positionData?.valueVi} ${detailDoctor.firstName} ${detailDoctor.lastName}`;
@@ -67,9 +70,13 @@ const DetailDoctor = () => {
                             <img src={FBImage} alt="Facebook Icon" style={{ width: '10%' }} />
                             <img src={ZaloImage} alt="Zalo Icon" style={{ width: '10%' }} />
                         </div>
-                        <div className="booking-doctor" onClick={handleBooking}>
+                        {/* <div className="booking-doctor" onClick={handleBooking}>
                             <p className="booking-icon"><FaCalendarAlt /></p>
                             <p className="booking-text" > Đặt lịch ngay</p>
+                        </div> */}
+                        <div className="chat-doctor" onClick={handleToggleChat}>
+                            <p className="chat-icon"><FaComments /></p>
+                            <p className="chat-text">Nhắn tin</p>
                         </div>
                         <div className="schedule-doctor">
                             <div className="schedule-content-up">
@@ -107,6 +114,13 @@ const DetailDoctor = () => {
                         </div>
                     </div>
                 </div>
+                {isChatOpen && (
+                    <ChatWindow
+                        doctorId={detailDoctor.id}
+                        doctorName={nameDetailDoctor}
+                        onClose={handleToggleChat}
+                    />
+                )}
                 <div className="schedule-doctor">
 
                 </div>
@@ -115,6 +129,7 @@ const DetailDoctor = () => {
 
                 </div>
             </div>
+            <Footer />
         </>
 
     )

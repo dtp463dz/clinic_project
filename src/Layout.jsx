@@ -47,10 +47,10 @@ import DetailItem from './components/HomePage/News/DetailPage/DetailItem.jsx';
 import { useDispatch } from 'react-redux';
 import { doLogout } from './redux/action/userAction';
 import { persistor } from './redux/store.jsx';
-import Profile from './pages/Hearder/Profile.jsx';
 import MainLayout from './MainLayout.jsx';
 import MessageDoctor from './components/Admin/Content/Doctor/MessageDoctor.jsx';
 import Notifications from './components/Admin/Content/Doctor/Notifications.jsx';
+import Profile from './pages/Hearder/Profile/Profile.jsx';
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
     const dispatch = useDispatch();

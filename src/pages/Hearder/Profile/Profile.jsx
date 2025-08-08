@@ -1,16 +1,18 @@
 import './Profile.scss';
-import { getUserProfile, getAllCodeService } from '../../services/apiService';
+import { getUserProfile, getAllCodeService } from '../../../services/apiService';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
-import Header from './Header';
-import CancelButton from './Profile/CancelButton';
+import CancelButton from './CancelButton';
+import EditProfileModal from './EditProfileModal';
 
 const Profile = () => {
     const { account, isAuthenticated, accessToken } = useSelector((state) => state.user);
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
     const [statuses, setStatuses] = useState({}); // lưu trạng thái 
+    const [showEditModal, setShowEditModal] = useState(false);
+
     const fetchProfile = async () => {
         try {
             setLoading(true);
@@ -45,15 +47,12 @@ const Profile = () => {
             toast.error('Vui lòng đăng nhập để xem hồ sơ');
             return;
         }
-
-
         fetchProfile();
+    }, [isAuthenticated, accessToken, account]);
 
-    }, [isAuthenticated, accessToken, account])
     if (!isAuthenticated || loading || !profile) {
         return null; // Toast sẽ hiển thị trạng thái tải hoặc lỗi
     }
-    console.log('check profile patientData: ', profile.patientData)
 
     return (
         <>
@@ -62,7 +61,15 @@ const Profile = () => {
 
                 {/* Thông tin cá nhân */}
                 <div className='profile-section'>
-                    <h2 className='section-title'>Thông tin cá nhân</h2>
+                    <div className='section-header'>
+                        <h2 className='section-title'>Thông tin cá nhân</h2>
+                        <button
+                            className='edit-profile-btn'
+                            onClick={() => setShowEditModal(true)}
+                        >
+                            Chỉnh sửa hồ sơ
+                        </button>
+                    </div>
                     <div className='info-column'>
                         <p><strong>Email:</strong> {profile.email}</p>
                         <p><strong>Họ:</strong> {profile.lastName}</p>
@@ -109,6 +116,13 @@ const Profile = () => {
                         <p className='no-data'>Chưa có lịch sử đặt khám</p>
                     )}
                 </div>
+                <EditProfileModal
+                    show={showEditModal}
+                    onHide={() => setShowEditModal(false)}
+                    profile={profile}
+                    accessToken={account.accessToken}
+                    onUpdateSuccess={fetchProfile}
+                />
             </div>
         </>
 

@@ -101,10 +101,18 @@ const getUserProfile = (accessToken) => {
     });
 }
 
+// update patient
+const putUpdatePatient = (data, accessToken) => {
+    return axios.put('/api/edit-patient', data, {
+        headers: {
+            Authorization: `Bearer ${accessToken}`
+        }
+    });
+};
 
 export {
     postLogin, getAllUsers, postLogout, postCreateNewUser,
     putUpdateUser, deleteUser, postRegister,
     getAllCodeService, createNewUserService, editUserService,
-    getSearch, getUserProfile
+    getSearch, getUserProfile, putUpdatePatient
 }

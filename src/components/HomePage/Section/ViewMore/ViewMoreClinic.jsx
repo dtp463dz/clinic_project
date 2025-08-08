@@ -22,8 +22,6 @@ const ViewMoreClinic = () => {
     }, []);
     return (
         <>
-            <Slogan />
-            <HomeHeader />
             <div className="view-more-container">
                 <h2>Chuyên Khoa</h2>
                 <div className="clinic-grid">

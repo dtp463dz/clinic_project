@@ -1,0 +1,58 @@
+.all-medical-list {
+    margin-top: 2rem;
+
+    h2 {
+        font-size: 1.6rem;
+        margin-bottom: 1rem;
+    }
+
+    input {
+        width: 100%;
+        padding: 0.6rem;
+        border: 1px solid #ccc;
+        margin-bottom: 1rem;
+        border-radius: 4px;
+    }
+
+    .alphabet-filter {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.4rem;
+        margin-bottom: 1rem;
+
+        button {
+            padding: 0.4rem 0.6rem;
+            border: 1px solid #ccc;
+            background: #f9f9f9;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 0.9rem;
+
+            &.active {
+                background: #007bff;
+                color: #fff;
+                border-color: #007bff;
+            }
+        }
+    }
+
+    ul {
+        list-style: none;
+        padding: 0;
+
+        li {
+            padding: 0.5rem 0;
+            border-bottom: 1px solid #eee;
+
+            a {
+                text-decoration: none; // bỏ gạch chân
+                color: #333; // màu chữ mặc định
+                transition: color 0.2s ease;
+
+                &:hover {
+                    color: #007bff; // đổi màu khi hover
+                }
+            }
+        }
+    }
+}

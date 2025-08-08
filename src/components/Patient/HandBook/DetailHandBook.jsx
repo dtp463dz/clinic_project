@@ -25,8 +25,6 @@ const DetailHandBook = () => {
 
     return (
         <>
-            <Slogan />
-            <HomeHeader />
             <div className="detail-handbook-container">
                 {dataHandBook && !_.isEmpty(dataHandBook) && (
                     <>

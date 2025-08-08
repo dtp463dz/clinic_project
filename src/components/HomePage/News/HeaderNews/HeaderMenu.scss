@@ -74,6 +74,22 @@
                 }
             }
 
+            .view-more {
+                border-top: 1px solid #eee;
+                margin-top: 0.3rem;
+                padding-top: 0.3rem;
+
+                a {
+                    font-weight: bold;
+                    font-size: 0.9rem;
+                    color: #8ec4fe;
+
+                    &:hover {
+                        text-decoration: underline;
+                    }
+                }
+            }
+
             // Loại bỏ bất kỳ display flex hoặc inline nào
             display: block !important; // Đảm bảo dropdown-list là khối dọc
 

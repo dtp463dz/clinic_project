@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { FaHome } from 'react-icons/fa';
 import { getAllBodyPart, getAllDrug, getAllMedicinal, getAllSymptom } from '../../../../services/medicalDataService';
 import { Link, useNavigate } from 'react-router-dom';
@@ -13,47 +13,31 @@ const HeaderMenu = () => {
         bodyParts: { show: false, data: [] },
     });
 
-    const fetchData = async (type) => {
-        try {
-            let response;
-            if (type === 'symptoms') response = await getAllSymptom();
-            if (type === 'drugs') response = await getAllDrug();
-            if (type === 'herbs') response = await getAllMedicinal();
-            if (type === 'bodyParts') response = await getAllBodyPart();
+    useEffect(() => {
+        const fetchAllData = async () => {
+            try {
+                const [symptomsRes, drugsRes, herbsRes, bodyPartsRes] = await Promise.all([
+                    getAllSymptom(1, 5), // chỉ lấy 5 mục đầu để menu gọn hơn
+                    getAllDrug(1, 5),
+                    getAllMedicinal(1, 5),
+                    getAllBodyPart(1, 5),
+                ]);
 
-            // Extract the array based on the type
-            let data = [];
-            if (response?.data) {
-                if (type === 'drugs') {
-                    data = Array.isArray(response.data.drugs) ? response.data.drugs : [];
-                } else if (type === 'symptoms') {
-                    data = Array.isArray(response.data.symptoms) ? response.data.symptoms : [];
-                } else if (type === 'herbs') {
-                    data = Array.isArray(response.data.herbs) ? response.data.herbs : [];
-                } else if (type === 'bodyParts') {
-                    data = Array.isArray(response.data.bodyParts) ? response.data.bodyParts : [];
-                }
+                setDropdowns({
+                    symptoms: { show: false, data: symptomsRes?.data?.symptoms || [] },
+                    drugs: { show: false, data: drugsRes?.data?.drugs || [] },
+                    herbs: { show: false, data: herbsRes?.data?.herbs || [] },
+                    bodyParts: { show: false, data: bodyPartsRes?.data?.bodyParts || [] },
+                });
+            } catch (error) {
+                console.error('Lỗi khi lấy dữ liệu:', error);
             }
+        };
 
-            setDropdowns((prev) => ({
-                ...prev,
-                [type]: { ...prev[type], data },
-            }));
-        } catch (error) {
-            console.error(`Error fetching data for ${type}:`, error);
-            setDropdowns((prev) => ({
-                ...prev,
-                [type]: { ...prev[type], data: [] },
-            }));
-        }
-    };
+        fetchAllData();
+    }, []);
 
-    const handleMouseEnter = async (type) => {
-        // Chỉ gọi API nếu dữ liệu chưa có
-        if (dropdowns[type].data.length === 0) {
-            await fetchData(type);
-        }
-        // Hiển thị dropdown khi hover
+    const handleMouseEnter = (type) => {
         setDropdowns((prev) => ({
             ...prev,
             [type]: { ...prev[type], show: true },
@@ -61,7 +45,6 @@ const HeaderMenu = () => {
     };
 
     const handleMouseLeave = (type) => {
-        // an dropdown khi chuột rời
         setDropdowns((prev) => ({
             ...prev,
             [type]: { ...prev[type], show: false },
@@ -83,11 +66,15 @@ const HeaderMenu = () => {
                                 <Link to={`/${type}/${item.id}`}>{item.name}</Link>
                             </li>
                         ))}
+                        <li className="view-more">
+                            <Link to={`/medical/${type}`}>Xem thêm...</Link>
+                        </li>
                     </ul>
                 )}
             </li>
-        )
-    }
+        );
+    };
+
     return (
         <ul className="header-menu">
             <li><FaHome className="home-icon" onClick={() => navigate('/tin-tuc')} /></li>
@@ -95,9 +82,8 @@ const HeaderMenu = () => {
             {renderDropdown('drugs', 'Tra cứu thuốc')}
             {renderDropdown('herbs', 'Tra cứu dược liệu')}
             {renderDropdown('bodyParts', 'Tra cứu bộ phận cơ thể')}
-
         </ul>
-    )
-}
+    );
+};
 
 export default HeaderMenu;

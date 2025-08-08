@@ -1,22 +1,22 @@
 import './Profile.scss';
 import { getUserProfile, getAllCodeService } from '../../../services/apiService';
 import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { toast } from 'react-toastify';
 import CancelButton from './CancelButton';
 import EditProfileModal from './EditProfileModal';
 
 const Profile = () => {
-    const { account, isAuthenticated, accessToken } = useSelector((state) => state.user);
+    const { account, isAuthenticated } = useSelector((state) => state.user);
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
-    const [statuses, setStatuses] = useState({}); // lưu trạng thái 
+    const [statuses, setStatuses] = useState({});
     const [showEditModal, setShowEditModal] = useState(false);
+    const prevAccessToken = useRef(account?.accessToken);
 
     const fetchProfile = async () => {
         try {
             setLoading(true);
-            toast.info('Đang tải hồ sơ ... ');
             const statusResponse = await getAllCodeService('STATUS');
             if (statusResponse.errCode === 0) {
                 const statusMap = {};
@@ -24,34 +24,47 @@ const Profile = () => {
                     statusMap[status.keyMap] = status.valueVi;
                 });
                 setStatuses(statusMap);
+            } else {
+                console.warn('Lỗi lấy STATUS:', statusResponse.errMessage);
             }
             const response = await getUserProfile(account.accessToken);
-            toast.dismiss();
             if (response.errCode === 0) {
+                console.log('Profile data:', response.data); // Debug dữ liệu API
                 setProfile(response.data);
-                toast.success('Tải hồ sơ thành công!')
             } else {
-                toast.error(response.errMessage || 'Không thể tải hồ sơ')
+                toast.error(response.errMessage || 'Không thể tải hồ sơ', { autoClose: 3000 });
             }
         } catch (err) {
-            console.log('Lỗi fetchProfile: ', err)
-            toast.dismiss();
-            toast.error('Lỗi khi tải thông tin hồ sơ. Vui lòng thử lại sau,')
+            console.error('Lỗi fetchProfile:', err);
+            toast.error('Lỗi khi tải thông tin hồ sơ. Vui lòng thử lại sau.', { autoClose: 3000 });
         } finally {
             setLoading(false);
         }
     };
 
     useEffect(() => {
-        if (!isAuthenticated || !account) {
-            toast.error('Vui lòng đăng nhập để xem hồ sơ');
-            return;
+        console.log('Account:', account, 'isAuthenticated:', isAuthenticated); // Debug Redux
+        if (!isAuthenticated || !account || !account.accessToken) {
+            toast.error('Vui lòng đăng nhập để xem hồ sơ', { autoClose: 3000 });
+            return; // Ngăn tiếp tục thực thi để tránh toast chồng chất
         }
-        fetchProfile();
-    }, [isAuthenticated, accessToken, account]);
+        // Gọi fetchProfile lần đầu hoặc khi accessToken thay đổi
+        if (!profile || account.accessToken !== prevAccessToken.current) {
+            fetchProfile();
+            prevAccessToken.current = account.accessToken;
+        }
+    }, [isAuthenticated, account, profile]);
 
-    if (!isAuthenticated || loading || !profile) {
-        return null; // Toast sẽ hiển thị trạng thái tải hoặc lỗi
+    if (!isAuthenticated) {
+        return <div className="profile-container">Vui lòng đăng nhập để xem hồ sơ</div>;
+    }
+
+    if (loading) {
+        return <div className="profile-container">Đang tải hồ sơ...</div>;
+    }
+
+    if (!profile) {
+        return <div className="profile-container">Không thể tải hồ sơ. Vui lòng thử lại.</div>;
     }
 
     return (
@@ -71,9 +84,9 @@ const Profile = () => {
                         </button>
                     </div>
                     <div className='info-column'>
-                        <p><strong>Email:</strong> {profile.email}</p>
-                        <p><strong>Họ:</strong> {profile.lastName}</p>
-                        <p><strong>Tên:</strong> {profile.firstName}</p>
+                        <p><strong>Email:</strong> {profile.email || 'Chưa cập nhật'}</p>
+                        <p><strong>Họ:</strong> {profile.lastName || 'Chưa cập nhật'}</p>
+                        <p><strong>Tên:</strong> {profile.firstName || 'Chưa cập nhật'}</p>
                         <p><strong>Giới tính:</strong> {profile.genderData?.valueVi || 'Chưa cập nhật'}</p>
                     </div>
                     <div className='info-column'>
@@ -85,25 +98,26 @@ const Profile = () => {
 
                 {/* Lịch sử đặt khám */}
                 <div className='profile-section'>
-                    <h2 className='section-title'>Lịch Sử Đặt Khám</h2>
-
+                    <div className='section-header'>
+                        <h2 className='section-title'>Lịch Sử Đặt Khám</h2>
+                    </div>
                     {profile.patientData ? (
                         <div className='booking-list'>
-                            <div className='booking-card' key={profile.patientData.id}>
+                            <div className='booking-card' key={profile.patientData.id || 'no-id'}>
                                 <div className='booking-header'>
-                                    <h3 className='booking-id'>Mã đặt khám: {profile.patientData.id}</h3>
-                                    <span className={`booking-status status-${profile.patientData.statusId}`}>
+                                    <h3 className='booking-id'>Mã đặt khám: {profile.patientData.id || 'N/A'}</h3>
+                                    <span className={`booking-status status-${profile.patientData.statusId || 'unknown'}`}>
                                         {statuses[profile.patientData.statusId] || 'Không xác định'}
                                     </span>
                                 </div>
                                 <div className='booking-details'>
-                                    <p><strong>Bác sĩ:</strong> {profile.patientData.doctorData?.firstName} {profile.patientData.doctorData?.lastName}</p>
+                                    <p><strong>Bác sĩ:</strong> {profile.patientData.doctorData?.firstName || 'Chưa cập nhật'} {profile.patientData.doctorData?.lastName || ''}</p>
                                     <p><strong>Phòng khám:</strong> {profile.patientData.doctorData?.Doctor_Infor?.nameClinic || 'Chưa cập nhật'}</p>
                                     <p><strong>Địa chỉ:</strong> {profile.patientData.doctorData?.Doctor_Infor?.addressClinic || 'Chưa cập nhật'}</p>
-                                    <p><strong>Ngày khám:</strong> {new Date(Number(profile.patientData.date)).toLocaleDateString('vi-VN')}</p>
+                                    <p><strong>Ngày khám:</strong> {profile.patientData.date ? new Date(Number(profile.patientData.date)).toLocaleDateString('vi-VN') : 'Chưa cập nhật'}</p>
                                     <p><strong>Thời gian:</strong> {profile.patientData.timeTypeDataPatient?.valueVi || 'Chưa cập nhật'}</p>
                                 </div>
-                                {profile.patientData.statusId === 'S1' && (
+                                {profile.patientData.statusId === 'S1' && profile.patientData.id && (
                                     <CancelButton
                                         accessToken={account.accessToken}
                                         bookingId={profile.patientData.id}
@@ -125,8 +139,7 @@ const Profile = () => {
                 />
             </div>
         </>
+    );
+};
 
-    )
-}
-
-export default Profile
+export default Profile;

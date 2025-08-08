@@ -1,7 +1,18 @@
 import { Modal, Button, Form } from 'react-bootstrap';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
 import { toast } from 'react-toastify';
 import { putUpdatePatient, getAllCodeService } from '../../../services/apiService';
+
+const GenderSelect = React.memo(({ genders, value, onChange }) => (
+    <Form.Select name="gender" value={value} onChange={onChange}>
+        <option value="">Chọn giới tính</option>
+        {genders.map(gender => (
+            <option key={gender.keyMap} value={gender.keyMap}>
+                {gender.valueVi}
+            </option>
+        ))}
+    </Form.Select>
+));
 
 const EditProfileModal = ({ show, onHide, profile, accessToken, onUpdateSuccess }) => {
     const [formData, setFormData] = useState({
@@ -11,7 +22,7 @@ const EditProfileModal = ({ show, onHide, profile, accessToken, onUpdateSuccess 
         address: profile?.address || '',
         phonenumber: profile?.phonenumber || '',
         gender: profile?.gender || '',
-        roleId: profile?.roleId || 'R3', // Mặc định là bệnh nhân
+        roleId: profile?.roleId || 'R3',
         image: profile?.image || null
     });
     const [loading, setLoading] = useState(false);
@@ -28,11 +39,11 @@ const EditProfileModal = ({ show, onHide, profile, accessToken, onUpdateSuccess 
                         setFormData(prev => ({ ...prev, gender: response.data[0].keyMap }));
                     }
                 } else {
-                    toast.error('Không thể tải danh sách giới tính');
+                    toast.error('Không thể tải danh sách giới tính', { autoClose: 3000 });
                 }
             } catch (err) {
-                console.log('Lỗi fetchGenders: ', err);
-                toast.error('Lỗi khi tải danh sách giới tính');
+                console.log('Lỗi fetchGenders:', err);
+                toast.error('Lỗi khi tải danh sách giới tính', { autoClose: 3000 });
             }
         };
         fetchGenders();
@@ -44,22 +55,20 @@ const EditProfileModal = ({ show, onHide, profile, accessToken, onUpdateSuccess 
     };
 
     const handleSubmit = async () => {
+        const toastId = 'update-profile-toast'; // ID duy nhất cho toast
         try {
             setLoading(true);
-            toast.info('Đang cập nhật hồ sơ...');
             const response = await putUpdatePatient(formData, accessToken);
-            toast.dismiss();
             if (response.errCode === 0) {
-                toast.success('Cập nhật hồ sơ thành công!');
+                toast.success('Cập nhật hồ sơ thành công!', { autoClose: 3000, toastId });
                 onUpdateSuccess();
                 onHide();
             } else {
-                toast.error(response.errMessage || 'Không thể cập nhật hồ sơ');
+                toast.error(response.errMessage || 'Không thể cập nhật hồ sơ', { autoClose: 3000, toastId });
             }
         } catch (err) {
-            console.log('Lỗi cập nhật hồ sơ: ', err);
-            toast.dismiss();
-            toast.error('Lỗi khi cập nhật hồ sơ. Vui lòng thử lại sau.');
+            console.log('Lỗi cập nhật hồ sơ:', err);
+            toast.error('Lỗi khi cập nhật hồ sơ. Vui lòng thử lại sau.', { autoClose: 3000, toastId });
         } finally {
             setLoading(false);
         }
@@ -114,18 +123,7 @@ const EditProfileModal = ({ show, onHide, profile, accessToken, onUpdateSuccess 
                     </Form.Group>
                     <Form.Group className="mb-3">
                         <Form.Label>Giới tính</Form.Label>
-                        <Form.Select
-                            name="gender"
-                            value={formData.gender}
-                            onChange={handleInputChange}
-                        >
-                            <option value="">Chọn giới tính</option>
-                            {genders.map(gender => (
-                                <option key={gender.keyMap} value={gender.keyMap}>
-                                    {gender.valueVi}
-                                </option>
-                            ))}
-                        </Form.Select>
+                        <GenderSelect genders={genders} value={formData.gender} onChange={handleInputChange} />
                     </Form.Group>
                 </Form>
             </Modal.Body>

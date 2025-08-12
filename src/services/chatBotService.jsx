@@ -1,10 +1,24 @@
 import axios from "../utils/axios.jsx";
 
-// Gửi câu hỏi lên chatbot
-const sendQuestion = async (question, accessToken) => {
+// Lấy danh sách các cuộc trò chuyện
+const getConversations = async (accessToken) => {
+    return axios.get(`/api/chatbot/conversations`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    });
+};
+
+// Lấy tin nhắn của một cuộc trò chuyện cụ thể
+const getMessagesByConversationId = async (conversationId, accessToken) => {
+    return axios.get(`/api/chatbot/conversations/${conversationId}`, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    });
+};
+
+// Gửi câu hỏi vào chatbot (có thể kèm conversationId)
+const sendQuestion = async (question, conversationId, accessToken) => {
     return axios.post(
         `/api/chatbot`,
-        { question },
+        { question, conversationId },
         {
             headers: {
                 Authorization: `Bearer ${accessToken}`
@@ -13,22 +27,8 @@ const sendQuestion = async (question, accessToken) => {
     );
 };
 
-// Lấy lịch sử trò chuyện với chatbot
-const getChatHistory = async (accessToken) => {
-    try {
-        const response = await axios.get(`/api/chatbot/history`, {
-            headers: {
-                Authorization: `Bearer ${accessToken}`
-            }
-        });
-        return response;
-    } catch (error) {
-        console.error('chatBotService: getChatHistory error:', error);
-        throw error;
-    }
-};
-
 export {
-    sendQuestion,
-    getChatHistory
+    getConversations,
+    getMessagesByConversationId,
+    sendQuestion
 };

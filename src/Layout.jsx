@@ -52,6 +52,7 @@ import MessageDoctor from './components/Admin/Content/Doctor/MessageDoctor.jsx';
 import Notifications from './components/Admin/Content/Doctor/Notifications.jsx';
 import Profile from './pages/Hearder/Profile/Profile.jsx';
 import AllMedicalList from './components/HomePage/News/AllMedicalList/AllMedicalList.jsx';
+import MedicalAssistant from './pages/Hearder/MedicalAssistant.jsx';
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
     const dispatch = useDispatch();
@@ -126,6 +127,7 @@ const Layout = () => {
                     <Route path='/verify-booking' element={<VerifyBooking />} />
                     <Route path="/profile" element={<Profile />} />
                 </Route>
+                <Route path="/dat-kham/ai" element={<MedicalAssistant />} />
 
             </Routes>
             <ToastContainer

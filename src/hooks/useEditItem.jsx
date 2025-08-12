@@ -1,4 +1,3 @@
-// hooks/useEditItem.js
 import { useState } from 'react';
 import { updateClinic, updateSpecialty } from '../services/userService';
 import { toast } from 'react-toastify';

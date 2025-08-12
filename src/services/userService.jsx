@@ -133,6 +133,20 @@ const updateClinic = (data) => {
     return axios.put('/api/edit-clinic', data)
 }
 
+// thông báo cho bác sĩ
+const getDoctorNotifications = (accessToken) => {
+    return axios.get('/api/get-doctor-notifications', {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    });
+};
+
+// đánh dấu đã đọc
+const markNotificationAsRead = (accessToken, notificationId) => {
+    return axios.post('/api/mark-notification-read', { notificationId }, {
+        headers: { Authorization: `Bearer ${accessToken}` }
+    });
+};
+
 
 export {
     getTopDoctorHomeService, getAllDoctors, saveDetailDoctorService, getDetailInforDoctor,
@@ -141,5 +155,5 @@ export {
     postVerifyBookAppointment, cancelAppointment, cancelConfirm, createNewSpecialty, getAllSpecialty,
     getDetailSpecialtyById, createNewClinic, getAllClinic, getDetailClinicById,
     getListPatientForDoctor, postSendConfirm, deleteClinic, deleteSpecialty,
-    updateSpecialty, updateClinic
+    updateSpecialty, updateClinic, getDoctorNotifications, markNotificationAsRead
 }

@@ -7,6 +7,7 @@ import { DiReact } from "react-icons/di";
 import { Link } from 'react-router-dom';
 import useLogout from '../../hooks/useLogout'; // Import hook
 import './SideBar.scss';
+import BadgeNotification from './Content/Doctor/BadgeNotification';
 
 const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
     const handleLogout = useLogout(); // Sử dụng hook
@@ -144,7 +145,11 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                             <MenuItem icon={<LuMessageCircleMore />} component={<Link to='/admin/messages' />}>
                                 Tin nhắn
                             </MenuItem>
-                            <MenuItem icon={<IoMdNotificationsOutline />} component={<Link to='/admin/notifications' />}>
+
+                            <MenuItem
+                                icon={<BadgeNotification />}
+                                component={<Link to='/admin/notifications' />}
+                            >
                                 Thông báo
                             </MenuItem>
                             <MenuItem icon={<MdLogout />} onClick={handleLogout}>

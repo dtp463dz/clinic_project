@@ -70,22 +70,22 @@ const ManageDoctor = () => {
         setSelectedSpecialty(null)
     };
     const handleSaveContentMarkdown = () => {
-        // console.log('State values:', {
-        //     contentMarkdown,
-        //     contentHTML,
-        //     selectedDoctor,
-        //     description,
-        //     listDoctors,
-        //     selectedPrice,
-        //     selectedPayment,
-        //     selectedProvince,
-        //     nameClinic,
-        //     addressClinic,
-        //     note,
+        console.log('State values:', {
+            contentMarkdown,
+            contentHTML,
+            selectedDoctor,
+            description,
+            listDoctors,
+            selectedPrice,
+            selectedPayment,
+            selectedProvince,
+            nameClinic,
+            addressClinic,
+            note,
 
-        //     selectedSpecialty,
-        //     selectedClinic,
-        // });
+            selectedSpecialty,
+            selectedClinic,
+        });
 
         dispatch(saveDetailDoctor({
             contentHTML: contentHTML,

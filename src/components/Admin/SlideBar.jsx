@@ -61,11 +61,11 @@ const SlideBar = ({ collapsed, toggled, handleToggleSidebar, isAdmin }) => {
                     )}
                     {isAdmin && (
                         <SubMenu label="Người Dùng" icon={<FaUser />}>
-                            <MenuItem component={<Link to='/admin/manage-users' />}>
+                            {/* <MenuItem component={<Link to='/admin/manage-users' />}>
                                 Quản Lý Người Dùng
-                            </MenuItem>
+                            </MenuItem> */}
                             <MenuItem component={<Link to='/admin/manage-userRedux' />}>
-                                Quản Lý User Redux
+                                Quản Lý Người Dùng
                             </MenuItem>
                             <MenuItem component={<Link to={'/admin/manage-doctor'} />}>
                                 Quản Lý Bác Sĩ

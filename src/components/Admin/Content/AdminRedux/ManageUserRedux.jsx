@@ -165,7 +165,14 @@ const ManageUserRedux = () => {
 
     // show hide form
     const btnShowForm = () => {
-        setIsShowForm(!isShowForm)
+        if (!isShowForm) {
+            // Nếu đang mở form để tạo mới thì reset edit mode
+            setIsEditMode(false);
+            resetForm();
+            setIsShowForm(true);
+        } else {
+            setIsShowForm(false);
+        }
     }
     // view form edit user
     const handleEditUserFromParent = (user) => {

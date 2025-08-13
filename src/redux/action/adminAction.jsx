@@ -292,7 +292,7 @@ export const saveDetailDoctor = (data) => {
             let res = await saveDetailDoctorService(data);
             // console.log('check res', res);
             if (res && res.errCode === 0) {
-                toast.success('Save Infor Detail Doctor Succeed!')
+                toast.success('Lưu thông tin bác sĩ thành công')
                 dispatch({
                     type: actionTypes.SAVE_DETAIL_DOCTOR_SUCCESS,
                 })

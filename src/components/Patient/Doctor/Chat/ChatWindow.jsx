@@ -19,10 +19,10 @@ const ChatWindow = ({ doctorId, doctorName, onClose }) => {
         toast.error('Không tìm thấy ID bác sĩ');
         return null;
     }
-    if (!account.accessToken) {
-        toast.error('Không tìm thấy token xác thực');
-        return null;
-    }
+    // if (!account.accessToken) {
+    //     toast.error('Không tìm thấy token xác thực');
+    //     return null;
+    // }
     if (!isAuthenticated) {
         toast.error('Vui lòng đăng nhập để sử dụng chức năng chat');
         return (

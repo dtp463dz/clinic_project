@@ -76,9 +76,9 @@ const DoctorSchedule = (props) => {
     }
     // click schedule time modal
     const handleClickScheduleTimeModal = (time) => {
+        if (time.isBooked) return;
         setShowModalBooking(true)
         setDataScheduleTimeModal(time)
-        console.log('check schedule time: ', time)
     }
 
     return (
@@ -114,6 +114,8 @@ const DoctorSchedule = (props) => {
                                             <button
                                                 onClick={() => handleClickScheduleTimeModal(item)}
                                                 key={index}
+                                                disabled={item.isBooked}
+                                                className={item.isBooked ? "disabled-slot" : ""}
                                             >
                                                 {timeDisplay}
                                             </button>

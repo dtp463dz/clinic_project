@@ -1,3 +1,11 @@
+import { useContext, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { LoadingContext } from './contexts/LoadingContext';
+import { registerGlobalLoading } from './utils/axios.jsx';
+import { getUserProfile } from './services/apiService';
+import { doLogin, doLogout } from './redux/action/userAction';
+import FullScreenSpinner from './components/common/FullScreenSpinner';
 import App from './App.jsx';
 import {
     Routes,
@@ -34,46 +42,62 @@ import ListHandBook from './components/Admin/Content/HandBook/ListHandBook.jsx';
 import ManageHandBook from './components/Admin/Content/HandBook/ManageHandBook.jsx';
 import DetailHandBook from './components/Patient/HandBook/DetailHandBook.jsx';
 import ViewMoreHandBook from './components/HomePage/Section/ViewMore/ViewMoreHandBook.jsx';
-import { useContext, useEffect } from 'react';
-import { LoadingContext } from './contexts/LoadingContext';
-import { registerGlobalLoading } from './utils/axios.jsx';
-import FullScreenSpinner from './components/common/FullScreenSpinner';
 import ManageSymptoms from './components/Admin/Content/Symptoms/ManageSymptoms.jsx';
 import ManageDrugs from './components/Admin/Content/Drugs/ManageDrugs.jsx';
 import ManageMedicinal from './components/Admin/Content/MedicinalHerb/ManageMedicinal.jsx';
 import ManageBodyPart from './components/Admin/Content/BodyPart/ManageBodyPart.jsx';
 import HomeNews from './components/HomePage/News/HomeNews.jsx';
 import DetailItem from './components/HomePage/News/DetailPage/DetailItem.jsx';
-import { useDispatch } from 'react-redux';
-import { doLogout } from './redux/action/userAction';
-import { persistor } from './redux/store.jsx';
 import MainLayout from './MainLayout.jsx';
 import MessageDoctor from './components/Admin/Content/Doctor/MessageDoctor.jsx';
 import Notifications from './components/Admin/Content/Doctor/Notifications.jsx';
 import Profile from './pages/Hearder/Profile/Profile.jsx';
 import AllMedicalList from './components/HomePage/News/AllMedicalList/AllMedicalList.jsx';
 import MedicalAssistant from './pages/Hearder/MedicalAssistant.jsx';
+
 const Layout = () => {
     const { isLoading, setIsLoading } = useContext(LoadingContext);
     const dispatch = useDispatch();
+    const navigate = useNavigate();
+    const { isAuthenticated } = useSelector((state) => state.user);
 
     useEffect(() => {
-        // Xóa trạng thái redux-persist khi ứng dụng khởi động
-        persistor.purge().then(() => {
-            dispatch(doLogout()); // Reset Redux state
-        });
+        const restoreSession = async () => {
+            const accessToken = localStorage.getItem('accessToken');
+            if (accessToken && !isAuthenticated) {
+                try {
+                    const data = await getUserProfile(accessToken);
+                    if (data && data.errCode === 0) {
+                        dispatch(doLogin(data));
+                        const roleId = data.user.roleId;
+                        if (roleId === 'R1') navigate('/admin');
+                        else if (roleId === 'R2') navigate('/admin/manage-doctor-schedule');
+                        else if (roleId === 'R3') navigate('/home');
+                    } else {
+                        localStorage.removeItem('accessToken');
+                        dispatch(doLogout());
+                        navigate('/login');
+                    }
+                } catch (error) {
+                    console.error('Lỗi khi khôi phục phiên:', error);
+                    localStorage.removeItem('accessToken');
+                    dispatch(doLogout());
+                    navigate('/login');
+                }
+            }
+        };
+
+        restoreSession();
         registerGlobalLoading(setIsLoading);
-    }, [setIsLoading, dispatch]);
+    }, [setIsLoading, dispatch, navigate, isAuthenticated]);
+
     return (
         <>
             {isLoading && <FullScreenSpinner message="Đang tải dữ liệu..." />}
             <Routes>
                 <Route path="/" element={<App />}>
-                    {/* <Route index element={<HomePage />} /> */}
                     <Route path="users" element={<User />} />
                 </Route>
-
-                <Route />
                 <Route path="admin" element={<PrivateRoute component={Admin} allowedRoles={['R1', 'R2']} />}>
                     <Route index element={<Dashboard />} />
                     <Route path="manage-users" element={<ManageUser />} />
@@ -87,48 +111,37 @@ const Layout = () => {
                     <Route path="manage-handbook" element={<ManageHandBook />} />
                     <Route path="list-handbook" element={<ListHandBook />} />
                     <Route path="manage-patient" element={<ManagePatient />} />
-
                     <Route path="symptoms" element={<ManageSymptoms />} />
                     <Route path="drugs" element={<ManageDrugs />} />
                     <Route path="medicinal-herb" element={<ManageMedicinal />} />
                     <Route path="body-part" element={<ManageBodyPart />} />
-
                     <Route path="messages" element={<MessageDoctor />} />
                     <Route path="notifications" element={<Notifications />} />
-
                 </Route>
-
-
                 <Route path="/unauthorized" element={<Unauthorized />} />
-
-                <Route path='/login' element={<Login />} />
-                <Route path='/register' element={<Register />} />
-                <Route path='*' element={<NotFound />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/register" element={<Register />} />
+                <Route path="*" element={<NotFound />} />
                 <Route path="/home" element={<HomePage />} />
-                <Route path='/detail-doctor/:id' element={<DetailDoctor />} />
-
-                <Route path='/tin-tuc' element={<HomeNews />} />
-                <Route path='/symptoms/:id' element={<DetailItem />} />
-                <Route path='/drugs/:id' element={<DetailItem />} />
-                <Route path='/herbs/:id' element={<DetailItem />} />
-                <Route path='/bodyParts/:id' element={<DetailItem />} />
+                <Route path="/detail-doctor/:id" element={<DetailDoctor />} />
+                <Route path="/tin-tuc" element={<HomeNews />} />
+                <Route path="/symptoms/:id" element={<DetailItem />} />
+                <Route path="/drugs/:id" element={<DetailItem />} />
+                <Route path="/herbs/:id" element={<DetailItem />} />
+                <Route path="/bodyParts/:id" element={<DetailItem />} />
                 <Route path="/medical/:type" element={<AllMedicalList />} />
-
-                {/* Bọc các route cần Header/Footer */}
                 <Route element={<MainLayout />}>
                     <Route path="/view-more-doctor" element={<ViewMoreDoctor />} />
                     <Route path="/view-more-specialty" element={<ViewMoreSpecialty />} />
                     <Route path="/view-more-clinic" element={<ViewMoreClinic />} />
                     <Route path="/view-more-handbook" element={<ViewMoreHandBook />} />
-
-                    <Route path='/detail-specialty/:id' element={<DetailSpecialty />} />
-                    <Route path='/detail-clinic/:id' element={<DetailClinic />} />
-                    <Route path='/detail-handbook/:id' element={<DetailHandBook />} />
-                    <Route path='/verify-booking' element={<VerifyBooking />} />
+                    <Route path="/detail-specialty/:id" element={<DetailSpecialty />} />
+                    <Route path="/detail-clinic/:id" element={<DetailClinic />} />
+                    <Route path="/detail-handbook/:id" element={<DetailHandBook />} />
+                    <Route path="/verify-booking" element={<VerifyBooking />} />
                     <Route path="/profile" element={<Profile />} />
                 </Route>
                 <Route path="/dat-kham/ai" element={<MedicalAssistant />} />
-
             </Routes>
             <ToastContainer
                 position="top-right"
@@ -142,7 +155,7 @@ const Layout = () => {
                 pauseOnHover
             />
         </>
-    )
-}
+    );
+};
 
 export default Layout;

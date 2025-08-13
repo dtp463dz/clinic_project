@@ -61,6 +61,13 @@
                         color: #fff;
                     }
                 }
+
+                .disabled-slot {
+                    opacity: 0.5;
+                    cursor: not-allowed;
+                    background-color: #ccc !important;
+                }
+
             }
 
             .book-free {
